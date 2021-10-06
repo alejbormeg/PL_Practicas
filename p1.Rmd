@@ -1,5 +1,5 @@
 ---
-title: "Práctica 1: Diseño del lenguaje"
+title: "Procesadores de lenguajes. Práctica 1: Diseño del lenguaje"
 description: "Procesadores de Lenguajes"
 date: "Curso 2021/2022"
 author:
@@ -51,14 +51,18 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 
 <variables> ::= <identificador>, <variables> | <identificador>
 <identificador> ::= <letra> | <letra> <letra_o_digito>
-<letra_o_digito> ::= <letra_o_digito> <letra> | <letra_o_digito> <digito> | <letra> | <digito>
+<letra_o_digito> ::= <letra_o_digito> <letra>
+                    | <letra_o_digito> <digito>
+                    | <letra>
+                    | <digito>
 
-<letra> ::= _ | a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z |
-            A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z
+<letra> ::= _ | a | ... | z |
+            A | ... | Z
 <digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 
-<Cabecera_subprog> ::= <tipo> <identificador> (<parametros>) | void <identificador> (<parametros>)
+<Cabecera_subprog> ::=  <tipo> <identificador> (<parametros>)
+                        | void <identificador> (<parametros>)
 
 <Sentencias> ::= <Sentencias> <Sentencia> | <Sentencia>
 
@@ -75,7 +79,10 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 <sentencia_asignacion> ::= <identificador> = <expresion>
 
 <sentencia_if> ::= if (<expresion>) <bloque> <sentencia_else>
-<sentencia_else> ::= else <bloque> | elif (<expresion>) <bloque> | elif (<expresion>) <bloque> <sentencia_else> |
+<sentencia_else> ::=    else <bloque>
+                        | elif (<expresion>) <bloque>
+                        | elif (<expresion>) <bloque> <sentencia_else>
+                        |
 
 <sentencia_while> ::= while (<expresion>) <bloque>
 
@@ -165,7 +172,7 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 | INPUT        | "input" | 265 | |
 | OUTPUT       | "output" | 266 | |
 | RETURN     | "return" | 268 | |
-| OPUNARIO   | "//" \| "not" \| "-" \| "++" \| "--" \| "get_back"  \| "get_front"  \| "pop_back"  \| "pop_front" | 270 | 0: !, 1: #, 2: ?,3: +, 4: -, |
+| OPUNARIO   | "//" \| "not" \| "-" \| "++" \| "--" \| "get_back"  \| "get_front"  \| "pop_back"  \| "pop_front" | 270 | 0: //, 1: not, 2: -, 3: ++, 4: --, 5: get_back, 6: get_front, 7: pop_back, 8: pop_front|
 | OPBINARIO      | "+" \| "-" \| "*" \| "/" \| "%" \| "^" \| "==" \| "!=" \| ">" \| ">=" \| "<" \| "<=" \| "and" \| "or" \| "xor" \| "push_back" \| "push_front" | 269 | 0: +, 1: -, 2: *, 3: /, 4: %, 5: ^, 6: ==, 7: !=, 8: >, 9: >=, 10: <, 11: <=, 12: and, 13: or, 14: xor,15: push_back, 16: push_front | 
 | CONSTANTE      | ([0-9]+) \| ([0-9]\.[0-9]) \| ("true" \| "false") \| \'[^\']\' \|  | 270 | 0: int, 1: float, 2: bool, 3: char |
 | ASIGN      | "=" | 271 | |
