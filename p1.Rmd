@@ -1,33 +1,43 @@
-# Diseño del lenguaje
+---
+title: "Práctica 1: Diseño del lenguaje"
+description: "Procesadores de Lenguajes"
+date: "Curso 2021/2022"
+author:
+ - "Alejandro Borrego Megías"
+ - "Blanca Cano Camarero"
+ - "José Luis Ruiz Benito"
+output: pdf_document
+---
+
 El lenguaje que describimos a continuación **(BBAAC)** está basado en la sintaxis de **C**, con palabras reservadas en **inglés**, a cuyos tipos de datos primitivos añadimos la estructura **lista**, los subprogramas son **funciones** y además de las estructuras de control básicas incluimos la estructura **repeat-until**
 
 
-```BNF
+## Descripción de la sintaxis en BNF
+
+```
 <Programa>  ::= <Cabecera_programa> <bloque>
 
-<bloque>    ::= {
+<bloque>    ::= <Inicio_de_bloque>
                 <Declar_de_variables_locales>
                 <Declar_de_subprogs>
                 <Sentencias>
-                }
+                <Fin_de_bloque>
 
 <Declar_de_subprogs> ::= <Declar_de_subprogs> <Declar_subprog> |
 
 <Declar_subprog> ::= <Cabecera_subprograma> <bloque>
 
-<Declar_de_variables_locales> ::=   var {
+<Declar_de_variables_locales> ::=   var
+                                    <Inicio_de_bloque>
                                     <Variables_locales>
-                                    }
+                                    <Fin_de_bloque>
                                     |
 
 <Cabecera_programa> ::= main (<parametros>)
 <parametros> ::= <variables> 
 
-ESTO YA ESTÁ HECHO:
-<Inicio_de_bloque> ::= En C: {
-En Pascal: begin
-<Fin_de_bloque> ::= En C: }
-En Pascal: end
+<Inicio_de_bloque> ::= {
+<Fin_de_bloque> ::= }
 
 <Variables_locales> ::= <Variables_locales> <Cuerpo_declar_variables>
                         | <Cuerpo_declar_variables>
@@ -89,10 +99,10 @@ En Pascal: end
                 | -
                 | ++
                 | --
-                | get_back                          # Último elemento de una lista
-                | get_front                         # Primer elemento de una lista
-                | pop_back                          # Elimina último elemento de una lista
-                | pop_front                         # Elimina primer elemento de una lista
+                | get_back      # Último elemento de una lista
+                | get_front     # Primer elemento de una lista
+                | pop_back      # Elimina último elemento de una lista
+                | pop_front     # Elimina primer elemento de una lista
 
 <op_binario> ::=  +
                 | -
@@ -109,8 +119,8 @@ En Pascal: end
                 | and
                 | or
                 | xor
-                | push_back                         # Inserta elemento al final de la lista
-                | push_front                        # Inserta elemento al principio de la lista
+                | push_back     # Inserta elemento al final de la lista
+                | push_front    # Inserta elemento al principio de la lista
 
 <constante> ::=   <entero>
                 | <flotante>
@@ -143,11 +153,11 @@ En Pascal: end
 ## Tabla de tokens
 
 | Nombre del token | Expresión regular | Código del token | Atributos |
-|------------------|-------------------------------------------------|------------------|---------------------------------------------------------|
+|---|---|-|---|
 | INICIOBLOQUE  | "{" | 257 | |
 | FINBLOQUE  | "}" | 258 | |
 | VAR      | "var" | 259 | |
-| PRIMITIVO | "int" \| "float" \| "char" \| "bool" \| "string" | 260 | 0: int 1: float 2: char 3: bool 4: string|
+| PRIMITIVO | "int" \| "float" \| "char" \| "bool" \| "string" | 260 | 0: int, 1: float, 2: char, 3: bool, 4: string|
 | ID         | [a-z\|A-Z][a-z\|A-Z\|0-9\|_]* | 261 | |
 | PARIZQ     | "(" | 262 | |
 | PARDER     | ")" | 263 | |
@@ -155,9 +165,9 @@ En Pascal: end
 | INPUT        | "input" | 265 | |
 | OUTPUT       | "output" | 266 | |
 | RETURN     | "return" | 268 | |
-| OPUNARIO   | "//" \| "not" \| "-" \| "++" \| "--" \| "get_back"  \| "get_front"  \| "pop_back"  \| "pop_front" | 270 | 0: ! 1: # 2: ? 3: + 4: - | TODO
-| OPBINARIO      | "+" \| "-" \| "*" \| "/" \| "%" \| "^" \| "==" \| "!=" \| ">" \| ">=" \| "<" \| "<=" \| "and" \| "or" \| "xor" \| "push_back" \| "push_front" | 269 | 0: + 1: - 2: * 3: / 4: % 5: ^ 6: == 7: != 8: > 9: >= 10: < 11: <= 12: and 13:or 14:xor 15:push_back 16:push_front | 
-| CONSTANTE      | ([0-9]+) \| ([0-9]\.[0-9]) \| ("true" \| "false") \| \'[^\']\' \|  | 270 | 0: int 1: float 2: bool 3: char |
+| OPUNARIO   | "//" \| "not" \| "-" \| "++" \| "--" \| "get_back"  \| "get_front"  \| "pop_back"  \| "pop_front" | 270 | 0: !, 1: #, 2: ?,3: +, 4: -, |
+| OPBINARIO      | "+" \| "-" \| "*" \| "/" \| "%" \| "^" \| "==" \| "!=" \| ">" \| ">=" \| "<" \| "<=" \| "and" \| "or" \| "xor" \| "push_back" \| "push_front" | 269 | 0: +, 1: -, 2: *, 3: /, 4: %, 5: ^, 6: ==, 7: !=, 8: >, 9: >=, 10: <, 11: <=, 12: and, 13: or, 14: xor,15: push_back, 16: push_front | 
+| CONSTANTE      | ([0-9]+) \| ([0-9]\.[0-9]) \| ("true" \| "false") \| \'[^\']\' \|  | 270 | 0: int, 1: float, 2: bool, 3: char |
 | ASIGN      | "=" | 271 | |
 | COMA       | "," | 272 | |
 | MAIN       | "main" | 273 | |
