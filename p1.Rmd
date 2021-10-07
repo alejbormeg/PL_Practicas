@@ -34,7 +34,7 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
                                     |
 
 <Cabecera_programa> ::= main (<parametros>)
-<parametros> ::= <variables> 
+<parametros> ::= <parametros>, <tipo> <identificador> | <tipo> <identificador>
 
 <Inicio_de_bloque> ::= {
 <Fin_de_bloque> ::= }
@@ -45,9 +45,8 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 
 <Cuerpo_declar_variables> ::= <tipo> <variables> ;
 
-<tipo> ::= <primitivo> | <estructura>
-<primitivo> ::= bool | char | float | int | string
-<estructura> ::= list of <primitivo>
+<tipo> ::= <primitivo> | list of <primitivo>
+<primitivo> ::= bool | char | float | int
 
 <variables> ::= <identificador>, <variables> | <identificador>
 <identificador> ::= <letra> | <letra> <letra_o_digito>
@@ -62,54 +61,62 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 
 
 <Cabecera_subprog> ::=  <tipo> <identificador> (<parametros>)
-                        | void <identificador> (<parametros>)
 
 <Sentencias> ::= <Sentencias> <Sentencia> | <Sentencia>
 
 <Sentencia> ::=   <bloque>
                 | <sentencia_asignacion>
-                | <sentencia_if>
+                | <sentencia_if> 
                 | <sentencia_while>
                 | <sentencia_entrada>
                 | <sentencia_salida>
                 | <sentencia_return>
                 | <sentencia_repeat_until>
+                | <sentencia_lista>
 
 
-<sentencia_asignacion> ::= <identificador> = <expresion>
+<sentencia_asignacion> ::= <identificador> = <expresion> ;
 
-<sentencia_if> ::= if (<expresion>) <bloque> <sentencia_else>
-<sentencia_else> ::=    else <bloque>
-                        | elif (<expresion>) <bloque>
-                        | elif (<expresion>) <bloque> <sentencia_else>
+<sentencia_if> ::= if (<expresion>) <Sentencia> <sentencia_else>
+<sentencia_else> ::=    else <Sentencia>
+                        | elif (<expresion>) <Sentencia>
+                        | elif (<expresion>) <Sentencia> <sentencia_else>
                         |
 
-<sentencia_while> ::= while (<expresion>) <bloque>
+<sentencia_while> ::= while (<expresion>) <Sentencia>
 
-<sentencia_entrada> ::= input(<id>) ;
+<sentencia_entrada> ::= input <lista_id> ;
+<lista_id> ::= <lista_id>, <identificador> | <identificador>
 
-<sentencia_salida> ::= output(<expresion>) ;
+<sentencia_salida> ::= output <lista_expresion_cadena> ;
+<lista_expresion_cadena> ::=    <lista_expresion_cadena>, <expresion_cadena>
+                                | <expresion_cadena>
+<expresion_cadena> ::= <expresion> | <cadena>
 
 <sentencia_return> :: return <expresion> ;
 
-<sentencia_repeat_until> ::= repeat <bloque> until (<expresion>) ;
+<sentencia_repeat_until> ::= repeat <Sentencia> until (<expresion>) ;
+
+<sentencia_lista> ::= <expresion> >> 
+                      | <expresion> <<
+                      | $ <expresion>
 
 <expresion> ::= ( <expresion> )
                 | <op_unario> <expresion>
                 | <expresion> <op_binario> <expresion>
+                | <expresion> ++ <expresion> @ <expresion>
                 | <identificador>
                 | <constante>
                 | <funcion>
 
 <op_unario> ::= | //
                 | not
+                | +
                 | -
                 | ++
                 | --
-                | get_back      # Último elemento de una lista
-                | get_front     # Primer elemento de una lista
-                | pop_back      # Elimina último elemento de una lista
-                | pop_front     # Elimina primer elemento de una lista
+                | #
+                | ?
 
 <op_binario> ::=  +
                 | -
@@ -126,15 +133,15 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
                 | and
                 | or
                 | xor
-                | push_back     # Inserta elemento al final de la lista
-                | push_front    # Inserta elemento al principio de la lista
+                | @
+                | --
+                | **
 
 <constante> ::=   <entero>
                 | <flotante>
                 | <booleano>
                 | <caracter>
-                | <literal_lista>
-                | <cadena>
+                | <lista>
 
 <entero> ::= <digito> <entero>
             | <digito>
@@ -164,7 +171,7 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 | INICIOBLOQUE  | "{" | 257 | |
 | FINBLOQUE  | "}" | 258 | |
 | VAR      | "var" | 259 | |
-| PRIMITIVO | "int" \| "float" \| "char" \| "bool" \| "string" | 260 | 0: int, 1: float, 2: char, 3: bool, 4: string|
+| PRIMITIVO | "int" \| "float" \| "char" \| "bool" | 260 | 0: int, 1: float, 2: char, 3: bool|
 | ID         | [a-z\|A-Z][a-z\|A-Z\|0-9\|_]* | 261 | |
 | PARIZQ     | "(" | 262 | |
 | PARDER     | ")" | 263 | |
@@ -172,16 +179,22 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 | INPUT        | "input" | 265 | |
 | OUTPUT       | "output" | 266 | |
 | RETURN     | "return" | 268 | |
-| OPUNARIO   | "//" \| "not" \| "-" \| "++" \| "--" \| "get_back"  \| "get_front"  \| "pop_back"  \| "pop_front" | 270 | 0: //, 1: not, 2: -, 3: ++, 4: --, 5: get_back, 6: get_front, 7: pop_back, 8: pop_front|
-| OPBINARIO      | "+" \| "-" \| "*" \| "/" \| "%" \| "^" \| "==" \| "!=" \| ">" \| ">=" \| "<" \| "<=" \| "and" \| "or" \| "xor" \| "push_back" \| "push_front" | 269 | 0: +, 1: -, 2: *, 3: /, 4: %, 5: ^, 6: ==, 7: !=, 8: >, 9: >=, 10: <, 11: <=, 12: and, 13: or, 14: xor,15: push_back, 16: push_front | 
-| CONSTANTE      | ([0-9]+) \| ([0-9]\.[0-9]) \| ("true" \| "false") \| \'[^\']\' \|  | 270 | 0: int, 1: float, 2: bool, 3: char |
-| ASIGN      | "=" | 271 | |
-| COMA       | "," | 272 | |
-| MAIN       | "main" | 273 | |
-| REPEAT         | "repeat" | 274 | |
-| UNTIL      | "until" | 275 | |
-| IF         | "if" | 276 | |
-| WHILE      | "while" | 277 | |
-| ELSE       | "else" | 278 | |
-| CORCHETEIZQ     | "[" | 279 | |
-| CORCHETEDER     | "]" | 280 | |
+| OPUNARIO   | "//" \| "not" \| "-" \| "$" \| | 269 | 0: //, 1: not, 2: -, 3: "$"   
+| OPUNARIOBINARIO | "--" | 270  |   
+| OPER++ | "++" |  271 |  |     
+| OPERLISTA | "<<" \| ">>" |   272 |   
+| ARROBA | "@" | 273 |  
+| OPBINARIO      | "+" \| "-" \| "*" \| "/" \| "%" \| "^" \| "==" \| "!=" \| ">" \| ">=" \| "<" \| "<=" \| "and" \| "or" \| "xor" \|  | 274 | 0: +, 1: -, 2: *, 3: /, 4: %, 5: ^, 6: ==, 7: !=, 8: >, 9: >=, 10: <, 11: <=, 12: and, 13: or, 14: xor| 
+| CONSTANTE      | ([0-9]+) \| ([0-9]\.[0-9]) \| ("true" \| "false")  | 270 | 0: int, 1: float, 2: bool, 3: char |
+| ASIGN      | "=" | 274 | |
+| COMA       | "," | 275 | |
+| MAIN       | "main" | 276 | |
+| REPEAT         | "repeat" | 277 | |
+| UNTIL      | "until" | 278 | |
+| IF         | "if" | 279 | |
+| WHILE      | "while" | 280 | |
+| ELSE       | "else" | 281 | |
+| CORCHETEIZQ     | "[" | 282 | |
+| CORCHETEDER     | "]" | 283 | |
+| CADENA | "[\']*" | 284 |  |  
+| ELIF | "elif" | 285 | |    
