@@ -180,7 +180,7 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 | OUTPUT       | "output" | 266 | |
 | RETURN     | "return" | 268 | |
 | OPUNARIO   | "//" \| "not" \| "-" \| "$" \| | 269 | 0: //, 1: not, 2: -, 3: "$"   
-| OPUNARIOBINARIO | "--" | 270  |   
+| OPUNARIOBINARIO | "- -" | 270  |   
 | OPER++ | "++" |  271 |  |     
 | OPERLISTA | "<<" \| ">>" |   272 |   
 | ARROBA | "@" | 273 |  
