@@ -30,3 +30,4 @@
 #define CORCHETEDER      	284
 #define CADENA      		285
 #define ELIF       		286
+#define ESTRUCTURA		287
