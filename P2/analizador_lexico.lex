@@ -12,11 +12,9 @@
 "("                                     { return PARIZQ; }
 ")"                                     { return PARDER; }
 ";"                                     { return PYC; }
-","                                                                                  { return COMA; }
-"="                                                                                  { return ASIGN; }
+","                                     { return COMA; }
+"="                                     { return ASIGN; }
 "@"                                       { return ARROBA; }
-"$"                                                                                          { return DOLLAR; }
-"++"                                                                                         { return MASMAS; }
 "input"                                   { return INPUT; }
 "output"                                  { return OUTPUT; }
 "return"                                  { return RETURN; }
@@ -25,32 +23,30 @@
 "repeat"                                  { return REPEAT; }
 "until"                                   { return UNTIL; }
 "int"|"float"|"char"|"bool"               { return PRIMITIVO; }
-"list of"                                 { return ESTRUCTURA }
+"list of"                                 { return ESTRUCTURA; }
 "if"                                      { return IF; }
 "while"                                   { return WHILE; }
 "else"                                    { return ELSE; }
-                                                                                    { return BINYUN; }
-"<<"|">>"                                                                                    { return SHIFT; }
-"*"|"/"|"%"|"^"|"=="|"!="|"and"|"or"| "xor"|"<"|">"|"<="|">="|"&"|"|"|"^" | "+"|"-"                  
-"--"     { return OPUNARIOBINARIO; }
-"++" {return OPERMASMAS; }
-"<<" | ">>" {return OPERLISTA;}
-"//" | "not"|"-" | "$"                                                                { return OPUNARIO; }
+"*"|"/"|"%"|"^"|"=="|"**"|"!="|"and"|"or"|"xor"|"<"|">"|"<="|">="|"+"|"-"    {return OPBINARIO;}                
+"--"                                    { return OPUNARIOBINARIO; }
+"++"                                    { return OPERMASMAS; }
+"<<" | ">>"                             {return OPERLISTA;}
+"//" | "not"|"-" | "$"                  { return OPUNARIO; }
 \"[^\"]*\"                                 { return CADENA; }
-([0-9]+)|([0-9]*\.[0-9]*)|"true"|"false"|\'[^\']\'                              { return CONST; }
+([0-9]+)|([0-9]*\.[0-9]*)|"true"|"false"|\'[^\']\'                              { return CONSTANTE; }
 [a-z|A-Z][a-z|A-Z|0-9|_]*                                                            { return ID; }
-[ \t\n]                                                                                      { ; }
-<*>.|\n                                                                                      { printf("Error en la línea %d. Lexema %s no reconocible.\n", yylineno, yytext); }
-
+<*>.|\n                            { printf("Error en la línea %d. Lexema %s no reconocible.\n", yylineno, yytext); }
 %%
-main (){
-	int val;
-	val = yylex();
+    int main (){
+    int val;
+    val = yylex();
 
-	while (val != 0){
-		printf("%d\n", val);
-		val = yylex();
-	}
+    while (val != 0){
+      printf("%d\n", val);
+      val = yylex();
+    }
 
-	exit(0);
+    exit(0);
 }
+
+
