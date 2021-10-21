@@ -33,8 +33,7 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
                                     <Fin_de_bloque>
                                     |
 
-<Cabecera_programa> ::= main (<parametros>)
-<parametros> ::= <parametros>, <tipo> <identificador> | <tipo> <identificador>
+<Cabecera_programa> ::= main ()
 
 <Inicio_de_bloque> ::= {
 <Fin_de_bloque> ::= }
@@ -61,6 +60,7 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 
 
 <Cabecera_subprog> ::=  <tipo> <identificador> (<parametros>)
+<parametros> ::= <parametros>, <tipo> <identificador> | <tipo> <identificador>
 
 <Sentencias> ::= <Sentencias> <Sentencia> | <Sentencia>
 
@@ -79,8 +79,6 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 
 <sentencia_if> ::= if (<expresion>) <Sentencia> <sentencia_else>
 <sentencia_else> ::=    else <Sentencia>
-                        | elif (<expresion>) <Sentencia>
-                        | elif (<expresion>) <Sentencia> <sentencia_else>
                         |
 
 <sentencia_while> ::= while (<expresion>) <Sentencia>
@@ -180,13 +178,13 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 | INPUT        | "input" | 265 | |
 | OUTPUT       | "output" | 266 | |
 | RETURN     | "return" | 267 | |
-| OPUNARIO   | "//" \| "not" \| "-" \| "$" \| | 268 | 0: //, 1: not, 2: -, 3: "$"   
-| OPUNARIOBINARIO | "- -" | 269  |   
-| OPER++ | "++" |  270 |  |     
+| OPUNARIO   | "//" \| "not" \| "-" \| "\$" \| | 268 | 0: //, 1: not, 2: -, 3: "\$"   
+| OPUNARIOBINARIO | "\-\-" | 269  |   
+| OPERMASMAS | "++" |  270 |  |     
 | OPERLISTA | "<<" \| ">>" |   271 |   
 | ARROBA | "@" | 272 |  
-| OPBINARIO      | "+" \| "-" \| "*" \| "/" \| "%" \| "^" \| "==" \| "!=" \| ">" \| ">=" \| "<" \| "<=" \| "and" \| "or" \| "xor" \| "--" \| "**" | 273 | 0: +, 1: -, 2: *, 3: /, 4: %, 5: ^, 6: ==, 7: !=, 8: >, 9: >=, 10: <, 11: <=, 12: and, 13: or, 14: xor, 15: ** , 16: --   
-| CONSTANTE      | ([0-9]+) \| ([0-9]\.[0-9]) \| ("true" \| "false")  | 274 | 0: int, 1: float, 2: bool, 3: char |
+| OPBINARIO      | "+" \| "-" \| "*" \| "/" \| "%" \| "^" \| "==" \| "!=" \| ">" \| ">=" \| "<" \| "<=" \| "and" \| "or" \| "xor" \| "**" | 273 | 0: +, 1: -, 2: *, 3: /, 4: %, 5: ^, 6: ==, 7: !=, 8: >, 9: >=, 10: <, 11: <=, 12: and, 13: or, 14: xor, 15: **   
+| CONSTANTE      | ([0-9]+) \| ([0-9]\.[0-9]) \| ("true" \| "false") \| `\'[^\']\'` | 274 | 0: int, 1: float, 2: bool, 3: char |
 | ASIGN      | "=" | 275 | |
 | COMA       | "," | 276 | |
 | MAIN       | "main" | 277 | |
@@ -197,6 +195,5 @@ El lenguaje que describimos a continuación **(BBAAC)** está basado en la sinta
 | ELSE       | "else" | 282 | |
 | CORCHETEIZQ     | "[" | 283 | |
 | CORCHETEDER     | "]" | 284 | |
-| CADENA | "[\']*" | 285|  |  
-| ELIF | "elif" | 286 | | 
-| ESTRUCTURA | "list of"| 287 | |   
+| CADENA | `\"[^\"]*\"` | 285|  |  
+| ESTRUCTURA | "list of"| 286 | |   
