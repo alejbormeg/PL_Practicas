@@ -15,7 +15,7 @@ int acarrero = 1;
 ","                                     { return COMA; }
 "="                                     { return ASIGN; }
 "@"                                       { return ARROBA; }
-"input"                                   { return INPUT; }
+"input "                                   { return INPUT; }
 "output"                                  { return OUTPUT; }
 "return"                                  { return RETURN; }
 "var"                                     { return VAR; }
@@ -27,11 +27,12 @@ int acarrero = 1;
 "if"                                      { return IF; }
 "while"                                   { return WHILE; }
 "else"                                    { return ELSE; }
-"*"|"/"|"%"|"^"|"=="|"**"|"!="|"and"|"or"|"xor"|"<"|">"|"<="|">="|"+"|"-"    {return OPBINARIO;}                
+"<<"|">>"                             {return OPERLISTA;}
+"*"|"/"|"%"|"^"|"=="|"**"|"!="|"and"|"or"|"xor"|"<"|">"|"<="|">="  {return OPBINARIO;}
 "--"                                    { return OPUNARIOBINARIO; }
 "++"                                    { return OPERMASMAS; }
-"<<" | ">>"                             {return OPERLISTA;}
-"//" | "not"|"-" | "$"                  { return OPUNARIO; }
+"+"|"-"                                {return MASMENOS;}
+"//" | "not" | "$"                       { return OPUNARIO; }
 \"[^\"]*\"                                 { return CADENA; }
 ([0-9]+)|([0-9]*\.[0-9]*)|"true"|"false"|\'[^\']\'                              { return CONSTANTE; }
 [a-z|A-Z][a-z|A-Z|0-9|_]*                                                            { return ID; }

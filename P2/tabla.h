@@ -29,4 +29,6 @@
 #define CORCHETEIZQ     	283 
 #define CORCHETEDER      	284 
 #define CADENA      		285 
-#define ESTRUCTURA              286 
+#define ESTRUCTURA              286
+#define MASMENOS                287
+
