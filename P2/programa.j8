@@ -1,1 +1,2 @@
-main 
+maincillo(){ var {int numero1; int numero2; int suma;} numero1 = 3;
+numero2 = 8; suma = numero1 + numero2; output suma; } ?

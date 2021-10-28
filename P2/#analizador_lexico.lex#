@@ -15,7 +15,7 @@ int acarrero = 1;
 ","                                     { return COMA; }
 "="                                     { return ASIGN; }
 "@"                                       { return ARROBA; }
-"input"                                   { return INPUT; }
+"input "                                   { return INPUT; }
 "output"                                  { return OUTPUT; }
 "return"                                  { return RETURN; }
 "var"                                     { return VAR; }
