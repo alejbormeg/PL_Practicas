@@ -1,0 +1,17 @@
+main(){
+var {
+    int ve;
+    float vf;
+    char vc;
+    bool vl; 
+    list of int pe, pe2;
+    list of float pf, pf2;
+    list of char pc, pc2;
+    list of bool pl; 
+}
+numero1 = 3;
+numero2 = 8;
+suma = numero1 - numero2;
+suma = numero1 + numero2;
+output suma;
+}

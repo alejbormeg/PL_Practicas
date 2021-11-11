@@ -1,0 +1,81 @@
+main(){
+  var {
+    int ve;
+    float vf;
+    char vc;
+    bool vl; 
+    list of int pe, pe2;
+    list of float pf, pf2;
+    list of char pc, pc2;
+    list of bool pl; 
+  }
+
+  int funcionA (int a1, float a2, char a3)
+  {
+    var { int x1, x2; }
+    char funcionB(char b1, bool b2)
+    {
+      var { float xf, x2;}
+      float funcionC(bool c1, int c2)
+      {
+	float funcionC(bool c1, int c2)
+	{
+	  var {float x1;}
+	}
+	x1 = 1.3;
+	if (c2 > 10)  c2 = c2-1;
+	else x1 = 3.1;
+
+	return x1; 
+
+      }
+      xf = funcionC(true, 10);
+      x2 = xf * (funcionC(false, 1) - funcionC(true, 23))/10.0;
+
+      while (x2 * funcionC(false, 1) - xf < 10.0)
+	x2 = x2*xf; 
+    }
+    float funcionD(float d1)
+    {
+      var {char dato; int valor; }
+      char funcionE (char e1, char e2)
+      {
+	output "Introduzca dos caracteres: ";
+	input e1, e2;
+	if (e1 == 'a')
+	  return e1;
+	else if (e1 == 'b')
+	  return e2; 
+	else 
+	  return ' '; 
+      }
+      output "introduzca un valor entero: ";
+      input valor;
+
+      if (d1>0.0){
+	var {int dato;}
+
+	dato=2;
+	dato=valor*20/dato;
+      } 
+
+      else{
+	valor=valor*100;
+	d1=d1/1000.0
+	  }
+
+      returnd1;
+    }
+
+
+    pe++10@0; // Inserta 10 en la lista pe
+    pf++10.0@0; // Inserta 10.0 en la lista ppf
+    pc++"a"@0; // Inserta a en la lista ppf
+
+    if (e1 == 'a')
+      ve= pe@20 ; // Extrae el elemento de la posicion 20
+    else
+      pe= pe * ve ; // Multiplica pe por ve y lo almacena en pe 
+    pe= pe2 - (pe++(10*1000.0)@20);
+  }
+}

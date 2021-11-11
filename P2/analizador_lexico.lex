@@ -32,7 +32,7 @@ int acarrero = 1;
 "--"                                    { return OPUNARIOBINARIO; }
 "++"                                    { return OPERMASMAS; }
 "+"|"-"                                {return MASMENOS;}
-"//" | "not" | "$"                       { return OPUNARIO; }
+"//"|"not"|"$"|"?"               { return OPUNARIO; }
 \"[^\"]*\"                                 { return CADENA; }
 ([0-9]+)|([0-9]*\.[0-9]*)|"true"|"false"|\'[^\']\'                              { return CONSTANTE; }
 [a-z|A-Z][a-z|A-Z|0-9|_]*                                                            { return ID; }
