@@ -22,17 +22,38 @@ int acarrero = 1;
 "main"                                    { return MAIN; }
 "repeat"                                  { return REPEAT; }
 "until"                                   { return UNTIL; }
-"int"|"float"|"char"|"bool"               { return PRIMITIVO; }
+"int"               { return PRIMITIVO; }
+"float"            { return PRIMITIVO; }
+"char"             { return PRIMITIVO; }
+"bool"               { return PRIMITIVO; }
 "list of"                                 { return ESTRUCTURA; }
 "if"                                      { return IF; }
 "while"                                   { return WHILE; }
 "else"                                    { return ELSE; }
-"<<"|">>"                             {return OPERLISTA;}
-"*"|"/"|"%"|"^"|"=="|"**"|"!="|"and"|"or"|"xor"|"<"|">"|"<="|">="  {return OPBINARIO;}
+">>"                             {return OPERLISTA;}
+"<<"                            {return OPERLISTA;}
+"*"   {return OPBINARIO;}
+"/"  {return OPBINARIO;}
+"%"  {return OPBINARIO;}
+"^" {return OPBINARIO;}
+"=="  {return OPBINARIO;}
+"**" {return OPBINARIO;}
+"!="  {return OPBINARIO;}
+"and" {return OPBINARIO;}
+"or" {return OPBINARIO;}
+"xor" {return OPBINARIO;}
+"<"  {return OPBINARIO;}
+">"  {return OPBINARIO;}
+"<=" {return OPBINARIO;}
+">="  {return OPBINARIO;}
 "--"                                    { return OPUNARIOBINARIO; }
 "++"                                    { return OPERMASMAS; }
-"+"|"-"                                {return MASMENOS;}
-"//"|"not"|"$"|"?"               { return OPUNARIO; }
+"+"                               {return MASMENOS;}
+"-"                                {return MASMENOS;}
+"//"             { return OPUNARIO; }
+"not"            { return OPUNARIO; }
+"$"              { return OPUNARIO; }
+"?"               { return OPUNARIO; }
 \"[^\"]*\"                                 { return CADENA; }
 ([0-9]+)|([0-9]*\.[0-9]*)|"true"|"false"|\'[^\']\'                              { return CONSTANTE; }
 [a-z|A-Z][a-z|A-Z|0-9|_]*                                                            { return ID; }
