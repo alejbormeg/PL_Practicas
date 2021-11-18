@@ -27,39 +27,37 @@ void yyerror( const char * msg );
 %token ASIGN
 %token PARDER PARIZQ
 %token OPUNARIO
+%token ESTRUCTURA
 %token ID
 
 /* Ternario */
-%right MASMAS AT
+%right OPERMASMAS ARROBA
 
-/* Or log */
-%left ORLOG
 
-/* And log */
-%left ANDLOG
+/* Binario */
+%left OPBINARIO 
 
-/* Igual */
-%left EQN
-
-/* Rel */
-%left REL
-
-/* Op bin lista */
-%left PORPOR BORRLIST
 
 /* Sum rest */
-%left ADDSUB
+%left MASMENOS
 
-/* Mult div */
-%left MULDIV
 
 /* Unarios */
 %precedence INTHASH EXCL
+%right OPUNARIOBINARIO
+
+
 %%
 
-programa : MAIN bloque ;
+programa : MAIN PARIZQ PARDER bloque ;
 
 bloque : INICIOBLOQUE declar_de_variables_locales declar_de_subprogs sentencias FINBLOQUE ;
+
+
+declar_de_subprogs : declar_de_subprogs declar_subprog
+                   | %empty ;
+
+declar_subprog : cabecera_subprog bloque ;
 
 declar_de_variables_locales : VAR INICIOBLOQUE variables_locales FINBLOQUE
                             | %empty ;
@@ -67,30 +65,25 @@ declar_de_variables_locales : VAR INICIOBLOQUE variables_locales FINBLOQUE
 variables_locales : variables_locales cuerpo_declar_variables
                   | cuerpo_declar_variables ;
 
-cuerpo_declar_variables : TIPO lista_variables PYC
+cuerpo_declar_variables : tipo lista_variables PYC
                         | error ;
+tipo : PRIMITIVO
+| ESTRUCTURA ;
 
 lista_variables : ID COMA lista_variables
                 | ID ;
 
+cabecera_subprog : TIPO ID PARIZQ parametros PARDER ;
+
+
 lista_expresiones : lista_expresiones COMA expresion
                   | expresion ;
 
-declar_de_subprogs : declar_de_subprogs declar_subprog
-                   | %empty ;
 
-declar_subprog : cabecera_subprog bloque ;
+parametros : parametros COMA tipo ID
+           | tipo ID ;
 
-cabecera_subprog : TIPO ID PARIZQ cabecera_argumentos PARDER ;
 
-cabecera_argumentos : parametros
-                    | %empty
-                    | error ;
-
-parametros : parametros COMA parametro
-           | parametro ;
-
-parametro : TIPO ID ;
 
 sentencias : sentencias sentencia
            | %empty ;
@@ -128,7 +121,7 @@ lista_expresiones_o_cadena : lista_expresiones_o_cadena COMA expresion_cadena
 expresion_cadena : expresion
                  | CADENA ;
 
-sentencia_do_until : REPEAT sentencia UNTIL PARIZQ expresion PARDER PYC ;
+sentencia_do_until : REPEARROBA sentencia UNTIL PARIZQ expresion PARDER PYC ;
 
 sentencia_return : RETURN expresion PYC ;
 
@@ -136,7 +129,7 @@ expresion : PARIZQ expresion PARDER
           | ADDSUB expresion %prec EXCL
           | EXCL expresion
           | INTHASH expresion
-          | expresion AT expresion
+          | expresion ARROBA expresion
           | expresion ANDLOG expresion
           | expresion ORLOG expresion
           | expresion EQN expresion
@@ -145,7 +138,7 @@ expresion : PARIZQ expresion PARDER
           | expresion PORPOR expresion
           | expresion BORRLIST expresion
           | expresion REL expresion
-          | expresion MASMAS expresion AT expresion
+          | expresion OPERMASMAS expresion ARROBA expresion
           | llamada_funcion
           | ID
           | constante
