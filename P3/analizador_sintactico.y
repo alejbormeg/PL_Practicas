@@ -67,8 +67,8 @@ variables_locales : variables_locales cuerpo_declar_variables
 
 cuerpo_declar_variables : tipo lista_variables PYC
                         | error ;
-tipo : PRIMITIVO
-| ESTRUCTURA ;
+tipo  : PRIMITIVO
+      | ESTRUCTURA ;
 
 lista_variables : ID COMA lista_variables
                 | ID ;
@@ -90,69 +90,51 @@ sentencias : sentencias sentencia
 
 sentencia : bloque
           | sentencia_asignacion 
-          | sentencia_if <-
+          | sentencia_if
           | sentencia_while
           | sentencia_entrada
           | sentencia_salida
-          | sentencia_do_until
-          | sentencia_return 
+          | sentencia_return
+          | sentencia_repeat_until
           | sentencia_lista ;
 
 sentencia_asignacion : ID ASIGN expresion PYC ;
 
-sentencia_lista : expresion OPERLISTA PYC
-                | OPUNARIO expresion PYC ;
-
 sentencia_if : IF PARIZQ expresion PARDER sentencia sentencia_else ;
 
-bloque_else : ELSE sentencia
-            | %empty ;
+sentencia_else  : ELSE sentencia
+                | %empty ;
 
 sentencia_while : WHILE PARIZQ expresion PARDER sentencia ;
 
-sentencia_entrada : INPUT lista_variables PYC ;
+sentencia_entrada : INPUT lista_id PYC ;
+lista_id  : lista_id COMA identificador
+          | identificador ;
 
-sentencia_salida : OUTPUT lista_expresiones_o_cadena PYC ;
+sentencia_salida : OUTPUT lista_expresion_cadena PYC ;
 
-lista_expresiones_o_cadena : lista_expresiones_o_cadena COMA expresion_cadena
-                           | expresion_cadena ;
+lista_expresion_cadena  : lista_expresion_cadena COMA expresion_cadena
+                        | expresion_cadena ;
 
 expresion_cadena : expresion
                  | CADENA ;
 
-sentencia_do_until : REPEARROBA sentencia UNTIL PARIZQ expresion PARDER PYC ;
-
 sentencia_return : RETURN expresion PYC ;
 
+sentencia_repeat_until  : REPEAT sentencia UNTIL PARIZQ expresion PARDER PYC ;
+
+sentencia_lista : expresion OPERLISTA
+                | OPUNARIO expresion ;
+
 expresion : PARIZQ expresion PARDER
-          | ADDSUB expresion %prec EXCL
-          | EXCL expresion
-          | INTHASH expresion
-          | expresion ARROBA expresion
-          | expresion ANDLOG expresion
-          | expresion ORLOG expresion
-          | expresion EQN expresion
-          | expresion ADDSUB expresion
-          | expresion MULDIV expresion
-          | expresion PORPOR expresion
-          | expresion BORRLIST expresion
-          | expresion REL expresion
-          | expresion OPERMASMAS expresion ARROBA expresion
-          | llamada_funcion
+          | OPUNARIO expresion
+          | expresion OPBINARIO expresion
+          | expresion OPMASMAS expresion ARROBA expresion
           | ID
-          | constante
-          | error ;
+          | CONSTANTE
+          | funcion ;
 
-llamada_funcion : ID PARIZQ argumentos PARDER ;
-
-argumentos : lista_expresiones
-           | %empty ;
-
-constante : CONSTANTE
-          | lista ;
-
-lista : CORCHETEIZQ lista_expresiones CORCHETEDER
-      | CORCHETEIZQ CORCHETEDER ;
+funcion : ID PARIZQ lista_expresiones PARDER
 
 %%
 
