@@ -89,22 +89,21 @@ sentencias : sentencias sentencia
            | %empty ;
 
 sentencia : bloque
-          | expresion PYC
-          | sentencia_asignacion
-          | sentencia_lista
-          | sentencia_if
+          | sentencia_asignacion 
+          | sentencia_if <-
           | sentencia_while
           | sentencia_entrada
           | sentencia_salida
           | sentencia_do_until
-          | sentencia_return ;
+          | sentencia_return 
+          | sentencia_lista ;
 
 sentencia_asignacion : ID ASIGN expresion PYC ;
 
 sentencia_lista : expresion OPERLISTA PYC
                 | OPUNARIO expresion PYC ;
 
-sentencia_if : IF PARIZQ expresion PARDER sentencia bloque_else ;
+sentencia_if : IF PARIZQ expresion PARDER sentencia sentencia_else ;
 
 bloque_else : ELSE sentencia
             | %empty ;
