@@ -18,6 +18,6 @@ lex.yy.c: prueba.l
 limpia:
 	rm -f prueba main.o y.tab.o y.tab.c lex.yy.c
 
-todo:
+all:
 	make limpia
 	make prueba
