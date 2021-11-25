@@ -1,6 +1,8 @@
 %option yylineno
+%option noyywrap
 %{
-	#include "tabla.h"
+	//#include "tabla.h"
+	#include "y.tab.h"
 %}
 int acarrero = 1;
 %%
@@ -59,6 +61,7 @@ int acarrero = 1;
 [a-z|A-Z][a-z|A-Z|0-9|_]*                                                            { return ID; }
 <*>.|\n                            { printf("Error en la línea %d. Lexema %s no reconocible.\n", yylineno, yytext); }
 %%
+/*
     int main (){
     int val;
     val = yylex();
@@ -70,5 +73,6 @@ int acarrero = 1;
 
     exit(0);
 }
+*/
 
 

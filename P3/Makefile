@@ -1,23 +1,25 @@
 .SUFFIXES:
 
-prueba: main.o y.tab.o
-	gcc -o prueba main.o y.tab.o
-	
-y.tab.o: y.tab.c
-	gcc -c y.tab.c
-	
-main.o: main.c
-	gcc -c main.c
-	
-y.tab.c: prueba.y lex.yy.c
-	bison -o y.tab.c prueba.y
-	
-lex.yy.c: prueba.l
-	flex prueba.l
+ana8: y.tab.c
+	gcc -w -o ana8 y.tab.c
 
-clean:
-	rm -f prueba main.o y.tab.o y.tab.c lex.yy.c
+y.tab.c: analizador_sintactico.y lex.yy.c
+	#	yacc -d -v -o y.tab.c sintactico.y
+	bison -d -v -o y.tab.c analizador_sintactico.y
 
-all:
-	make clean
-	make prueba
+lex.yy.c: analizador_lexico.lex
+	flex analizador_lexico.lex
+
+limpia:
+	rm ana8 y.tab.c lex.yy.c y.output y.tab.h
+
+todo:
+	make --no-print-directory limpia
+	make --no-print-directory ana8
+
+# Test
+test_ana8: todo
+	./ana8 < ./programa2.j8
+
+test_sintactico: todo
+	./ana8 < ../pruebas/errores_sintacticos.txt

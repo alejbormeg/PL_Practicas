@@ -43,11 +43,10 @@ void yyerror( const char * msg );
 
 
 /* Unarios */
-%precedence INTHASH EXCL
 %right OPUNARIOBINARIO
 %right OPUNARIO
 
-
+%precedence INTHASH EXCL
 %%
 
 programa : MAIN PARIZQ PARDER bloque ;
@@ -69,7 +68,7 @@ variables_locales : variables_locales cuerpo_declar_variables
 cuerpo_declar_variables : tipo lista_variables PYC
                         | error ;
 tipo  : PRIMITIVO
-      | ESTRUCTURA ;
+      | ESTRUCTURA tipo;
 
 lista_variables : ID COMA lista_variables
                 | ID ;
@@ -125,9 +124,10 @@ sentencia_repeat_until  : REPEAT sentencia UNTIL PARIZQ expresion PARDER PYC ;
 sentencia_lista : expresion OPERLISTA
                 | OPUNARIO expresion ;
 
-expresion : PARIZQ expresion PARDER
+expresion : PARIZQ expresion PARDER 
           | OPUNARIO expresion
           | expresion OPBINARIO expresion
+          | expresion MASMENOS expresion
           | expresion OPERMASMAS expresion ARROBA expresion
           | ID
           | CONSTANTE

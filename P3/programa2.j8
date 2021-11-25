@@ -76,10 +76,10 @@ main(){
 
 			else{
 				valor=valor*100;
-				d1=d1/1000.0
+				d1=d1/1000.0;
 			}
 
-			returnd1;
+			return d1;
 		}
 
 
