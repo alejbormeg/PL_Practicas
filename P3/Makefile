@@ -15,9 +15,9 @@ y.tab.c: prueba.y lex.yy.c
 lex.yy.c: prueba.l
 	flex prueba.l
 
-limpia:
+clean:
 	rm -f prueba main.o y.tab.o y.tab.c lex.yy.c
 
 all:
-	make limpia
+	make clean
 	make prueba

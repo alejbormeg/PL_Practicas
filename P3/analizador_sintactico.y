@@ -45,6 +45,7 @@ void yyerror( const char * msg );
 /* Unarios */
 %precedence INTHASH EXCL
 %right OPUNARIOBINARIO
+%right OPUNARIO
 
 
 %%
@@ -73,7 +74,7 @@ tipo  : PRIMITIVO
 lista_variables : ID COMA lista_variables
                 | ID ;
 
-cabecera_subprog : TIPO ID PARIZQ parametros PARDER ;
+cabecera_subprog : tipo ID PARIZQ parametros PARDER ;
 
 
 lista_expresiones : lista_expresiones COMA expresion
@@ -82,8 +83,6 @@ lista_expresiones : lista_expresiones COMA expresion
 
 parametros : parametros COMA tipo ID
            | tipo ID ;
-
-
 
 sentencias : sentencias sentencia
            | %empty ;
@@ -108,8 +107,8 @@ sentencia_else  : ELSE sentencia
 sentencia_while : WHILE PARIZQ expresion PARDER sentencia ;
 
 sentencia_entrada : INPUT lista_id PYC ;
-lista_id  : lista_id COMA identificador
-          | identificador ;
+lista_id  : lista_id COMA ID
+          | ID ;
 
 sentencia_salida : OUTPUT lista_expresion_cadena PYC ;
 
@@ -129,7 +128,7 @@ sentencia_lista : expresion OPERLISTA
 expresion : PARIZQ expresion PARDER
           | OPUNARIO expresion
           | expresion OPBINARIO expresion
-          | expresion OPMASMAS expresion ARROBA expresion
+          | expresion OPERMASMAS expresion ARROBA expresion
           | ID
           | CONSTANTE
           | funcion ;
