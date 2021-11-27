@@ -33,17 +33,35 @@ void yyerror( const char * msg );
 /* Ternario */
 %right OPERMASMAS ARROBA
 
+/* Or */
+%left OR
 
-/* Binario */
-%left OPBINARIO 
+/* And */
+%left AND
 
+/* Rel */
+%left REL
+
+/* Igual desigual */
+%left EQN
 
 /* Sum rest */
 %left MASMENOS
 
+/* Mult div */
+%left MULDIV
+
+/* POR POR */
+%left PORPOR 
+
+/* XOR */
+%left XOR 
+
+/* Binario */
+%left OPBINARIO 
 
 /* Unarios */
-%right OPUNARIOBINARIO
+%right MENOSMENOS
 %right OPUNARIO
 
 %precedence INTHASH EXCL
@@ -127,7 +145,14 @@ sentencia_lista : expresion OPERLISTA
 expresion : PARIZQ expresion PARDER 
           | OPUNARIO expresion
           | expresion OPBINARIO expresion
+          | expresion EQN expresion
           | expresion MASMENOS expresion
+          | expresion MULDIV expresion
+          | expresion AND expresion
+          | expresion XOR expresion
+          | expresion OR expresion
+          | expresion MASMENOS expresion
+          | expresion PORPOR expresion
           | expresion OPERMASMAS expresion ARROBA expresion
           | ID
           | CONSTANTE

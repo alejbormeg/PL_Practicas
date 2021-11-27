@@ -16,49 +16,42 @@ int acarrero = 1;
 ";"                                     { return PYC; }
 ","                                     { return COMA; }
 "="                                     { return ASIGN; }
-"@"                                       { return ARROBA; }
-"input "                                   { return INPUT; }
-"output"                                  { return OUTPUT; }
-"return"                                  { return RETURN; }
-"var"                                     { return VAR; }
-"main"                                    { return MAIN; }
-"repeat"                                  { return REPEAT; }
-"until"                                   { return UNTIL; }
-"int"               { return PRIMITIVO; }
-"float"            { return PRIMITIVO; }
-"char"             { return PRIMITIVO; }
-"bool"               { return PRIMITIVO; }
-"list of"                                 { return ESTRUCTURA; }
-"if"                                      { return IF; }
-"while"                                   { return WHILE; }
-"else"                                    { return ELSE; }
-">>"                             {return OPERLISTA;}
-"<<"                            {return OPERLISTA;}
-"*"   {return OPBINARIO;}
-"/"  {return OPBINARIO;}
-"%"  {return OPBINARIO;}
-"^" {return OPBINARIO;}
-"=="  {return OPBINARIO;}
-"**" {return OPBINARIO;}
-"!="  {return OPBINARIO;}
-"and" {return OPBINARIO;}
-"or" {return OPBINARIO;}
-"xor" {return OPBINARIO;}
-"<"  {return OPBINARIO;}
-">"  {return OPBINARIO;}
-"<=" {return OPBINARIO;}
-">="  {return OPBINARIO;}
-"--"                                    { return OPUNARIOBINARIO; }
+"@"                                     { return ARROBA; }
+"input "                                { return INPUT; }
+"output"                                { return OUTPUT; }
+"return"                                { return RETURN; }
+"var"                                   { return VAR; }
+"main"                                  { return MAIN; }
+"repeat"                                { return REPEAT; }
+"until"                                 { return UNTIL; }
+"int"                                   { return PRIMITIVO; }
+"float"                                 { return PRIMITIVO; }
+"char"                                  { return PRIMITIVO; }
+"bool"                                  { return PRIMITIVO; }
+"list of"                               { return ESTRUCTURA; }
+"if"                                    { return IF; }
+"while"                                 { return WHILE; }
+"else"                                  { return ELSE; }
+">>"|"<<"                               {return OPERLISTA;}
+"+"|"-"                                 {return MASMENOS;}
+"*"|"/"                                 {return MULDIV;}
+"%"                                     {return OPBINARIO;}
+"^"                                     {return OPBINARIO;}
+"=="|"!="                               {return EQN;}
+"**"                                    {return PORPOR;}
+"and"                                   {return AND;}
+"or"                                    {return OR;}
+"xor"                                   {return XOR;}
+"<"|">"|"<="|">="                       {return REL;}
+"--"                                    { return MENOSMENOS; }
 "++"                                    { return OPERMASMAS; }
-"+"                               {return MASMENOS;}
-"-"                                {return MASMENOS;}
-"//"             { return OPUNARIO; }
-"not"            { return OPUNARIO; }
-"$"              { return OPUNARIO; }
-"?"               { return OPUNARIO; }
-\"[^\"]*\"                                 { return CADENA; }
-([0-9]+)|([0-9]*\.[0-9]*)|"true"|"false"|\'[^\']\'                              { return CONSTANTE; }
-[a-z|A-Z][a-z|A-Z|0-9|_]*                                                            { return ID; }
+"//"                                    { return OPUNARIO; }
+"not"                                   { return OPUNARIO; }
+"$"                                     { return OPUNARIO; }
+"?"                                     { return OPUNARIO; }
+\"[^\"]*\"                              { return CADENA; }
+([0-9]+)|([0-9]*\.[0-9]*)|"true"|"false"|\'[^\']\'    { return CONSTANTE; }
+[a-z|A-Z][a-z|A-Z|0-9|_]*                             { return ID; }
 <*>.|\n                            { printf("Error en la línea %d. Lexema %s no reconocible.\n", yylineno, yytext); }
 %%
 /*
