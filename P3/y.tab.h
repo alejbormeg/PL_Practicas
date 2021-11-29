@@ -77,11 +77,20 @@ extern int yydebug;
     ID = 283,
     OPERMASMAS = 284,
     ARROBA = 285,
-    OPBINARIO = 286,
-    MASMENOS = 287,
-    OPUNARIOBINARIO = 288,
-    INTHASH = 289,
-    EXCL = 290
+    ORLOG = 286,
+    ANDLOG = 287,
+    XOR = 288,
+    EQN = 289,
+    REL = 290,
+    PORPOR = 291,
+    PORPOT = 292,
+    MASMENOS = 293,
+    MULDIV = 294,
+    MENOSMENOS = 295,
+    INT = 296,
+    BAR = 297,
+    DOLLAR = 298,
+    NOT = 299
   };
 #endif
 

@@ -33,20 +33,35 @@ void yyerror( const char * msg );
 /* Ternario */
 %right OPERMASMAS ARROBA
 
+/* Or lógico */
+%left ORLOG 
 
-/* Binario */
-%left OPBINARIO 
+/* AND lógico */
+%left ANDLOG 
 
+/* XOR lógico */
+%left XOR 
+
+/* Igual distinto */
+%left EQN
+
+/* Relacional */
+%left REL
+
+%left PORPOR
+
+%left PORPOT
 
 /* Sum rest */
 %left MASMENOS
 
+/* Multiplicación división */
+%left MULDIV
 
-/* Unarios */
-%right OPUNARIOBINARIO
-%right OPUNARIO
+/* Menos menos */
+%right MENOSMENOS
 
-%precedence INTHASH EXCL
+%precedence INT BAR DOLLAR NOT
 %%
 
 programa : MAIN PARIZQ PARDER bloque ;
@@ -122,12 +137,23 @@ sentencia_return : RETURN expresion PYC ;
 sentencia_repeat_until  : REPEAT sentencia UNTIL PARIZQ expresion PARDER PYC ;
 
 sentencia_lista : expresion OPERLISTA
-                | OPUNARIO expresion ;
+                | INT expresion 
+                | DOLLAR expresion ;
 
 expresion : PARIZQ expresion PARDER 
-          | OPUNARIO expresion
-          | expresion OPBINARIO expresion
+          | BAR expresion
+          | NOT expresion
+          | MENOSMENOS expresion
+          | expresion MENOSMENOS expresion
+          | expresion ORLOG expresion
+          | expresion ANDLOG expresion
+          | expresion XOR expresion
+          | expresion REL expresion
           | expresion MASMENOS expresion
+          | expresion PORPOR expresion
+          | expresion PORPOT expresion
+          | expresion MULDIV expresion
+          | expresion EQN expresion
           | expresion OPERMASMAS expresion ARROBA expresion
           | ID
           | CONSTANTE
