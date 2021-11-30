@@ -29,7 +29,6 @@ void yyerror( const char * msg );
 %token OPUNARIO
 %token ESTRUCTURA
 %token ID
-
 /* Ternario */
 %right OPERMASMAS ARROBA
 
@@ -60,6 +59,8 @@ void yyerror( const char * msg );
 
 /* Menos menos */
 %right MENOSMENOS
+
+
 
 %precedence INT BAR DOLLAR NOT
 %%
@@ -136,11 +137,12 @@ sentencia_return : RETURN expresion PYC ;
 
 sentencia_repeat_until  : REPEAT sentencia UNTIL PARIZQ expresion PARDER PYC ;
 
-sentencia_lista : expresion OPERLISTA
-                | INT expresion 
-                | DOLLAR expresion ;
+sentencia_lista : expresion OPERLISTA PYC
+                | INT expresion PYC
+                | DOLLAR expresion PYC;
 
 expresion : PARIZQ expresion PARDER 
+          | MASMENOS expresion %prec NOT
           | BAR expresion
           | NOT expresion
           | MENOSMENOS expresion
@@ -159,7 +161,11 @@ expresion : PARIZQ expresion PARDER
           | CONSTANTE
           | funcion ;
 
-funcion : ID PARIZQ lista_expresiones PARDER
+funcion : ID PARIZQ argumentos PARDER;
+
+argumentos : lista_expresiones
+           | %empty ;
+
 
 %%
 

@@ -4,13 +4,13 @@ main(){
 		float vf;
 		char vc;
 		bool vl; 
-		list of int pe, pe2, pe3;
-		list of float pf, pf2;
+		list of int pe, pe2 pe3
+		list of float pf pf2;
 		list of char pc, pc2;
 		list of bool pl; 
 	}
 
-	int funcionA (int a1, float a2, char a3) {
+	int funcionA (int a1, float a2, char a3 , ') {
 		var {
 			int x1, x2;
 		}
@@ -84,7 +84,7 @@ main(){
 
 
 		if (e1 == 'a')
-			$(per++10@0); 
+			$(per++10@0 -); 
 		else
 			pe= pe * ve ;
 			

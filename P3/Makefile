@@ -4,7 +4,6 @@ ana8: y.tab.c
 	gcc -w -o ana8 y.tab.c
 
 y.tab.c: analizador_sintactico.y lex.yy.c
-	#	yacc -d -v -o y.tab.c sintactico.y
 	bison -d -v -o y.tab.c analizador_sintactico.y
 
 lex.yy.c: analizador_lexico.lex
