@@ -1,10 +1,7 @@
 # PL_Practicas
-
-## Para compilar la práctica 2
 Prácticas de la asignatura Procesadores de Lenguages
 
-Para compilar ejecutar `make`.
-
+## Para compilar la práctica 2
 
 Como compilar el programa
 
