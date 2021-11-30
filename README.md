@@ -13,7 +13,7 @@ lex nombre.lex
 gcc lex.yy.c -o nombreEjecutale.j8 -ll 
 ```
 
-## Para compilar la Práctica y probarla
+## Para compilar la Práctica 3 y probarla
 Ejecutar `make` y con el fichero ana8 generado ejecutar 
 
 ```
