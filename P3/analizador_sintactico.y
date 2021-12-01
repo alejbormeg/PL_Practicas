@@ -145,10 +145,12 @@ expresion : PARIZQ expresion PARDER
           | MASMENOS expresion %prec NOT
           | BAR expresion
           | NOT expresion
+          | INT expresion
           | MENOSMENOS expresion
           | expresion MENOSMENOS expresion
           | expresion ORLOG expresion
           | expresion ANDLOG expresion
+          | expresion ARROBA expresion
           | expresion XOR expresion
           | expresion REL expresion
           | expresion MASMENOS expresion
@@ -158,15 +160,19 @@ expresion : PARIZQ expresion PARDER
           | expresion EQN expresion
           | expresion OPERMASMAS expresion ARROBA expresion
           | ID
-          | CONSTANTE
+          | constante
           | funcion ;
 
 funcion : ID PARIZQ argumentos PARDER;
 
 argumentos : lista_expresiones
            | %empty ;
-
-
+           
+constante : CONSTANTE
+          | lista ;
+          
+lista : CORCHETEIZQ lista_expresiones CORCHETEDER
+      | CORCHETEIZQ CORCHETEDER ;
 %%
 
 #include "lex.yy.c"

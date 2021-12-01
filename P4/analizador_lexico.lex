@@ -1,0 +1,90 @@
+%option yylineno
+%option noyywrap
+
+char* msgError[256];
+
+%%
+[ \n\t] {}
+"{"                                     { return INICIOBLOQUE; }
+"}"                                     { return FINBLOQUE; }
+"["                                     { return CORCHETEIZQ; }
+"]"                                     { return CORCHETEDER; }
+"("                                     { return PARIZQ; }
+")"                                     { return PARDER; }
+";"                                     { return PYC; }
+","                                     { return COMA; }
+"="                                     { return ASIGN; }
+"@"                                     { return ARROBA; }
+"input "                                { return INPUT; }
+"output"                                { return OUTPUT; }
+"return"                                { return RETURN; }
+"var"                                   { return VAR; }
+"main"                                  { return MAIN; }
+"repeat"                                { return REPEAT; }
+"until"                                 { return UNTIL; }
+
+
+"int"                                   {yylval.atributo = 0; yylval.dtipo = entero; return PRIMITIVO;}
+"float"                                 {yylval.atributo = 1; yylval.dtipo = real; return PRIMITIVO; }
+"char"                                  {yylval.atributo = 2; yylval.dtipo = caracter; return PRIMITIVO; }
+"bool"                                  {yylval.atributo = 3; yylval.dtipo = booleano; return PRIMITIVO; }
+
+
+"list of"                               {yylval.atributo = 4; yylval.dtipo = lista; return ESTRUCTURA; } //Muchísimo cuidado con este, hay que cambiarlo en el semántico, porque ellos distinguen entre 4 posibles tipos de listas
+
+
+"if"                                    { return IF; }
+"while"                                 { return WHILE; }
+"else"                                  { return ELSE; }
+"and"                                   {return ANDLOG;}
+"or"                                    {return ORLOG;}
+"xor"                                   {return XOR;}
+
+"<<"					 {yylval.atributo = 0;return OPERLISTA;}
+">>"                                    {yylval.atributo = 1; return OPERLISTA;}
+
+
+"*"                                     {yylval.atributo = 0; return MULDIV;}
+"/"                                     {yylval.atributo = 1; return MULDIV;}
+"%"|"^"                                 {return PORPOT;} //Revisarlo y pensarlo
+
+"=="                                    {yylval.atributo = 0; return EQN; }
+"!="                                    {yylval.atributo = 1; return EQN; }
+
+
+"**"                                    {return PORPOR;}
+
+
+"<"                                     { yylval.atributo = 0; return REL; }
+">"                                     { yylval.atributo = 1; return REL; }
+"<="                                    { yylval.atributo = 2; return REL; }
+">="                                    { yylval.atributo = 3; return REL; }
+
+
+"--"                                    {return MENOSMENOS; } //Cuidado con este a ver que pasa
+
+"++"                                    {return OPERMASMAS; }
+
+"+"                                     { yylval.atributo = 0; return MASMENOS; }
+"-"                                     { yylval.atributo = 1; return MASMENOS; }
+
+"//"                                    {return BAR; } //Adaptarlo al # de ellos
+"?"                                     {return INT; } //Adaptarlo 
+
+"not"                                   {return NOT; }
+
+"$"                                     {return DOLLAR; }
+
+\"[^\"]*\"                              {return CADENA; }
+
+
+[0-9]+                                  { yylval.atributo = 0; yylval.dtipo = entero; return CONSTANTE; }
+[0-9]*\.[0-9]*                          { yylval.atributo = 1; yylval.dtipo = real; return CONSTANTE; }
+
+[a-z|A-Z][a-z|A-Z|0-9|_]*               {yylval.lexema = strdup(yytext); return ID;}
+
+<*>.|\n                            {sprintf(msgError, "ERROR LÉXICO: Lexema %s no reconocible.\n", yytext); yyerror(msgError);}
+%%
+
+
+

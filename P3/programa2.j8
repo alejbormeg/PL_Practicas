@@ -90,4 +90,22 @@ main(){
 			
 		pe= pe2 - (pe++(10*1000.0)@20);
 }
-	}
+
+        pe= [1, 43, 5, 0, 0];
+	pe= ['z', 'A','B'];
+	pe=[2.5, 4.9*c, 3.0+f(b,c), 0.0];
+	pe = [true, false, true,true] ;
+	pe>> ;
+	pe<< ;
+	pe <<;
+	$pe;
+	if (?pe < ?pe2)
+		return pe%2 ;
+	else
+		return pe % 3 ;
+	pe = pe**(ppf % 2) ;
+	pe = pe++true@3 ;
+	pe = pf--(3 + 2 / 2.0) ;
+	pe = pe ;
+
+}

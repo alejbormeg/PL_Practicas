@@ -1,11 +1,9 @@
 Terminales no usados en la gramática
 
-    CORCHETEIZQ
-    CORCHETEDER
     OPUNARIO
 
 
-Estado 135 conflictos: 1 desplazamiento/reducción
+Estado 146 conflictos: 1 desplazamiento/reducción
 
 
 Gramática
@@ -91,26 +89,34 @@ Gramática
    51          | MASMENOS expresion
    52          | BAR expresion
    53          | NOT expresion
-   54          | MENOSMENOS expresion
-   55          | expresion MENOSMENOS expresion
-   56          | expresion ORLOG expresion
-   57          | expresion ANDLOG expresion
-   58          | expresion XOR expresion
-   59          | expresion REL expresion
-   60          | expresion MASMENOS expresion
-   61          | expresion PORPOR expresion
-   62          | expresion PORPOT expresion
-   63          | expresion MULDIV expresion
-   64          | expresion EQN expresion
-   65          | expresion OPERMASMAS expresion ARROBA expresion
-   66          | ID
-   67          | CONSTANTE
-   68          | funcion
+   54          | INT expresion
+   55          | MENOSMENOS expresion
+   56          | expresion MENOSMENOS expresion
+   57          | expresion ORLOG expresion
+   58          | expresion ANDLOG expresion
+   59          | expresion ARROBA expresion
+   60          | expresion XOR expresion
+   61          | expresion REL expresion
+   62          | expresion MASMENOS expresion
+   63          | expresion PORPOR expresion
+   64          | expresion PORPOT expresion
+   65          | expresion MULDIV expresion
+   66          | expresion EQN expresion
+   67          | expresion OPERMASMAS expresion ARROBA expresion
+   68          | ID
+   69          | constante
+   70          | funcion
 
-   69 funcion: ID PARIZQ argumentos PARDER
+   71 funcion: ID PARIZQ argumentos PARDER
 
-   70 argumentos: lista_expresiones
-   71           | %empty
+   72 argumentos: lista_expresiones
+   73           | %empty
+
+   74 constante: CONSTANTE
+   75          | lista
+
+   76 lista: CORCHETEIZQ lista_expresiones CORCHETEDER
+   77      | CORCHETEIZQ CORCHETEDER
 
 
 Terminales con las reglas donde aparecen
@@ -131,31 +137,31 @@ Terminales con las reglas donde aparecen
     UNTIL (269) 46
     WHILE (270) 36
     OPERLISTA (271) 47
-    CONSTANTE (272) 67
+    CONSTANTE (272) 74
     INICIOBLOQUE (273) 2 6
     FINBLOQUE (274) 2 6
-    CORCHETEIZQ (275)
-    CORCHETEDER (276)
+    CORCHETEIZQ (275) 76 77
+    CORCHETEDER (276) 76 77
     COMA (277) 14 17 19 38 41
     ASIGN (278) 32
-    PARDER (279) 1 16 33 36 46 50 69
-    PARIZQ (280) 1 16 33 36 46 50 69
+    PARDER (279) 1 16 33 36 46 50 71
+    PARIZQ (280) 1 16 33 36 46 50 71
     OPUNARIO (281)
     ESTRUCTURA (282) 13
-    ID (283) 14 15 16 19 20 32 38 39 66 69
-    OPERMASMAS (284) 65
-    ARROBA (285) 65
-    ORLOG (286) 56
-    ANDLOG (287) 57
-    XOR (288) 58
-    EQN (289) 64
-    REL (290) 59
-    PORPOR (291) 61
-    PORPOT (292) 62
-    MASMENOS (293) 51 60
-    MULDIV (294) 63
-    MENOSMENOS (295) 54 55
-    INT (296) 48
+    ID (283) 14 15 16 19 20 32 38 39 68 71
+    OPERMASMAS (284) 67
+    ARROBA (285) 59 67
+    ORLOG (286) 57
+    ANDLOG (287) 58
+    XOR (288) 60
+    EQN (289) 66
+    REL (290) 61
+    PORPOR (291) 63
+    PORPOT (292) 64
+    MASMENOS (293) 51 62
+    MULDIV (294) 65
+    MENOSMENOS (295) 55 56
+    INT (296) 48 54
     BAR (297) 52
     DOLLAR (298) 49
     NOT (299) 53
@@ -197,7 +203,7 @@ No terminales con las reglas donde aparecen
         on right: 5
     lista_expresiones (56)
         on left: 17 18
-        on right: 17 70
+        on right: 17 72 76
     parametros (57)
         on left: 19 20
         on right: 16 19
@@ -244,14 +250,20 @@ No terminales con las reglas donde aparecen
         on left: 47 48 49
         on right: 31
     expresion (72)
-        on left: 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68
-        on right: 17 18 32 33 36 43 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65
+        on left: 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70
+        on right: 17 18 32 33 36 43 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67
     funcion (73)
-        on left: 69
-        on right: 68
+        on left: 71
+        on right: 70
     argumentos (74)
-        on left: 70 71
+        on left: 72 73
+        on right: 71
+    constante (75)
+        on left: 74 75
         on right: 69
+    lista (76)
+        on left: 76 77
+        on right: 75
 
 
 Estado 0
@@ -454,27 +466,30 @@ Estado 21
     CONSTANTE     desplazar e ir al estado 35
     INICIOBLOQUE  desplazar e ir al estado 6
     FINBLOQUE     desplazar e ir al estado 36
-    PARIZQ        desplazar e ir al estado 37
-    ID            desplazar e ir al estado 38
-    MASMENOS      desplazar e ir al estado 39
-    MENOSMENOS    desplazar e ir al estado 40
-    INT           desplazar e ir al estado 41
-    BAR           desplazar e ir al estado 42
-    DOLLAR        desplazar e ir al estado 43
-    NOT           desplazar e ir al estado 44
+    CORCHETEIZQ   desplazar e ir al estado 37
+    PARIZQ        desplazar e ir al estado 38
+    ID            desplazar e ir al estado 39
+    MASMENOS      desplazar e ir al estado 40
+    MENOSMENOS    desplazar e ir al estado 41
+    INT           desplazar e ir al estado 42
+    BAR           desplazar e ir al estado 43
+    DOLLAR        desplazar e ir al estado 44
+    NOT           desplazar e ir al estado 45
 
-    bloque                  ir al estado 45
-    sentencia               ir al estado 46
-    sentencia_asignacion    ir al estado 47
-    sentencia_if            ir al estado 48
-    sentencia_while         ir al estado 49
-    sentencia_entrada       ir al estado 50
-    sentencia_salida        ir al estado 51
-    sentencia_return        ir al estado 52
-    sentencia_repeat_until  ir al estado 53
-    sentencia_lista         ir al estado 54
-    expresion               ir al estado 55
-    funcion                 ir al estado 56
+    bloque                  ir al estado 46
+    sentencia               ir al estado 47
+    sentencia_asignacion    ir al estado 48
+    sentencia_if            ir al estado 49
+    sentencia_while         ir al estado 50
+    sentencia_entrada       ir al estado 51
+    sentencia_salida        ir al estado 52
+    sentencia_return        ir al estado 53
+    sentencia_repeat_until  ir al estado 54
+    sentencia_lista         ir al estado 55
+    expresion               ir al estado 56
+    funcion                 ir al estado 57
+    constante               ir al estado 58
+    lista                   ir al estado 59
 
 
 Estado 22
@@ -503,7 +518,7 @@ Estado 25
    14 lista_variables: ID . COMA lista_variables
    15                | ID .
 
-    COMA  desplazar e ir al estado 57
+    COMA  desplazar e ir al estado 60
 
     $default  reduce usando la regla 15 (lista_variables)
 
@@ -512,14 +527,14 @@ Estado 26
 
    10 cuerpo_declar_variables: tipo lista_variables . PYC
 
-    PYC  desplazar e ir al estado 58
+    PYC  desplazar e ir al estado 61
 
 
 Estado 27
 
    16 cabecera_subprog: tipo ID . PARIZQ parametros PARDER
 
-    PARIZQ  desplazar e ir al estado 59
+    PARIZQ  desplazar e ir al estado 62
 
 
 Estado 28
@@ -533,51 +548,59 @@ Estado 29
 
    37 sentencia_entrada: INPUT . lista_id PYC
 
-    ID  desplazar e ir al estado 60
+    ID  desplazar e ir al estado 63
 
-    lista_id  ir al estado 61
+    lista_id  ir al estado 64
 
 
 Estado 30
 
    40 sentencia_salida: OUTPUT . lista_expresion_cadena PYC
 
-    CADENA      desplazar e ir al estado 62
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CADENA       desplazar e ir al estado 65
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    lista_expresion_cadena  ir al estado 64
-    expresion_cadena        ir al estado 65
-    expresion               ir al estado 66
-    funcion                 ir al estado 56
+    lista_expresion_cadena  ir al estado 68
+    expresion_cadena        ir al estado 69
+    expresion               ir al estado 70
+    funcion                 ir al estado 57
+    constante               ir al estado 58
+    lista                   ir al estado 59
 
 
 Estado 31
 
    45 sentencia_return: RETURN . expresion PYC
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 67
-    funcion    ir al estado 56
+    expresion  ir al estado 71
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 32
 
    33 sentencia_if: IF . PARIZQ expresion PARDER sentencia sentencia_else
 
-    PARIZQ  desplazar e ir al estado 68
+    PARIZQ  desplazar e ir al estado 72
 
 
 Estado 33
@@ -592,41 +615,44 @@ Estado 33
     WHILE         desplazar e ir al estado 34
     CONSTANTE     desplazar e ir al estado 35
     INICIOBLOQUE  desplazar e ir al estado 6
-    PARIZQ        desplazar e ir al estado 37
-    ID            desplazar e ir al estado 38
-    MASMENOS      desplazar e ir al estado 39
-    MENOSMENOS    desplazar e ir al estado 40
-    INT           desplazar e ir al estado 41
-    BAR           desplazar e ir al estado 42
-    DOLLAR        desplazar e ir al estado 43
-    NOT           desplazar e ir al estado 44
+    CORCHETEIZQ   desplazar e ir al estado 37
+    PARIZQ        desplazar e ir al estado 38
+    ID            desplazar e ir al estado 39
+    MASMENOS      desplazar e ir al estado 40
+    MENOSMENOS    desplazar e ir al estado 41
+    INT           desplazar e ir al estado 42
+    BAR           desplazar e ir al estado 43
+    DOLLAR        desplazar e ir al estado 44
+    NOT           desplazar e ir al estado 45
 
-    bloque                  ir al estado 45
-    sentencia               ir al estado 69
-    sentencia_asignacion    ir al estado 47
-    sentencia_if            ir al estado 48
-    sentencia_while         ir al estado 49
-    sentencia_entrada       ir al estado 50
-    sentencia_salida        ir al estado 51
-    sentencia_return        ir al estado 52
-    sentencia_repeat_until  ir al estado 53
-    sentencia_lista         ir al estado 54
-    expresion               ir al estado 55
-    funcion                 ir al estado 56
+    bloque                  ir al estado 46
+    sentencia               ir al estado 73
+    sentencia_asignacion    ir al estado 48
+    sentencia_if            ir al estado 49
+    sentencia_while         ir al estado 50
+    sentencia_entrada       ir al estado 51
+    sentencia_salida        ir al estado 52
+    sentencia_return        ir al estado 53
+    sentencia_repeat_until  ir al estado 54
+    sentencia_lista         ir al estado 55
+    expresion               ir al estado 56
+    funcion                 ir al estado 57
+    constante               ir al estado 58
+    lista                   ir al estado 59
 
 
 Estado 34
 
    36 sentencia_while: WHILE . PARIZQ expresion PARDER sentencia
 
-    PARIZQ  desplazar e ir al estado 70
+    PARIZQ  desplazar e ir al estado 74
 
 
 Estado 35
 
-   67 expresion: CONSTANTE .
+   74 constante: CONSTANTE .
 
-    $default  reduce usando la regla 67 (expresion)
+    $default  reduce usando la regla 74 (constante)
 
 
 Estado 36
@@ -638,1330 +664,1620 @@ Estado 36
 
 Estado 37
 
-   50 expresion: PARIZQ . expresion PARDER
+   76 lista: CORCHETEIZQ . lista_expresiones CORCHETEDER
+   77      | CORCHETEIZQ . CORCHETEDER
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    CORCHETEDER  desplazar e ir al estado 75
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 71
-    funcion    ir al estado 56
+    lista_expresiones  ir al estado 76
+    expresion          ir al estado 77
+    funcion            ir al estado 57
+    constante          ir al estado 58
+    lista              ir al estado 59
 
 
 Estado 38
 
-   32 sentencia_asignacion: ID . ASIGN expresion PYC
-   66 expresion: ID .
-   69 funcion: ID . PARIZQ argumentos PARDER
+   50 expresion: PARIZQ . expresion PARDER
 
-    ASIGN   desplazar e ir al estado 72
-    PARIZQ  desplazar e ir al estado 73
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    $default  reduce usando la regla 66 (expresion)
+    expresion  ir al estado 78
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 39
 
-   51 expresion: MASMENOS . expresion
+   32 sentencia_asignacion: ID . ASIGN expresion PYC
+   68 expresion: ID .
+   71 funcion: ID . PARIZQ argumentos PARDER
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    ASIGN   desplazar e ir al estado 79
+    PARIZQ  desplazar e ir al estado 80
 
-    expresion  ir al estado 74
-    funcion    ir al estado 56
+    $default  reduce usando la regla 68 (expresion)
 
 
 Estado 40
 
-   54 expresion: MENOSMENOS . expresion
+   51 expresion: MASMENOS . expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 75
-    funcion    ir al estado 56
+    expresion  ir al estado 81
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 41
 
-   48 sentencia_lista: INT . expresion PYC
+   55 expresion: MENOSMENOS . expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 76
-    funcion    ir al estado 56
+    expresion  ir al estado 82
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 42
 
-   52 expresion: BAR . expresion
+   48 sentencia_lista: INT . expresion PYC
+   54 expresion: INT . expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 77
-    funcion    ir al estado 56
+    expresion  ir al estado 83
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 43
 
-   49 sentencia_lista: DOLLAR . expresion PYC
+   52 expresion: BAR . expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 78
-    funcion    ir al estado 56
+    expresion  ir al estado 84
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 44
 
-   53 expresion: NOT . expresion
+   49 sentencia_lista: DOLLAR . expresion PYC
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 79
-    funcion    ir al estado 56
+    expresion  ir al estado 85
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 45
+
+   53 expresion: NOT . expresion
+
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 86
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
+
+
+Estado 46
 
    23 sentencia: bloque .
 
     $default  reduce usando la regla 23 (sentencia)
 
 
-Estado 46
+Estado 47
 
    21 sentencias: sentencias sentencia .
 
     $default  reduce usando la regla 21 (sentencias)
 
 
-Estado 47
+Estado 48
 
    24 sentencia: sentencia_asignacion .
 
     $default  reduce usando la regla 24 (sentencia)
 
 
-Estado 48
+Estado 49
 
    25 sentencia: sentencia_if .
 
     $default  reduce usando la regla 25 (sentencia)
 
 
-Estado 49
+Estado 50
 
    26 sentencia: sentencia_while .
 
     $default  reduce usando la regla 26 (sentencia)
 
 
-Estado 50
+Estado 51
 
    27 sentencia: sentencia_entrada .
 
     $default  reduce usando la regla 27 (sentencia)
 
 
-Estado 51
+Estado 52
 
    28 sentencia: sentencia_salida .
 
     $default  reduce usando la regla 28 (sentencia)
 
 
-Estado 52
+Estado 53
 
    29 sentencia: sentencia_return .
 
     $default  reduce usando la regla 29 (sentencia)
 
 
-Estado 53
+Estado 54
 
    30 sentencia: sentencia_repeat_until .
 
     $default  reduce usando la regla 30 (sentencia)
 
 
-Estado 54
+Estado 55
 
    31 sentencia: sentencia_lista .
 
     $default  reduce usando la regla 31 (sentencia)
 
 
-Estado 55
-
-   47 sentencia_lista: expresion . OPERLISTA PYC
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
-
-    OPERLISTA   desplazar e ir al estado 80
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
-
-
 Estado 56
 
-   68 expresion: funcion .
+   47 sentencia_lista: expresion . OPERLISTA PYC
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    $default  reduce usando la regla 68 (expresion)
+    OPERLISTA   desplazar e ir al estado 87
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
 
 Estado 57
+
+   70 expresion: funcion .
+
+    $default  reduce usando la regla 70 (expresion)
+
+
+Estado 58
+
+   69 expresion: constante .
+
+    $default  reduce usando la regla 69 (expresion)
+
+
+Estado 59
+
+   75 constante: lista .
+
+    $default  reduce usando la regla 75 (constante)
+
+
+Estado 60
 
    14 lista_variables: ID COMA . lista_variables
 
     ID  desplazar e ir al estado 25
 
-    lista_variables  ir al estado 92
+    lista_variables  ir al estado 100
 
 
-Estado 58
+Estado 61
 
    10 cuerpo_declar_variables: tipo lista_variables PYC .
 
     $default  reduce usando la regla 10 (cuerpo_declar_variables)
 
 
-Estado 59
+Estado 62
 
    16 cabecera_subprog: tipo ID PARIZQ . parametros PARDER
 
     PRIMITIVO   desplazar e ir al estado 13
     ESTRUCTURA  desplazar e ir al estado 14
 
-    tipo        ir al estado 93
-    parametros  ir al estado 94
+    tipo        ir al estado 101
+    parametros  ir al estado 102
 
 
-Estado 60
+Estado 63
 
    39 lista_id: ID .
 
     $default  reduce usando la regla 39 (lista_id)
 
 
-Estado 61
+Estado 64
 
    37 sentencia_entrada: INPUT lista_id . PYC
    38 lista_id: lista_id . COMA ID
 
-    PYC   desplazar e ir al estado 95
-    COMA  desplazar e ir al estado 96
+    PYC   desplazar e ir al estado 103
+    COMA  desplazar e ir al estado 104
 
 
-Estado 62
+Estado 65
 
    44 expresion_cadena: CADENA .
 
     $default  reduce usando la regla 44 (expresion_cadena)
 
 
-Estado 63
+Estado 66
 
-   66 expresion: ID .
-   69 funcion: ID . PARIZQ argumentos PARDER
+   68 expresion: ID .
+   71 funcion: ID . PARIZQ argumentos PARDER
 
-    PARIZQ  desplazar e ir al estado 73
+    PARIZQ  desplazar e ir al estado 80
 
-    $default  reduce usando la regla 66 (expresion)
+    $default  reduce usando la regla 68 (expresion)
 
 
-Estado 64
+Estado 67
+
+   54 expresion: INT . expresion
+
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 105
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
+
+
+Estado 68
 
    40 sentencia_salida: OUTPUT lista_expresion_cadena . PYC
    41 lista_expresion_cadena: lista_expresion_cadena . COMA expresion_cadena
 
-    PYC   desplazar e ir al estado 97
-    COMA  desplazar e ir al estado 98
+    PYC   desplazar e ir al estado 106
+    COMA  desplazar e ir al estado 107
 
 
-Estado 65
+Estado 69
 
    42 lista_expresion_cadena: expresion_cadena .
 
     $default  reduce usando la regla 42 (lista_expresion_cadena)
 
 
-Estado 66
+Estado 70
 
    43 expresion_cadena: expresion .
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
     $default  reduce usando la regla 43 (expresion_cadena)
 
 
-Estado 67
-
-   45 sentencia_return: RETURN expresion . PYC
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
-
-    PYC         desplazar e ir al estado 99
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
-
-
-Estado 68
-
-   33 sentencia_if: IF PARIZQ . expresion PARDER sentencia sentencia_else
-
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
-
-    expresion  ir al estado 100
-    funcion    ir al estado 56
-
-
-Estado 69
-
-   46 sentencia_repeat_until: REPEAT sentencia . UNTIL PARIZQ expresion PARDER PYC
-
-    UNTIL  desplazar e ir al estado 101
-
-
-Estado 70
-
-   36 sentencia_while: WHILE PARIZQ . expresion PARDER sentencia
-
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
-
-    expresion  ir al estado 102
-    funcion    ir al estado 56
-
-
 Estado 71
 
-   50 expresion: PARIZQ expresion . PARDER
-   55          | expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   45 sentencia_return: RETURN expresion . PYC
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    PARDER      desplazar e ir al estado 103
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    PYC         desplazar e ir al estado 108
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
 
 Estado 72
 
-   32 sentencia_asignacion: ID ASIGN . expresion PYC
+   33 sentencia_if: IF PARIZQ . expresion PARDER sentencia sentencia_else
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 104
-    funcion    ir al estado 56
+    expresion  ir al estado 109
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 73
 
-   69 funcion: ID PARIZQ . argumentos PARDER
+   46 sentencia_repeat_until: REPEAT sentencia . UNTIL PARIZQ expresion PARDER PYC
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
-
-    $default  reduce usando la regla 71 (argumentos)
-
-    lista_expresiones  ir al estado 105
-    expresion          ir al estado 106
-    funcion            ir al estado 56
-    argumentos         ir al estado 107
+    UNTIL  desplazar e ir al estado 110
 
 
 Estado 74
 
-   51 expresion: MASMENOS expresion .
-   55          | expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   36 sentencia_while: WHILE PARIZQ . expresion PARDER sentencia
 
-    $default  reduce usando la regla 51 (expresion)
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 111
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 75
 
-   54 expresion: MENOSMENOS expresion .
-   55          | expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   77 lista: CORCHETEIZQ CORCHETEDER .
 
-    MENOSMENOS  desplazar e ir al estado 91
-
-    $default  reduce usando la regla 54 (expresion)
+    $default  reduce usando la regla 77 (lista)
 
 
 Estado 76
 
-   48 sentencia_lista: INT expresion . PYC
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   17 lista_expresiones: lista_expresiones . COMA expresion
+   76 lista: CORCHETEIZQ lista_expresiones . CORCHETEDER
 
-    PYC         desplazar e ir al estado 108
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    CORCHETEDER  desplazar e ir al estado 112
+    COMA         desplazar e ir al estado 113
 
 
 Estado 77
 
-   52 expresion: BAR expresion .
-   55          | expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   18 lista_expresiones: expresion .
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    $default  reduce usando la regla 52 (expresion)
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
+
+    $default  reduce usando la regla 18 (lista_expresiones)
 
 
 Estado 78
 
-   49 sentencia_lista: DOLLAR expresion . PYC
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   50 expresion: PARIZQ expresion . PARDER
+   56          | expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    PYC         desplazar e ir al estado 109
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    PARDER      desplazar e ir al estado 114
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
 
 Estado 79
 
-   53 expresion: NOT expresion .
-   55          | expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   32 sentencia_asignacion: ID ASIGN . expresion PYC
 
-    $default  reduce usando la regla 53 (expresion)
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 115
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 80
 
-   47 sentencia_lista: expresion OPERLISTA . PYC
+   71 funcion: ID PARIZQ . argumentos PARDER
 
-    PYC  desplazar e ir al estado 110
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    $default  reduce usando la regla 73 (argumentos)
+
+    lista_expresiones  ir al estado 116
+    expresion          ir al estado 77
+    funcion            ir al estado 57
+    argumentos         ir al estado 117
+    constante          ir al estado 58
+    lista              ir al estado 59
 
 
 Estado 81
 
-   65 expresion: expresion OPERMASMAS . expresion ARROBA expresion
+   51 expresion: MASMENOS expresion .
+   56          | expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
-
-    expresion  ir al estado 111
-    funcion    ir al estado 56
+    $default  reduce usando la regla 51 (expresion)
 
 
 Estado 82
 
-   56 expresion: expresion ORLOG . expresion
+   55 expresion: MENOSMENOS expresion .
+   56          | expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    MENOSMENOS  desplazar e ir al estado 99
 
-    expresion  ir al estado 112
-    funcion    ir al estado 56
+    $default  reduce usando la regla 55 (expresion)
 
 
 Estado 83
 
-   57 expresion: expresion ANDLOG . expresion
+   48 sentencia_lista: INT expresion . PYC
+   54 expresion: INT expresion .
+   56          | expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    PYC  desplazar e ir al estado 118
 
-    expresion  ir al estado 113
-    funcion    ir al estado 56
+    $default  reduce usando la regla 54 (expresion)
 
 
 Estado 84
 
-   58 expresion: expresion XOR . expresion
+   52 expresion: BAR expresion .
+   56          | expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
-
-    expresion  ir al estado 114
-    funcion    ir al estado 56
+    $default  reduce usando la regla 52 (expresion)
 
 
 Estado 85
 
-   64 expresion: expresion EQN . expresion
+   49 sentencia_lista: DOLLAR expresion . PYC
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
-
-    expresion  ir al estado 115
-    funcion    ir al estado 56
+    PYC         desplazar e ir al estado 119
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
 
 Estado 86
 
-   59 expresion: expresion REL . expresion
+   53 expresion: NOT expresion .
+   56          | expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
-
-    expresion  ir al estado 116
-    funcion    ir al estado 56
+    $default  reduce usando la regla 53 (expresion)
 
 
 Estado 87
 
-   61 expresion: expresion PORPOR . expresion
+   47 sentencia_lista: expresion OPERLISTA . PYC
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
-
-    expresion  ir al estado 117
-    funcion    ir al estado 56
+    PYC  desplazar e ir al estado 120
 
 
 Estado 88
 
-   62 expresion: expresion PORPOT . expresion
+   67 expresion: expresion OPERMASMAS . expresion ARROBA expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 118
-    funcion    ir al estado 56
+    expresion  ir al estado 121
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 89
 
-   60 expresion: expresion MASMENOS . expresion
+   59 expresion: expresion ARROBA . expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 119
-    funcion    ir al estado 56
+    expresion  ir al estado 122
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 90
 
-   63 expresion: expresion MULDIV . expresion
+   57 expresion: expresion ORLOG . expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 120
-    funcion    ir al estado 56
+    expresion  ir al estado 123
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 91
 
-   55 expresion: expresion MENOSMENOS . expresion
+   58 expresion: expresion ANDLOG . expresion
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 121
-    funcion    ir al estado 56
+    expresion  ir al estado 124
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
 Estado 92
+
+   60 expresion: expresion XOR . expresion
+
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 125
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
+
+
+Estado 93
+
+   66 expresion: expresion EQN . expresion
+
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 126
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
+
+
+Estado 94
+
+   61 expresion: expresion REL . expresion
+
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 127
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
+
+
+Estado 95
+
+   63 expresion: expresion PORPOR . expresion
+
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 128
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
+
+
+Estado 96
+
+   64 expresion: expresion PORPOT . expresion
+
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 129
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
+
+
+Estado 97
+
+   62 expresion: expresion MASMENOS . expresion
+
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 130
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
+
+
+Estado 98
+
+   65 expresion: expresion MULDIV . expresion
+
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 131
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
+
+
+Estado 99
+
+   56 expresion: expresion MENOSMENOS . expresion
+
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 132
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
+
+
+Estado 100
 
    14 lista_variables: ID COMA lista_variables .
 
     $default  reduce usando la regla 14 (lista_variables)
 
 
-Estado 93
+Estado 101
 
    20 parametros: tipo . ID
 
-    ID  desplazar e ir al estado 122
+    ID  desplazar e ir al estado 133
 
 
-Estado 94
+Estado 102
 
    16 cabecera_subprog: tipo ID PARIZQ parametros . PARDER
    19 parametros: parametros . COMA tipo ID
 
-    COMA    desplazar e ir al estado 123
-    PARDER  desplazar e ir al estado 124
+    COMA    desplazar e ir al estado 134
+    PARDER  desplazar e ir al estado 135
 
 
-Estado 95
+Estado 103
 
    37 sentencia_entrada: INPUT lista_id PYC .
 
     $default  reduce usando la regla 37 (sentencia_entrada)
 
 
-Estado 96
+Estado 104
 
    38 lista_id: lista_id COMA . ID
 
-    ID  desplazar e ir al estado 125
+    ID  desplazar e ir al estado 136
 
 
-Estado 97
+Estado 105
+
+   54 expresion: INT expresion .
+   56          | expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
+
+    $default  reduce usando la regla 54 (expresion)
+
+
+Estado 106
 
    40 sentencia_salida: OUTPUT lista_expresion_cadena PYC .
 
     $default  reduce usando la regla 40 (sentencia_salida)
 
 
-Estado 98
+Estado 107
 
    41 lista_expresion_cadena: lista_expresion_cadena COMA . expresion_cadena
 
-    CADENA      desplazar e ir al estado 62
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CADENA       desplazar e ir al estado 65
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion_cadena  ir al estado 126
-    expresion         ir al estado 66
-    funcion           ir al estado 56
+    expresion_cadena  ir al estado 137
+    expresion         ir al estado 70
+    funcion           ir al estado 57
+    constante         ir al estado 58
+    lista             ir al estado 59
 
 
-Estado 99
+Estado 108
 
    45 sentencia_return: RETURN expresion PYC .
 
     $default  reduce usando la regla 45 (sentencia_return)
 
 
-Estado 100
+Estado 109
 
    33 sentencia_if: IF PARIZQ expresion . PARDER sentencia sentencia_else
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    PARDER      desplazar e ir al estado 127
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    PARDER      desplazar e ir al estado 138
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
 
-Estado 101
+Estado 110
 
    46 sentencia_repeat_until: REPEAT sentencia UNTIL . PARIZQ expresion PARDER PYC
 
-    PARIZQ  desplazar e ir al estado 128
+    PARIZQ  desplazar e ir al estado 139
 
 
-Estado 102
+Estado 111
 
    36 sentencia_while: WHILE PARIZQ expresion . PARDER sentencia
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    PARDER      desplazar e ir al estado 129
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    PARDER      desplazar e ir al estado 140
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
 
-Estado 103
+Estado 112
+
+   76 lista: CORCHETEIZQ lista_expresiones CORCHETEDER .
+
+    $default  reduce usando la regla 76 (lista)
+
+
+Estado 113
+
+   17 lista_expresiones: lista_expresiones COMA . expresion
+
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
+
+    expresion  ir al estado 141
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
+
+
+Estado 114
 
    50 expresion: PARIZQ expresion PARDER .
 
     $default  reduce usando la regla 50 (expresion)
 
 
-Estado 104
+Estado 115
 
    32 sentencia_asignacion: ID ASIGN expresion . PYC
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    PYC         desplazar e ir al estado 130
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    PYC         desplazar e ir al estado 142
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
 
-Estado 105
+Estado 116
 
    17 lista_expresiones: lista_expresiones . COMA expresion
-   70 argumentos: lista_expresiones .
+   72 argumentos: lista_expresiones .
 
-    COMA  desplazar e ir al estado 131
+    COMA  desplazar e ir al estado 113
 
-    $default  reduce usando la regla 70 (argumentos)
-
-
-Estado 106
-
-   18 lista_expresiones: expresion .
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
-
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
-
-    $default  reduce usando la regla 18 (lista_expresiones)
+    $default  reduce usando la regla 72 (argumentos)
 
 
-Estado 107
+Estado 117
 
-   69 funcion: ID PARIZQ argumentos . PARDER
+   71 funcion: ID PARIZQ argumentos . PARDER
 
-    PARDER  desplazar e ir al estado 132
+    PARDER  desplazar e ir al estado 143
 
 
-Estado 108
+Estado 118
 
    48 sentencia_lista: INT expresion PYC .
 
     $default  reduce usando la regla 48 (sentencia_lista)
 
 
-Estado 109
+Estado 119
 
    49 sentencia_lista: DOLLAR expresion PYC .
 
     $default  reduce usando la regla 49 (sentencia_lista)
 
 
-Estado 110
+Estado 120
 
    47 sentencia_lista: expresion OPERLISTA PYC .
 
     $default  reduce usando la regla 47 (sentencia_lista)
 
 
-Estado 111
+Estado 121
 
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
-   65          | expresion OPERMASMAS expresion . ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
+   67          | expresion OPERMASMAS expresion . ARROBA expresion
 
-    OPERMASMAS  desplazar e ir al estado 81
-    ARROBA      desplazar e ir al estado 133
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
-
-
-Estado 112
-
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   56          | expresion ORLOG expresion .
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
-
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
-
-    $default  reduce usando la regla 56 (expresion)
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 144
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
 
-Estado 113
+Estado 122
 
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   57          | expresion ANDLOG expresion .
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   59          | expresion ARROBA expresion .
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
-
-    $default  reduce usando la regla 57 (expresion)
-
-
-Estado 114
-
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   58          | expresion XOR expresion .
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
-
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
-
-    $default  reduce usando la regla 58 (expresion)
-
-
-Estado 115
-
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   64          | expresion EQN expresion .
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
-
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
-
-    $default  reduce usando la regla 64 (expresion)
-
-
-Estado 116
-
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   59          | expresion REL expresion .
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
-
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
     $default  reduce usando la regla 59 (expresion)
 
 
-Estado 117
+Estado 123
 
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   61          | expresion PORPOR expresion .
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   57          | expresion ORLOG expresion .
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
-    $default  reduce usando la regla 61 (expresion)
-
-
-Estado 118
-
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   62          | expresion PORPOT expresion .
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
-
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
-
-    $default  reduce usando la regla 62 (expresion)
+    $default  reduce usando la regla 57 (expresion)
 
 
-Estado 119
+Estado 124
 
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   60          | expresion MASMENOS expresion .
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   58          | expresion ANDLOG expresion .
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
+
+    $default  reduce usando la regla 58 (expresion)
+
+
+Estado 125
+
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   60          | expresion XOR expresion .
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
+
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
     $default  reduce usando la regla 60 (expresion)
 
 
-Estado 120
+Estado 126
 
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   63          | expresion MULDIV expresion .
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   66          | expresion EQN expresion .
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    MENOSMENOS  desplazar e ir al estado 91
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
+
+    $default  reduce usando la regla 66 (expresion)
+
+
+Estado 127
+
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   61          | expresion REL expresion .
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
+
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
+
+    $default  reduce usando la regla 61 (expresion)
+
+
+Estado 128
+
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   63          | expresion PORPOR expresion .
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
+
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
     $default  reduce usando la regla 63 (expresion)
 
 
-Estado 121
+Estado 129
 
-   55 expresion: expresion . MENOSMENOS expresion
-   55          | expresion MENOSMENOS expresion .
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   64          | expresion PORPOT expresion .
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    MENOSMENOS  desplazar e ir al estado 91
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
-    $default  reduce usando la regla 55 (expresion)
+    $default  reduce usando la regla 64 (expresion)
 
 
-Estado 122
+Estado 130
+
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   62          | expresion MASMENOS expresion .
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
+
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
+
+    $default  reduce usando la regla 62 (expresion)
+
+
+Estado 131
+
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   65          | expresion MULDIV expresion .
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
+
+    MENOSMENOS  desplazar e ir al estado 99
+
+    $default  reduce usando la regla 65 (expresion)
+
+
+Estado 132
+
+   56 expresion: expresion . MENOSMENOS expresion
+   56          | expresion MENOSMENOS expresion .
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
+
+    MENOSMENOS  desplazar e ir al estado 99
+
+    $default  reduce usando la regla 56 (expresion)
+
+
+Estado 133
 
    20 parametros: tipo ID .
 
     $default  reduce usando la regla 20 (parametros)
 
 
-Estado 123
+Estado 134
 
    19 parametros: parametros COMA . tipo ID
 
     PRIMITIVO   desplazar e ir al estado 13
     ESTRUCTURA  desplazar e ir al estado 14
 
-    tipo  ir al estado 134
+    tipo  ir al estado 145
 
 
-Estado 124
+Estado 135
 
    16 cabecera_subprog: tipo ID PARIZQ parametros PARDER .
 
     $default  reduce usando la regla 16 (cabecera_subprog)
 
 
-Estado 125
+Estado 136
 
    38 lista_id: lista_id COMA ID .
 
     $default  reduce usando la regla 38 (lista_id)
 
 
-Estado 126
+Estado 137
 
    41 lista_expresion_cadena: lista_expresion_cadena COMA expresion_cadena .
 
     $default  reduce usando la regla 41 (lista_expresion_cadena)
 
 
-Estado 127
+Estado 138
 
    33 sentencia_if: IF PARIZQ expresion PARDER . sentencia sentencia_else
 
@@ -1973,46 +2289,53 @@ Estado 127
     WHILE         desplazar e ir al estado 34
     CONSTANTE     desplazar e ir al estado 35
     INICIOBLOQUE  desplazar e ir al estado 6
-    PARIZQ        desplazar e ir al estado 37
-    ID            desplazar e ir al estado 38
-    MASMENOS      desplazar e ir al estado 39
-    MENOSMENOS    desplazar e ir al estado 40
-    INT           desplazar e ir al estado 41
-    BAR           desplazar e ir al estado 42
-    DOLLAR        desplazar e ir al estado 43
-    NOT           desplazar e ir al estado 44
+    CORCHETEIZQ   desplazar e ir al estado 37
+    PARIZQ        desplazar e ir al estado 38
+    ID            desplazar e ir al estado 39
+    MASMENOS      desplazar e ir al estado 40
+    MENOSMENOS    desplazar e ir al estado 41
+    INT           desplazar e ir al estado 42
+    BAR           desplazar e ir al estado 43
+    DOLLAR        desplazar e ir al estado 44
+    NOT           desplazar e ir al estado 45
 
-    bloque                  ir al estado 45
-    sentencia               ir al estado 135
-    sentencia_asignacion    ir al estado 47
-    sentencia_if            ir al estado 48
-    sentencia_while         ir al estado 49
-    sentencia_entrada       ir al estado 50
-    sentencia_salida        ir al estado 51
-    sentencia_return        ir al estado 52
-    sentencia_repeat_until  ir al estado 53
-    sentencia_lista         ir al estado 54
-    expresion               ir al estado 55
-    funcion                 ir al estado 56
+    bloque                  ir al estado 46
+    sentencia               ir al estado 146
+    sentencia_asignacion    ir al estado 48
+    sentencia_if            ir al estado 49
+    sentencia_while         ir al estado 50
+    sentencia_entrada       ir al estado 51
+    sentencia_salida        ir al estado 52
+    sentencia_return        ir al estado 53
+    sentencia_repeat_until  ir al estado 54
+    sentencia_lista         ir al estado 55
+    expresion               ir al estado 56
+    funcion                 ir al estado 57
+    constante               ir al estado 58
+    lista                   ir al estado 59
 
 
-Estado 128
+Estado 139
 
    46 sentencia_repeat_until: REPEAT sentencia UNTIL PARIZQ . expresion PARDER PYC
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-    expresion  ir al estado 136
-    funcion    ir al estado 56
+    expresion  ir al estado 147
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
-Estado 129
+Estado 140
 
    36 sentencia_while: WHILE PARIZQ expresion PARDER . sentencia
 
@@ -2024,198 +2347,197 @@ Estado 129
     WHILE         desplazar e ir al estado 34
     CONSTANTE     desplazar e ir al estado 35
     INICIOBLOQUE  desplazar e ir al estado 6
-    PARIZQ        desplazar e ir al estado 37
-    ID            desplazar e ir al estado 38
-    MASMENOS      desplazar e ir al estado 39
-    MENOSMENOS    desplazar e ir al estado 40
-    INT           desplazar e ir al estado 41
-    BAR           desplazar e ir al estado 42
-    DOLLAR        desplazar e ir al estado 43
-    NOT           desplazar e ir al estado 44
+    CORCHETEIZQ   desplazar e ir al estado 37
+    PARIZQ        desplazar e ir al estado 38
+    ID            desplazar e ir al estado 39
+    MASMENOS      desplazar e ir al estado 40
+    MENOSMENOS    desplazar e ir al estado 41
+    INT           desplazar e ir al estado 42
+    BAR           desplazar e ir al estado 43
+    DOLLAR        desplazar e ir al estado 44
+    NOT           desplazar e ir al estado 45
 
-    bloque                  ir al estado 45
-    sentencia               ir al estado 137
-    sentencia_asignacion    ir al estado 47
-    sentencia_if            ir al estado 48
-    sentencia_while         ir al estado 49
-    sentencia_entrada       ir al estado 50
-    sentencia_salida        ir al estado 51
-    sentencia_return        ir al estado 52
-    sentencia_repeat_until  ir al estado 53
-    sentencia_lista         ir al estado 54
-    expresion               ir al estado 55
-    funcion                 ir al estado 56
+    bloque                  ir al estado 46
+    sentencia               ir al estado 148
+    sentencia_asignacion    ir al estado 48
+    sentencia_if            ir al estado 49
+    sentencia_while         ir al estado 50
+    sentencia_entrada       ir al estado 51
+    sentencia_salida        ir al estado 52
+    sentencia_return        ir al estado 53
+    sentencia_repeat_until  ir al estado 54
+    sentencia_lista         ir al estado 55
+    expresion               ir al estado 56
+    funcion                 ir al estado 57
+    constante               ir al estado 58
+    lista                   ir al estado 59
 
 
-Estado 130
+Estado 141
+
+   17 lista_expresiones: lista_expresiones COMA expresion .
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
+
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
+
+    $default  reduce usando la regla 17 (lista_expresiones)
+
+
+Estado 142
 
    32 sentencia_asignacion: ID ASIGN expresion PYC .
 
     $default  reduce usando la regla 32 (sentencia_asignacion)
 
 
-Estado 131
+Estado 143
 
-   17 lista_expresiones: lista_expresiones COMA . expresion
+   71 funcion: ID PARIZQ argumentos PARDER .
 
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
-
-    expresion  ir al estado 138
-    funcion    ir al estado 56
+    $default  reduce usando la regla 71 (funcion)
 
 
-Estado 132
+Estado 144
 
-   69 funcion: ID PARIZQ argumentos PARDER .
+   59 expresion: expresion ARROBA . expresion
+   67          | expresion OPERMASMAS expresion ARROBA . expresion
 
-    $default  reduce usando la regla 69 (funcion)
+    CONSTANTE    desplazar e ir al estado 35
+    CORCHETEIZQ  desplazar e ir al estado 37
+    PARIZQ       desplazar e ir al estado 38
+    ID           desplazar e ir al estado 66
+    MASMENOS     desplazar e ir al estado 40
+    MENOSMENOS   desplazar e ir al estado 41
+    INT          desplazar e ir al estado 67
+    BAR          desplazar e ir al estado 43
+    NOT          desplazar e ir al estado 45
 
-
-Estado 133
-
-   65 expresion: expresion OPERMASMAS expresion ARROBA . expresion
-
-    CONSTANTE   desplazar e ir al estado 35
-    PARIZQ      desplazar e ir al estado 37
-    ID          desplazar e ir al estado 63
-    MASMENOS    desplazar e ir al estado 39
-    MENOSMENOS  desplazar e ir al estado 40
-    BAR         desplazar e ir al estado 42
-    NOT         desplazar e ir al estado 44
-
-    expresion  ir al estado 139
-    funcion    ir al estado 56
+    expresion  ir al estado 149
+    funcion    ir al estado 57
+    constante  ir al estado 58
+    lista      ir al estado 59
 
 
-Estado 134
+Estado 145
 
    19 parametros: parametros COMA tipo . ID
 
-    ID  desplazar e ir al estado 140
+    ID  desplazar e ir al estado 150
 
 
-Estado 135
+Estado 146
 
    33 sentencia_if: IF PARIZQ expresion PARDER sentencia . sentencia_else
 
-    ELSE  desplazar e ir al estado 141
+    ELSE  desplazar e ir al estado 151
 
     ELSE      [reduce usando la regla 35 (sentencia_else)]
     $default  reduce usando la regla 35 (sentencia_else)
 
-    sentencia_else  ir al estado 142
+    sentencia_else  ir al estado 152
 
 
-Estado 136
+Estado 147
 
    46 sentencia_repeat_until: REPEAT sentencia UNTIL PARIZQ expresion . PARDER PYC
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    PARDER      desplazar e ir al estado 143
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    PARDER      desplazar e ir al estado 153
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
 
-Estado 137
+Estado 148
 
    36 sentencia_while: WHILE PARIZQ expresion PARDER sentencia .
 
     $default  reduce usando la regla 36 (sentencia_while)
 
 
-Estado 138
+Estado 149
 
-   17 lista_expresiones: lista_expresiones COMA expresion .
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
+   56 expresion: expresion . MENOSMENOS expresion
+   57          | expresion . ORLOG expresion
+   58          | expresion . ANDLOG expresion
+   59          | expresion . ARROBA expresion
+   59          | expresion ARROBA expresion .
+   60          | expresion . XOR expresion
+   61          | expresion . REL expresion
+   62          | expresion . MASMENOS expresion
+   63          | expresion . PORPOR expresion
+   64          | expresion . PORPOT expresion
+   65          | expresion . MULDIV expresion
+   66          | expresion . EQN expresion
+   67          | expresion . OPERMASMAS expresion ARROBA expresion
+   67          | expresion OPERMASMAS expresion ARROBA expresion .
 
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
+    OPERMASMAS  desplazar e ir al estado 88
+    ARROBA      desplazar e ir al estado 89
+    ORLOG       desplazar e ir al estado 90
+    ANDLOG      desplazar e ir al estado 91
+    XOR         desplazar e ir al estado 92
+    EQN         desplazar e ir al estado 93
+    REL         desplazar e ir al estado 94
+    PORPOR      desplazar e ir al estado 95
+    PORPOT      desplazar e ir al estado 96
+    MASMENOS    desplazar e ir al estado 97
+    MULDIV      desplazar e ir al estado 98
+    MENOSMENOS  desplazar e ir al estado 99
 
-    $default  reduce usando la regla 17 (lista_expresiones)
-
-
-Estado 139
-
-   55 expresion: expresion . MENOSMENOS expresion
-   56          | expresion . ORLOG expresion
-   57          | expresion . ANDLOG expresion
-   58          | expresion . XOR expresion
-   59          | expresion . REL expresion
-   60          | expresion . MASMENOS expresion
-   61          | expresion . PORPOR expresion
-   62          | expresion . PORPOT expresion
-   63          | expresion . MULDIV expresion
-   64          | expresion . EQN expresion
-   65          | expresion . OPERMASMAS expresion ARROBA expresion
-   65          | expresion OPERMASMAS expresion ARROBA expresion .
-
-    OPERMASMAS  desplazar e ir al estado 81
-    ORLOG       desplazar e ir al estado 82
-    ANDLOG      desplazar e ir al estado 83
-    XOR         desplazar e ir al estado 84
-    EQN         desplazar e ir al estado 85
-    REL         desplazar e ir al estado 86
-    PORPOR      desplazar e ir al estado 87
-    PORPOT      desplazar e ir al estado 88
-    MASMENOS    desplazar e ir al estado 89
-    MULDIV      desplazar e ir al estado 90
-    MENOSMENOS  desplazar e ir al estado 91
-
-    $default  reduce usando la regla 65 (expresion)
+    $default  reduce usando la regla 67 (expresion)
 
 
-Estado 140
+Estado 150
 
    19 parametros: parametros COMA tipo ID .
 
     $default  reduce usando la regla 19 (parametros)
 
 
-Estado 141
+Estado 151
 
    34 sentencia_else: ELSE . sentencia
 
@@ -2227,51 +2549,54 @@ Estado 141
     WHILE         desplazar e ir al estado 34
     CONSTANTE     desplazar e ir al estado 35
     INICIOBLOQUE  desplazar e ir al estado 6
-    PARIZQ        desplazar e ir al estado 37
-    ID            desplazar e ir al estado 38
-    MASMENOS      desplazar e ir al estado 39
-    MENOSMENOS    desplazar e ir al estado 40
-    INT           desplazar e ir al estado 41
-    BAR           desplazar e ir al estado 42
-    DOLLAR        desplazar e ir al estado 43
-    NOT           desplazar e ir al estado 44
+    CORCHETEIZQ   desplazar e ir al estado 37
+    PARIZQ        desplazar e ir al estado 38
+    ID            desplazar e ir al estado 39
+    MASMENOS      desplazar e ir al estado 40
+    MENOSMENOS    desplazar e ir al estado 41
+    INT           desplazar e ir al estado 42
+    BAR           desplazar e ir al estado 43
+    DOLLAR        desplazar e ir al estado 44
+    NOT           desplazar e ir al estado 45
 
-    bloque                  ir al estado 45
-    sentencia               ir al estado 144
-    sentencia_asignacion    ir al estado 47
-    sentencia_if            ir al estado 48
-    sentencia_while         ir al estado 49
-    sentencia_entrada       ir al estado 50
-    sentencia_salida        ir al estado 51
-    sentencia_return        ir al estado 52
-    sentencia_repeat_until  ir al estado 53
-    sentencia_lista         ir al estado 54
-    expresion               ir al estado 55
-    funcion                 ir al estado 56
+    bloque                  ir al estado 46
+    sentencia               ir al estado 154
+    sentencia_asignacion    ir al estado 48
+    sentencia_if            ir al estado 49
+    sentencia_while         ir al estado 50
+    sentencia_entrada       ir al estado 51
+    sentencia_salida        ir al estado 52
+    sentencia_return        ir al estado 53
+    sentencia_repeat_until  ir al estado 54
+    sentencia_lista         ir al estado 55
+    expresion               ir al estado 56
+    funcion                 ir al estado 57
+    constante               ir al estado 58
+    lista                   ir al estado 59
 
 
-Estado 142
+Estado 152
 
    33 sentencia_if: IF PARIZQ expresion PARDER sentencia sentencia_else .
 
     $default  reduce usando la regla 33 (sentencia_if)
 
 
-Estado 143
+Estado 153
 
    46 sentencia_repeat_until: REPEAT sentencia UNTIL PARIZQ expresion PARDER . PYC
 
-    PYC  desplazar e ir al estado 145
+    PYC  desplazar e ir al estado 155
 
 
-Estado 144
+Estado 154
 
    34 sentencia_else: ELSE sentencia .
 
     $default  reduce usando la regla 34 (sentencia_else)
 
 
-Estado 145
+Estado 155
 
    46 sentencia_repeat_until: REPEAT sentencia UNTIL PARIZQ expresion PARDER PYC .
 
