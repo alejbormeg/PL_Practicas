@@ -30,7 +30,10 @@ char* msgError[256];
 "bool"                                  {yylval.atributo = 3; yylval.dtipo = booleano; return PRIMITIVO; }
 
 
-"list of"                               {yylval.atributo = 4; yylval.dtipo = lista; return ESTRUCTURA; } // TODO Muchísimo cuidado con este, hay que cambiarlo en el semántico, porque ellos distinguen entre 4 posibles tipos de listas
+"list"" "+"of"" "+"int"          { yylval.atributo = 0; yylval.dtipo = listaEntero; return ESTRUCTURA; } // WARNING hemos separado tipo de estructura en todos los list of
+"list"" "+"of"" "+"float"        { yylval.atributo = 1; yylval.dtipo = listaReal; return ESTRUCTURA; }
+"list"" "+"of"" "+"char"         { yylval.atributo = 2; yylval.dtipo = listaCaracter; return ESTRUCTURA; }
+"list"" "+"of"" "+"bool"         { yylval.atributo = 3; yylval.dtipo = listaBooleano; return ESTRUCTURA; }
 
 
 "if"                                    { return IF; }

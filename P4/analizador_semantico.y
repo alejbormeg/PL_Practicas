@@ -24,7 +24,7 @@ int yylex();
 /* ESTRUCTURA TABLA DE SIMBOLOS */
 /********************************/
 
-// TODO  Tipo de entrada
+//Tipo de entrada
 typedef enum {
   marca,
   funcion,
@@ -32,41 +32,40 @@ typedef enum {
   parametroFormal
 } TipoEntrada;
 
-// TODO  Si TipoEntrada es función, variable ... indica el tipo de dato
+//Si TipoEntrada es función, variable ... indica el tipo de dato
 typedef enum {
   entero,
   real,
   booleano,
   caracter,
-  // TODO : Esto hay que cambiarlo
   listaEntero,
   listaReal,
   listaBooleano,
   listaCaracter,
-  error // TODO  Si da un error con expresiones
+  error //Si da un error con expresiones
 } TipoDato;
 
 typedef struct {
-  TipoEntrada tipoEntrada;    // TODO  Tipo de entrada
-  char* nombre;               // TODO  Nombre del identificador (no se usa con marca)
-  TipoDato tipoDato;          // TODO  Tipo de dato
-  int parametros;             // TODO  Nº de parámetros (para funciones)
+  TipoEntrada tipoEntrada;    // Tipo de entrada
+  char* nombre;               // Nombre del identificador (no se usa con marca)
+  TipoDato tipoDato;          // Tipo de dato
+  int parametros;             // Nº de parámetros (para funciones)
 } EntradaTS;
 
-// TODO  La Tabla de Símbolos
+//La Tabla de Símbolos
 EntradaTS ts[MAX_TAM_TS];
 
-// TODO  Última entrada de la TS usada.
+//Última entrada de la TS usada.
 long int tope = -1;
 
-// TODO  Tipo auxiliar para declaración de variables
+//Tipo auxiliar para declaración de variables
 TipoDato tipoTmp;
 
-// TODO  Si entramos en un bloque de un subprograma
-// TODO  Si es 0 es un bloque de un subprograma; en caso contrario no
+//Si entramos en un bloque de un subprograma
+//Si es 0 es un bloque de un subprograma; en caso contrario no
 int subProg = 0;
 
-// TODO  Variables usadas para pasar argumentos a una función
+//Variables usadas para pasar argumentos a una función
 #define MAX_ARGS 50
 TipoDato argumentos_tipo_datos[MAX_ARGS];
 int n_argumentos = 0;
@@ -88,15 +87,14 @@ char* tipoAString(TipoDato tipo_dato) {
       return "bool";
     case caracter:
       return "char";
-    // TODO  Cambiar esto
     case listaReal:
-      return "list_of float";
+      return "list of float";
     case listaEntero:
-      return "list_of int";
+      return "list of int";
     case listaCaracter:
-      return "list_of char";
+      return "list of char";
     case listaBooleano:
-      return "list_of bool";
+      return "list of bool";
     case error:
       return "error";
     default:
@@ -105,7 +103,7 @@ char* tipoAString(TipoDato tipo_dato) {
   }
 }
 
-// TODO  Cambiarlo para adaptarlo a nuestras listas
+
 TipoDato tipoLista(TipoDato tipo_dato) {
   switch (tipo_dato) {
     case listaEntero:
@@ -177,7 +175,7 @@ void imprimir() {
 }
 
 void idRepetida(char* id) {
-  // TODO  Miramos si id estaba declarado después de la última marca
+  //Miramos si id estaba declarado después de la última marca
   int repetida = 0;
   for (int i = tope; !repetida && ts[i].tipoEntrada != marca; --i) {
     if (ts[i].tipoEntrada != parametroFormal && !strcmp(ts[i].nombre, id)) {
@@ -189,7 +187,7 @@ void idRepetida(char* id) {
 }
 
 void insertarEntrada(TipoEntrada te, char* nombre, TipoDato tipo_dato, int nParam) {
-  // TODO  Hacemos la entrada
+  //Hacemos la entrada
   EntradaTS entrada = {
     te,
     strdup(nombre),
@@ -197,19 +195,19 @@ void insertarEntrada(TipoEntrada te, char* nombre, TipoDato tipo_dato, int nPara
     nParam
   };
 
-  // TODO  Si la tabla está llena da error
+  //Si la tabla está llena da error
   if (tope + 1 >= MAX_TAM_TS) {
     sprintf(msgError, "ERROR SINTÁCTICO: La tabla de símbolos está llena\n");
     yyerror(msgError);
   }
-  // TODO  Aumentamos el tope
+  //Aumentamos el tope
   ++tope;
-  // TODO  Añadimos la nueva entrada
+  //Añadimos la nueva entrada
   ts[tope] = entrada;
 }
 
-// TODO  Busca una entrada en la TS con el id especificado en el ámbito del programa
-// TODO  actual. Si no lo encuentra, devuelve -1. No gestiona errores!
+//Busca una entrada en la TS con el id especificado en el ámbito del programa
+//actual. Si no lo encuentra, devuelve -1. No gestiona errores!
 int buscarEntrada(char* id) {
   int i = tope;
   while(i >= 0 && (ts[i].tipoEntrada == parametroFormal || strcmp(id, ts[i].nombre)))
@@ -227,9 +225,9 @@ int buscarEntrada(char* id) {
 /*************************************/
 
 void insertarMarca() {
-  // TODO  Metemos la marca
+  //Metemos la marca
   insertarEntrada(marca, "", -1, -1);
-  // TODO  Si es subprograma añadimos las variables al bloque
+  //Si es subprograma añadimos las variables al bloque
   if (subProg) {
     for (int i = tope - 1; ts[i].tipoEntrada != funcion; --i) {
       insertarEntrada(variable, ts[i].nombre, ts[i].tipoDato, -1);
@@ -239,28 +237,28 @@ void insertarMarca() {
 }
 
 void vaciarEntradas() {
-  // TODO  Hasta la última marca borramos todo
+  //Hasta la última marca borramos todo
   while (ts[tope].tipoEntrada != marca)
     --tope;
-  // TODO  Elimina la última marca
+  //Elimina la última marca
   --tope;
 }
 
 void insertarVariable(char* id) {
-  // TODO  Comprobamos que no esté repetida la id
+  //Comprobamos que no esté repetida la id
   idRepetida(id);
   insertarEntrada(variable, id, tipoTmp, -1);
 }
 
 void insertarFuncion(TipoDato tipoDato, char* id) {
-  // TODO  Comprobamos que el id no esté usado ya
+  //Comprobamos que el id no esté usado ya
   idRepetida(id);
   insertarEntrada(funcion, id, tipoDato, 0);
 }
 
 void insertarParametro(TipoDato tipoDato, char* id) {
-  // TODO  Comprobamos que no haya parámetros con nombres repetidos
-  // TODO  Además guardamos el índice de la función
+  //Comprobamos que no haya parámetros con nombres repetidos
+  //Además guardamos el índice de la función
   int i;
   int parametroRepetido = 0;
   for (i = tope; !parametroRepetido && ts[i].tipoEntrada != funcion; --i) {
@@ -270,9 +268,9 @@ void insertarParametro(TipoDato tipoDato, char* id) {
       parametroRepetido = 1;
     }
   }
-  // TODO  Añadimos la entrada
+  //Añadimos la entrada
   insertarEntrada(parametroFormal, id, tipoDato, -1);
-  // TODO  Actualizamos el nº de parámetros de la función
+  //Actualizamos el nº de parámetros de la función
   ++ts[i].parametros;
 }
 
@@ -344,7 +342,7 @@ TipoDato masMenos(int atr, TipoDato td) {
   return td;
 }
 
-TipoDato excl(TipoDato td) {
+TipoDato not(TipoDato td) {
   if (td == error)
     return error;
   if (td != booleano) {
@@ -356,11 +354,13 @@ TipoDato excl(TipoDato td) {
   return booleano;
 }
 
-TipoDato intHash(int atr, TipoDato td) {
+// Nos hemos quedado aqui
+TipoDato interrogacion(TipoDato td) {
   if (td == error)
     return error;
 
-  char* operador = atr ? "#" : "?";
+// WARNING Esto se hace suponiendo que la interrogación está sola en la tabla tokens
+  char* operador = "?";
   if (!esLista(td)) {
     sprintf(msgError, "ERROR SINTÁCTICO: operador %s no aplicable al tipo %s\n",
         operador, tipoAString(td));
@@ -368,10 +368,7 @@ TipoDato intHash(int atr, TipoDato td) {
     return error;
   }
 
-  if (atr)
     return tipoLista(td);
-  else
-    return entero;
 }
 
 TipoDato at(TipoDato td1, TipoDato td2) {
@@ -776,9 +773,9 @@ sentencia_lista : expresion OPERLISTA PYC { sentenciaLista($1.dtipo, $2.lexema);
 // TODO  Revisar todas las funciones, para nosotros NOT==EXCL
 expresion : PARIZQ expresion PARDER        { $$.dtipo = $2.dtipo; }
           | MASMENOS expresion %prec NOT   { $$.dtipo = masMenos($1.atributo, $2.dtipo); } // TODO  Revisar not---EXCL
-          | BAR expresion                  { $$.dtipo = intHash($1.atributo, $2.dtipo); } // TODO   Revisar Hash--Bar
-          | NOT expresion                  { $$.dtipo = excl($2.dtipo); } // TODO  TODO Revisar not -- EXCL
-          | INT expresion                  { $$.dtipo = intHash($1.atributo, $2.dtipo); } // TODO  Revisar y adaptar para INT
+          | BAR expresion                  { $$.dtipo = interrogacion($1.atributo, $2.dtipo); } // TODO   Revisar Hash--Bar
+          | NOT expresion                  { $$.dtipo = not($2.dtipo); } // TODO Revisar not -- EXCL
+          | INT expresion                  { $$.dtipo = interrogacion($1.atributo, $2.dtipo); } // TODO  Revisar y adaptar para INT
           | MENOSMENOS expresion
           | expresion MENOSMENOS expresion // TODO  Hacer funcion para el MENOSMENOS
           | expresion ORLOG expresion     { $$.dtipo = orLog($1.dtipo, $3.dtipo); } // TODO Debería estar bien esta función, pero revisar

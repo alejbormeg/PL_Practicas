@@ -3,8 +3,8 @@
 ana8: y.tab.c
 	gcc -w -o ana8 y.tab.c
 
-y.tab.c: analizador_sintactico.y lex.yy.c
-	bison -d -v -o y.tab.c analizador_sintactico.y
+y.tab.c: analizador_semantico.y lex.yy.c
+	bison -d -v -o y.tab.c analizador_semantico.y
 
 lex.yy.c: analizador_lexico.lex
 	flex analizador_lexico.lex
