@@ -9,6 +9,7 @@ main(){
 		list of char pc, pc2;
 		list of bool pl; 
 	}
+	
 
 	int funcionA (int a1, float a2 char a3) {
 		var {
@@ -38,7 +39,7 @@ main(){
 
 			}
 	
-			xf = funcionC(true, 10);
+			xf = funcionC(true, 10+);
 			x2 = xf * (funcionC(false, 1) - funcionC(true, 23))/10.0;
 
 			while (x2 * funcionC(false, 1) - xf < 10.0)

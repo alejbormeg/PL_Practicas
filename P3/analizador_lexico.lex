@@ -45,7 +45,7 @@ int acarrero = 1;
 "++"                                    {return OPERMASMAS; }
 "+"                                     {return MASMENOS;}
 "-"                                     {return MASMENOS;}
-"//"                                    {return BAR; }
+"//*"                                    {return BAR; }
 "?"                                     {return INT; }
 "not"                                   {return NOT; }
 "$"                                     {return DOLLAR; }

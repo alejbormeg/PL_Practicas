@@ -30,7 +30,7 @@ char* msgError[256];
 "bool"                                  {yylval.atributo = 3; yylval.dtipo = booleano; return PRIMITIVO; }
 
 
-"list of"                               {yylval.atributo = 4; yylval.dtipo = lista; return ESTRUCTURA; } //Muchísimo cuidado con este, hay que cambiarlo en el semántico, porque ellos distinguen entre 4 posibles tipos de listas
+"list of"                               {yylval.atributo = 4; yylval.dtipo = lista; return ESTRUCTURA; } // TODO Muchísimo cuidado con este, hay que cambiarlo en el semántico, porque ellos distinguen entre 4 posibles tipos de listas
 
 
 "if"                                    { return IF; }
@@ -46,7 +46,7 @@ char* msgError[256];
 
 "*"                                     {yylval.atributo = 0; return MULDIV;}
 "/"                                     {yylval.atributo = 1; return MULDIV;}
-"%"|"^"                                 {return PORPOT;} //Revisarlo y pensarlo
+"%"|"^"                                 {return PORPOT;} // TODO Revisarlo y pensarlo
 
 "=="                                    {yylval.atributo = 0; return EQN; }
 "!="                                    {yylval.atributo = 1; return EQN; }
@@ -61,15 +61,15 @@ char* msgError[256];
 ">="                                    { yylval.atributo = 3; return REL; }
 
 
-"--"                                    {return MENOSMENOS; } //Cuidado con este a ver que pasa
+"--"                                    {return MENOSMENOS; } // TODO Cuidado con este a ver que pasa
 
 "++"                                    {return OPERMASMAS; }
 
 "+"                                     { yylval.atributo = 0; return MASMENOS; }
 "-"                                     { yylval.atributo = 1; return MASMENOS; }
 
-"//"                                    {return BAR; } //Adaptarlo al # de ellos
-"?"                                     {return INT; } //Adaptarlo 
+"//"                                    {return BAR; } // TODO Adaptarlo al # de ellos
+"?"                                     {return INT; } // TODO Adaptarlo 
 
 "not"                                   {return NOT; }
 

@@ -88,8 +88,7 @@ tipo  : PRIMITIVO
 lista_variables : ID COMA lista_variables
                 | ID ;
 
-cabecera_subprog : tipo ID PARIZQ parametros PARDER 
-                 | error ;
+cabecera_subprog : tipo ID PARIZQ parametros PARDER ;
 
 
 lista_expresiones : lista_expresiones COMA expresion
@@ -97,8 +96,7 @@ lista_expresiones : lista_expresiones COMA expresion
 
 
 parametros : parametros COMA tipo ID
-           | tipo ID 
-           | error ;
+           | tipo ID ;
 
 sentencias : sentencias sentencia
            | %empty ;
@@ -161,8 +159,7 @@ expresion : PARIZQ expresion PARDER
           | expresion OPERMASMAS expresion ARROBA expresion
           | ID
           | constante
-          | funcion 
-          | error ;
+          | funcion ;
 
 funcion : ID PARIZQ argumentos PARDER;
 
