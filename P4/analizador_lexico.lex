@@ -72,7 +72,7 @@ char* msgError[256];
 "-"                                     { yylval.atributo = 1; return MASMENOS; }
 
 "//"                                    {return BAR; } // TODO Adaptarlo al # de ellos
-"?"                                     {return INT; } // TODO Adaptarlo 
+"?"                                     {return INT; }
 
 "not"                                   {return NOT; }
 

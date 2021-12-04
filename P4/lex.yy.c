@@ -1091,7 +1091,7 @@ YY_RULE_SETUP
 case 50:
 YY_RULE_SETUP
 #line 75 "analizador_lexico.lex"
-{return INT; } // TODO Adaptarlo 
+{return INT; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP

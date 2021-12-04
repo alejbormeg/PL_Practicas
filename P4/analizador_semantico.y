@@ -354,7 +354,7 @@ TipoDato not(TipoDato td) {
   return booleano;
 }
 
-// Nos hemos quedado aqui
+
 TipoDato interrogacion(TipoDato td) {
   if (td == error)
     return error;
@@ -371,7 +371,7 @@ TipoDato interrogacion(TipoDato td) {
     return tipoLista(td);
 }
 
-TipoDato at(TipoDato td1, TipoDato td2) {
+TipoDato arroba(TipoDato td1, TipoDato td2) {
   if (td1 == error || td2 == error)
     return error;
 
@@ -428,12 +428,12 @@ TipoDato eqn(TipoDato td1, int atr, TipoDato td2) {
   return booleano;
 }
 
-// TODO  Comprueba el tipo de la operación binaria realizada. En caso de error, lo
-// TODO  gestiona. En caso contrario, devuelve el tipo tras la operación binaria.
-// TODO  IMPORTANTE: Se asume que op1 esta asociado al valor 1 del atributo (atr)
-// TODO  mientras que op2 está asociado al valor 0.
-// TODO  IMPORTANE: Se asume que el op1 es simétrico y que el op2 no es simétrico y
-// TODO  unicamente funciona de la forma "T op2 T" o bien "list_of T op2 T".
+//Comprueba el tipo de la operación binaria realizada. En caso de error, lo
+//gestiona. En caso contrario, devuelve el tipo tras la operación binaria.
+//IMPORTANTE: Se asume que op1 esta asociado al valor 1 del atributo (atr)
+//mientras que op2 está asociado al valor 0.
+//IMPORTANE: Se asume que el op1 es simétrico y que el op2 no es simétrico y
+//unicamente funciona de la forma "T op2 T" o bien "list_of T op2 T".
 TipoDato op2Binario(TipoDato td1, int atr, TipoDato td2, char* op1, char* op2) {
   if (td1 == error || td2 == error)
     return error;
@@ -451,8 +451,8 @@ TipoDato op2Binario(TipoDato td1, int atr, TipoDato td2, char* op1, char* op2) {
   TipoDato resultado = td1;
 
   if (!op_error && (l1 || l2) ) {
-    // TODO  Llegado a este punto hay exactamente una lista. Vemos si el tipo de
-    // TODO  la lista encaja con el tipo del otro atributo:
+    //Llegado a este punto hay exactamente una lista. Vemos si el tipo de
+    //la lista encaja con el tipo del otro atributo:
     if ( (operador == op2) || l1 ) {
       resultado = l1 ? td1 : td2;
     } else {
@@ -469,7 +469,7 @@ TipoDato op2Binario(TipoDato td1, int atr, TipoDato td2, char* op1, char* op2) {
   return resultado;
 }
 
-TipoDato addSub(TipoDato td1, int atr, TipoDato td2) {
+TipoDato masmenos(TipoDato td1, int atr, TipoDato td2) {
   return op2Binario(td1, atr, td2, "-", "+");
 }
 
@@ -490,6 +490,8 @@ TipoDato porPor(TipoDato td1, TipoDato td2) {
 
   return td1;
 }
+
+// TODO Hacer el PORPOT
 
 TipoDato borrList(TipoDato td1, int atr, TipoDato td2) {
   if (td1 == error || td2 == error)
@@ -605,12 +607,12 @@ TipoDato comprobarFuncion(char* id) {
     }
   }
 
-  // TODO  De esta forma mostramos el máximo número de errores posibles.
+  //De esta forma mostramos el máximo número de errores posibles.
 
-  // TODO  Borramos los argumentos recibidos.
+  //Borramos los argumentos recibidos.
   n_argumentos = 0;
 
-  // TODO  Devolvemos el tipo de la función.
+  //Devolvemos el tipo de la función.
   return ts[iFuncion].tipoDato;
 }
 
@@ -636,7 +638,6 @@ TipoDato comprobarFuncion(char* id) {
 %token COMA
 %token ASIGN
 %token PARDER PARIZQ
-%token OPUNARIO
 %token ESTRUCTURA
 %token ID
 /* Ternario */
@@ -672,22 +673,19 @@ TipoDato comprobarFuncion(char* id) {
 
 %right NOT
 
-%precedence INT BAR DOLLAR 
+%precedence INT DOLLAR BAR
 %%
 
 programa : MAIN PARIZQ PARDER bloque ;
 
-bloque : INICIOBLOQUE { insertarMarca(); } 
-	 declar_de_variables_locales 
-	 declar_de_subprogs 
-	 sentencias 
-	 FINBLOQUE { vaciarEntradas(); };
+bloque : INICIOBLOQUE { insertarMarca(); } declar_de_variables_locales declar_de_subprogs sentencias FINBLOQUE { vaciarEntradas(); };
 
 
 declar_de_subprogs : declar_de_subprogs declar_subprog
                    | %empty ;
 
-declar_subprog : cabecera_subprog { subProg = 1; } bloque ;
+declar_subprog : cabecera_subprog { subProg = 1; } 
+                 bloque ;
 
 declar_de_variables_locales : VAR INICIOBLOQUE variables_locales FINBLOQUE
                             | %empty ;
@@ -761,29 +759,29 @@ expresion_cadena : expresion
 sentencia_return : RETURN expresion PYC { comprobarReturn($2.dtipo); };
 
 
-// TODO  Hay que adaptarlo para REPEAT-UNTIL
+// TODO Hay que adaptarlo para REPEAT-UNTIL
 sentencia_repeat_until  : REPEAT sentencia UNTIL PARIZQ expresion PARDER PYC { expresionBooleana($5.dtipo); };
 
 // TODO  Revisar estas funciones porque nuestras listas son diferentes
 sentencia_lista : expresion OPERLISTA PYC { sentenciaLista($1.dtipo, $2.lexema); }
-                | INT expresion PYC
+                | INT expresion PYC    { $$.dtipo = interrogacion($2.dtipo); } // TODO Revisar
                 | DOLLAR expresion PYC { sentenciaLista($2.dtipo, $1.lexema); };
 
 
 // TODO  Revisar todas las funciones, para nosotros NOT==EXCL
 expresion : PARIZQ expresion PARDER        { $$.dtipo = $2.dtipo; }
           | MASMENOS expresion %prec NOT   { $$.dtipo = masMenos($1.atributo, $2.dtipo); } // TODO  Revisar not---EXCL
-          | BAR expresion                  { $$.dtipo = interrogacion($1.atributo, $2.dtipo); } // TODO   Revisar Hash--Bar
+
           | NOT expresion                  { $$.dtipo = not($2.dtipo); } // TODO Revisar not -- EXCL
-          | INT expresion                  { $$.dtipo = interrogacion($1.atributo, $2.dtipo); } // TODO  Revisar y adaptar para INT
+          | INT expresion                  { $$.dtipo = interrogacion($2.dtipo); }
           | MENOSMENOS expresion
           | expresion MENOSMENOS expresion // TODO  Hacer funcion para el MENOSMENOS
           | expresion ORLOG expresion     { $$.dtipo = orLog($1.dtipo, $3.dtipo); } // TODO Debería estar bien esta función, pero revisar
           | expresion ANDLOG expresion    { $$.dtipo = andLog($1.dtipo, $3.dtipo); } // TODO Debería estar bien esta función, pero revisar
-          | expresion ARROBA expresion    { $$.dtipo = at($1.dtipo, $3.dtipo); } // TODO Cambiar at por arroba y revisar
+          | expresion ARROBA expresion    { $$.dtipo = arroba($1.dtipo, $3.dtipo); } // TODO Cambiar at por arroba y revisar
           | expresion XOR expresion       // TODO Crear una función para XOR
           | expresion REL expresion       { $$.dtipo = rel($1.dtipo, $2.atributo, $3.dtipo); } // TODO Debería estar bien
-          | expresion MASMENOS expresion  { $$.dtipo = addSub($1.dtipo, $2.atributo, $3.dtipo); } // TODO Revisar y adaptar nombre a MASMENOS
+          | expresion MASMENOS expresion  { $$.dtipo = masmenos($1.dtipo, $2.atributo, $3.dtipo); } // TODO Revisar y adaptar nombre a MASMENOS
           | expresion PORPOR expresion    { $$.dtipo = porPor($1.dtipo, $3.dtipo); } // TODO Debería estar bien 
           | expresion PORPOT expresion    // TODO Hacer función para PORPOT
           | expresion MULDIV expresion    { $$.dtipo = porDiv($1.dtipo, $2.atributo, $3.dtipo); } // TODO Debería estar bien
