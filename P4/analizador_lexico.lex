@@ -49,7 +49,7 @@ char* msgError[256];
 
 "*"                                     {yylval.atributo = 0; return MULDIV;}
 "/"                                     {yylval.atributo = 1; return MULDIV;}
-"%"|"^"                                 {return PORPOT;} // TODO Revisarlo y pensarlo
+"%"                                {return PORPOT;} // Hemso quitado esto     |"^" 
 
 "=="                                    {yylval.atributo = 0; return EQN; }
 "!="                                    {yylval.atributo = 1; return EQN; }
@@ -71,7 +71,7 @@ char* msgError[256];
 "+"                                     { yylval.atributo = 0; return MASMENOS; }
 "-"                                     { yylval.atributo = 1; return MASMENOS; }
 
-"//"                                    {return BAR; } // TODO Adaptarlo al # de ellos
+"//"                                    {return BAR; } // TODO Adaptarlo al # de ellos, supuestamente esto no debería de hacer na
 "?"                                     {return INT; }
 
 "not"                                   {return NOT; }

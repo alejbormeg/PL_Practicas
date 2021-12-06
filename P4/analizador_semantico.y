@@ -616,6 +616,8 @@ TipoDato comprobarFuncion(char* id) {
   return ts[iFuncion].tipoDato;
 }
 
+// ---- código refinamiento segundo  ----
+
 #define YYSTYPE Atributos
 
 %}
@@ -759,7 +761,7 @@ expresion_cadena : expresion
 sentencia_return : RETURN expresion PYC { comprobarReturn($2.dtipo); };
 
 
-// TODO Hay que adaptarlo para REPEAT-UNTIL
+// Para la sentencia de repetición se comprueba que el tipo sea booleano
 sentencia_repeat_until  : REPEAT sentencia UNTIL PARIZQ expresion PARDER PYC { expresionBooleana($5.dtipo); };
 
 // TODO  Revisar estas funciones porque nuestras listas son diferentes
@@ -770,20 +772,18 @@ sentencia_lista : expresion OPERLISTA PYC { sentenciaLista($1.dtipo, $2.lexema);
 
 // TODO  Revisar todas las funciones, para nosotros NOT==EXCL
 expresion : PARIZQ expresion PARDER        { $$.dtipo = $2.dtipo; }
-          | MASMENOS expresion %prec NOT   { $$.dtipo = masMenos($1.atributo, $2.dtipo); } // TODO  Revisar not---EXCL
-
-          | NOT expresion                  { $$.dtipo = not($2.dtipo); } // TODO Revisar not -- EXCL
+          | MASMENOS expresion %prec NOT   { $$.dtipo = masMenos($1.atributo, $2.dtipo); } 
+          | NOT expresion                  { $$.dtipo = not($2.dtipo); } 
           | INT expresion                  { $$.dtipo = interrogacion($2.dtipo); }
-          | MENOSMENOS expresion
-          | expresion MENOSMENOS expresion // TODO  Hacer funcion para el MENOSMENOS
-          | expresion ORLOG expresion     { $$.dtipo = orLog($1.dtipo, $3.dtipo); } // TODO Debería estar bien esta función, pero revisar
-          | expresion ANDLOG expresion    { $$.dtipo = andLog($1.dtipo, $3.dtipo); } // TODO Debería estar bien esta función, pero revisar
-          | expresion ARROBA expresion    { $$.dtipo = arroba($1.dtipo, $3.dtipo); } // TODO Cambiar at por arroba y revisar
-          | expresion XOR expresion       // TODO Crear una función para XOR
+          | MENOSMENOS expresion	  { $$.dtipo = masMenos("-",$2.dtipo); }  // Se reutiliza la función masMenos porque suponemos que devuelve valor del mismo tipo 
+          | expresion MENOSMENOS expresion { $$.dtipo = borrList($1.dtipo, $2.atributo, $3.dtipo)} 
+          | expresion ORLOG expresion     { $$.dtipo = orLog($1.dtipo, $3.dtipo); } 
+          | expresion ANDLOG expresion    { $$.dtipo = andLog($1.dtipo, $3.dtipo); } 
+          | expresion ARROBA expresion    { $$.dtipo = arroba($1.dtipo, $3.dtipo); } 
           | expresion REL expresion       { $$.dtipo = rel($1.dtipo, $2.atributo, $3.dtipo); } // TODO Debería estar bien
           | expresion MASMENOS expresion  { $$.dtipo = masmenos($1.dtipo, $2.atributo, $3.dtipo); } // TODO Revisar y adaptar nombre a MASMENOS
           | expresion PORPOR expresion    { $$.dtipo = porPor($1.dtipo, $3.dtipo); } // TODO Debería estar bien 
-          | expresion PORPOT expresion    // TODO Hacer función para PORPOT
+          | expresion PORPOT expresion    { $$.dtipo = borrList($1.dtipo, $2.atributo, $3.dtipo)}
           | expresion MULDIV expresion    { $$.dtipo = porDiv($1.dtipo, $2.atributo, $3.dtipo); } // TODO Debería estar bien
           | expresion EQN expresion       { $$.dtipo = eqn($1.dtipo, $2.atributo, $3.dtipo); } // TODO Debería estar bien
           | expresion OPERMASMAS expresion ARROBA expresion { $$.dtipo = ternario($1.dtipo, $3.dtipo, $5.dtipo); } // TODO Deberia estar bien
