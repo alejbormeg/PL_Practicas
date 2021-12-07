@@ -116,7 +116,7 @@ typedef enum {
 
 typedef struct {
   TipoEntrada tipoEntrada;    // Tipo de entrada
-  char* nombre;               // Nombre del identificador (no se usa con marca)
+  char* nombre;               // Nombre del i (no se usa con marca)
   TipoDato tipoDato;          // Tipo de dato
   int parametros;             // Nº de parámetros (para funciones)
 } EntradaTS;
@@ -282,7 +282,10 @@ int buscarEntrada(char* id) {
   while(i >= 0 && (ts[i].tipoEntrada == parametroFormal || strcmp(id, ts[i].nombre)))
     --i;
 
-  if (i < 0) {
+  // TODO habría que ser más estrictos en el caso de false y true. viendo que el tipo es verdaderamente booleano
+  // esto puede ser una fuente de error para futuros casos
+  // por ejemplo, hace que se trague el error float f = true; xD
+  if (i < 0 && strcmp(id, "true")  &&  strcmp(id, "false") ) {
     sprintf(msgError, "ERROR SINTÁCTICO: identificador %s no declarado\n", id);
     yyerror(msgError);
   }
@@ -690,7 +693,7 @@ TipoDato comprobarFuncion(char* id) {
 #define YYSTYPE Atributos
 
 
-#line 694 "y.tab.c"
+#line 697 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -1160,15 +1163,15 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   681,   681,   683,   683,   686,   687,   689,   689,   692,
-     693,   695,   696,   699,   699,   700,   701,   702,   705,   706,
-     708,   708,   712,   716,   723,   724,   725,   728,   729,   731,
-     732,   733,   734,   735,   736,   737,   738,   739,   741,   743,
-     745,   746,   748,   750,   751,   752,   754,   756,   757,   759,
-     760,   762,   766,   769,   770,   771,   775,   776,   777,   778,
-     779,   780,   781,   782,   783,   784,   785,   786,   787,   788,
-     789,   790,   791,   792,   793,   794,   798,   800,   801,   804,
-     805,   808,   809
+       0,   684,   684,   686,   686,   689,   690,   692,   692,   695,
+     696,   698,   699,   702,   702,   703,   704,   705,   708,   709,
+     711,   711,   715,   719,   724,   725,   726,   729,   730,   732,
+     733,   734,   735,   736,   737,   738,   739,   740,   742,   744,
+     746,   747,   749,   751,   752,   753,   755,   757,   758,   760,
+     761,   763,   767,   770,   771,   772,   776,   777,   778,   779,
+     780,   781,   782,   783,   784,   785,   786,   787,   788,   789,
+     790,   791,   792,   793,   794,   795,   799,   801,   802,   805,
+     806,   809,   810
 };
 #endif
 
@@ -2110,265 +2113,265 @@ yyreduce:
   switch (yyn)
     {
   case 3:
-#line 683 "analizador_semantico.y"
+#line 686 "analizador_semantico.y"
                       { insertarMarca(); }
-#line 2116 "y.tab.c"
+#line 2119 "y.tab.c"
     break;
 
   case 4:
-#line 683 "analizador_semantico.y"
+#line 686 "analizador_semantico.y"
                                                                                                                { vaciarEntradas(); }
-#line 2122 "y.tab.c"
+#line 2125 "y.tab.c"
     break;
 
   case 7:
-#line 689 "analizador_semantico.y"
+#line 692 "analizador_semantico.y"
                                   { subProg = 1; }
-#line 2128 "y.tab.c"
+#line 2131 "y.tab.c"
     break;
 
   case 13:
-#line 699 "analizador_semantico.y"
+#line 702 "analizador_semantico.y"
                                { tipoTmp = yyvsp[0].dtipo; }
-#line 2134 "y.tab.c"
+#line 2137 "y.tab.c"
     break;
 
   case 18:
-#line 705 "analizador_semantico.y"
+#line 708 "analizador_semantico.y"
                                            { insertarVariable(yyvsp[-2].lexema); }
-#line 2140 "y.tab.c"
+#line 2143 "y.tab.c"
     break;
 
   case 19:
-#line 706 "analizador_semantico.y"
+#line 709 "analizador_semantico.y"
                      { insertarVariable(yyvsp[0].lexema); }
-#line 2146 "y.tab.c"
+#line 2149 "y.tab.c"
     break;
 
   case 20:
-#line 708 "analizador_semantico.y"
+#line 711 "analizador_semantico.y"
                            { insertarFuncion(yyvsp[-1].dtipo, yyvsp[0].lexema); }
-#line 2152 "y.tab.c"
+#line 2155 "y.tab.c"
     break;
 
   case 22:
-#line 712 "analizador_semantico.y"
+#line 715 "analizador_semantico.y"
                                                      {
                     argumentos_tipo_datos[n_argumentos] = yyvsp[0].dtipo;
                     n_argumentos++;
                   }
-#line 2161 "y.tab.c"
+#line 2164 "y.tab.c"
     break;
 
   case 23:
-#line 716 "analizador_semantico.y"
+#line 719 "analizador_semantico.y"
                               {
                     argumentos_tipo_datos[n_argumentos] = yyvsp[0].dtipo;
                     n_argumentos++;
                   }
-#line 2170 "y.tab.c"
+#line 2173 "y.tab.c"
     break;
 
   case 24:
-#line 723 "analizador_semantico.y"
+#line 724 "analizador_semantico.y"
                                      { insertarParametro(yyvsp[-1].dtipo, yyvsp[0].lexema); }
-#line 2176 "y.tab.c"
+#line 2179 "y.tab.c"
     break;
 
   case 25:
-#line 724 "analizador_semantico.y"
+#line 725 "analizador_semantico.y"
                      { insertarParametro(yyvsp[-1].dtipo, yyvsp[0].lexema); }
-#line 2182 "y.tab.c"
+#line 2185 "y.tab.c"
     break;
 
   case 38:
-#line 741 "analizador_semantico.y"
+#line 742 "analizador_semantico.y"
                                               { comprobarAsignacion(yyvsp[-3].lexema, yyvsp[-1].dtipo); }
-#line 2188 "y.tab.c"
+#line 2191 "y.tab.c"
     break;
 
   case 39:
-#line 743 "analizador_semantico.y"
+#line 744 "analizador_semantico.y"
                                                                     {expresionBooleana(yyvsp[-3].dtipo); }
-#line 2194 "y.tab.c"
+#line 2197 "y.tab.c"
     break;
 
   case 42:
-#line 748 "analizador_semantico.y"
+#line 749 "analizador_semantico.y"
                                                           { expresionBooleana(yyvsp[-2].dtipo); }
-#line 2200 "y.tab.c"
+#line 2203 "y.tab.c"
     break;
 
   case 51:
-#line 762 "analizador_semantico.y"
+#line 763 "analizador_semantico.y"
                                         { comprobarReturn(yyvsp[-1].dtipo); }
-#line 2206 "y.tab.c"
+#line 2209 "y.tab.c"
     break;
 
   case 52:
-#line 766 "analizador_semantico.y"
+#line 767 "analizador_semantico.y"
                                                                              { expresionBooleana(yyvsp[-2].dtipo); }
-#line 2212 "y.tab.c"
+#line 2215 "y.tab.c"
     break;
 
   case 53:
-#line 769 "analizador_semantico.y"
+#line 770 "analizador_semantico.y"
                                           { sentenciaLista(yyvsp[-2].dtipo, yyvsp[-1].lexema); }
-#line 2218 "y.tab.c"
+#line 2221 "y.tab.c"
     break;
 
   case 54:
-#line 770 "analizador_semantico.y"
+#line 771 "analizador_semantico.y"
                                        { yyval.dtipo = interrogacion(yyvsp[-1].dtipo); }
-#line 2224 "y.tab.c"
+#line 2227 "y.tab.c"
     break;
 
   case 55:
-#line 771 "analizador_semantico.y"
+#line 772 "analizador_semantico.y"
                                        { sentenciaLista(yyvsp[-1].dtipo, yyvsp[-2].lexema); }
-#line 2230 "y.tab.c"
+#line 2233 "y.tab.c"
     break;
 
   case 56:
-#line 775 "analizador_semantico.y"
+#line 776 "analizador_semantico.y"
                                            { yyval.dtipo = yyvsp[-1].dtipo; }
-#line 2236 "y.tab.c"
+#line 2239 "y.tab.c"
     break;
 
   case 57:
-#line 776 "analizador_semantico.y"
+#line 777 "analizador_semantico.y"
                                            { yyval.dtipo = masMenos(yyvsp[-1].atributo, yyvsp[0].dtipo); }
-#line 2242 "y.tab.c"
+#line 2245 "y.tab.c"
     break;
 
   case 58:
-#line 777 "analizador_semantico.y"
+#line 778 "analizador_semantico.y"
                                            { yyval.dtipo = not(yyvsp[0].dtipo); }
-#line 2248 "y.tab.c"
+#line 2251 "y.tab.c"
     break;
 
   case 59:
-#line 778 "analizador_semantico.y"
+#line 779 "analizador_semantico.y"
                                            { yyval.dtipo = interrogacion(yyvsp[0].dtipo); }
-#line 2254 "y.tab.c"
+#line 2257 "y.tab.c"
     break;
 
   case 60:
-#line 779 "analizador_semantico.y"
+#line 780 "analizador_semantico.y"
                                           { yyval.dtipo = masMenos("-",yyvsp[0].dtipo); }
-#line 2260 "y.tab.c"
+#line 2263 "y.tab.c"
     break;
 
   case 61:
-#line 780 "analizador_semantico.y"
+#line 781 "analizador_semantico.y"
                                  { yyval.dtipo = borrList(yyvsp[-2].dtipo, yyvsp[-1].atributo, yyvsp[0].dtipo);}
-#line 2266 "y.tab.c"
+#line 2269 "y.tab.c"
     break;
 
   case 62:
-#line 781 "analizador_semantico.y"
+#line 782 "analizador_semantico.y"
                                           { yyval.dtipo = orLog(yyvsp[-2].dtipo, yyvsp[0].dtipo); }
-#line 2272 "y.tab.c"
+#line 2275 "y.tab.c"
     break;
 
   case 63:
-#line 782 "analizador_semantico.y"
+#line 783 "analizador_semantico.y"
                                           { yyval.dtipo = andLog(yyvsp[-2].dtipo, yyvsp[0].dtipo); }
-#line 2278 "y.tab.c"
+#line 2281 "y.tab.c"
     break;
 
   case 64:
-#line 783 "analizador_semantico.y"
+#line 784 "analizador_semantico.y"
                                           { yyval.dtipo = arroba(yyvsp[-2].dtipo, yyvsp[0].dtipo); }
-#line 2284 "y.tab.c"
+#line 2287 "y.tab.c"
     break;
 
   case 65:
-#line 784 "analizador_semantico.y"
+#line 785 "analizador_semantico.y"
                                           { yyval.dtipo = rel(yyvsp[-2].dtipo, yyvsp[-1].atributo, yyvsp[0].dtipo); }
-#line 2290 "y.tab.c"
+#line 2293 "y.tab.c"
     break;
 
   case 66:
-#line 785 "analizador_semantico.y"
+#line 786 "analizador_semantico.y"
                                           { yyval.dtipo = masmenos(yyvsp[-2].dtipo, yyvsp[-1].atributo, yyvsp[0].dtipo); }
-#line 2296 "y.tab.c"
+#line 2299 "y.tab.c"
     break;
 
   case 67:
-#line 786 "analizador_semantico.y"
+#line 787 "analizador_semantico.y"
                                           { yyval.dtipo = porPor(yyvsp[-2].dtipo, yyvsp[0].dtipo); }
-#line 2302 "y.tab.c"
+#line 2305 "y.tab.c"
     break;
 
   case 68:
-#line 787 "analizador_semantico.y"
+#line 788 "analizador_semantico.y"
                                 { yyval.dtipo = borrList(yyvsp[-2].dtipo, yyvsp[-1].atributo, yyvsp[0].dtipo);}
-#line 2308 "y.tab.c"
+#line 2311 "y.tab.c"
     break;
 
   case 69:
-#line 788 "analizador_semantico.y"
+#line 789 "analizador_semantico.y"
                                           { yyval.dtipo = porDiv(yyvsp[-2].dtipo, yyvsp[-1].atributo, yyvsp[0].dtipo); }
-#line 2314 "y.tab.c"
+#line 2317 "y.tab.c"
     break;
 
   case 70:
-#line 789 "analizador_semantico.y"
+#line 790 "analizador_semantico.y"
                                           { yyval.dtipo = eqn(yyvsp[-2].dtipo, yyvsp[-1].atributo, yyvsp[0].dtipo); }
-#line 2320 "y.tab.c"
+#line 2323 "y.tab.c"
     break;
 
   case 71:
-#line 790 "analizador_semantico.y"
+#line 791 "analizador_semantico.y"
                                                             { yyval.dtipo = ternario(yyvsp[-4].dtipo, yyvsp[-2].dtipo, yyvsp[0].dtipo); }
-#line 2326 "y.tab.c"
+#line 2329 "y.tab.c"
     break;
 
   case 72:
-#line 791 "analizador_semantico.y"
+#line 792 "analizador_semantico.y"
                                           { yyval.dtipo = buscarID(yyvsp[0].lexema); }
-#line 2332 "y.tab.c"
+#line 2335 "y.tab.c"
     break;
 
   case 73:
-#line 792 "analizador_semantico.y"
+#line 793 "analizador_semantico.y"
                                           { yyval.dtipo = yyvsp[0].dtipo; }
-#line 2338 "y.tab.c"
+#line 2341 "y.tab.c"
     break;
 
   case 74:
-#line 793 "analizador_semantico.y"
+#line 794 "analizador_semantico.y"
                                            { yyval.dtipo = yyvsp[0].dtipo; }
-#line 2344 "y.tab.c"
+#line 2347 "y.tab.c"
     break;
 
   case 76:
-#line 798 "analizador_semantico.y"
+#line 799 "analizador_semantico.y"
                                       { yyval.dtipo = comprobarFuncion(yyvsp[-3].lexema); }
-#line 2350 "y.tab.c"
+#line 2353 "y.tab.c"
     break;
 
   case 79:
-#line 804 "analizador_semantico.y"
+#line 805 "analizador_semantico.y"
                       { yyval.dtipo = yyvsp[0].dtipo; }
-#line 2356 "y.tab.c"
+#line 2359 "y.tab.c"
     break;
 
   case 80:
-#line 805 "analizador_semantico.y"
+#line 806 "analizador_semantico.y"
                   { yyval.dtipo = yyvsp[0].dtipo; }
-#line 2362 "y.tab.c"
+#line 2365 "y.tab.c"
     break;
 
   case 81:
-#line 808 "analizador_semantico.y"
+#line 809 "analizador_semantico.y"
                                                   { yyval.dtipo = aTipoLista(yyvsp[-1].dtipo); }
-#line 2368 "y.tab.c"
+#line 2371 "y.tab.c"
     break;
 
 
-#line 2372 "y.tab.c"
+#line 2375 "y.tab.c"
 
       default: break;
     }
@@ -2600,7 +2603,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 814 "analizador_semantico.y"
+#line 815 "analizador_semantico.y"
 
 
 #include "lex.yy.c"

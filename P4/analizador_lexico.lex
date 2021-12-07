@@ -71,7 +71,7 @@ char* msgError[256];
 "+"                                     { yylval.atributo = 0; return MASMENOS; }
 "-"                                     { yylval.atributo = 1; return MASMENOS; }
 
-"//"                                    {return BAR; } // TODO Adaptarlo al # de ellos, supuestamente esto no debería de hacer na
+"//*"                                    {return ; } // TODO Adaptarlo al # de ellos, supuestamente esto no debería de hacer na
 "?"                                     {return INT; }
 
 "not"                                   {return NOT; }
@@ -79,6 +79,7 @@ char* msgError[256];
 "$"                                     {return DOLLAR; }
 
 \"[^\"]*\"                              {return CADENA; }
+\"[a-z|A-Z|0-9]\"                              {return CADENA; } //TODO LO acabo de añadir DEBERÁI DE SER CARACTER 
 
 
 [0-9]+                                  { yylval.atributo = 0; yylval.dtipo = entero; return CONSTANTE; }
