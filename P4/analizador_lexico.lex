@@ -79,7 +79,7 @@ char* msgError[256];
 "$"                                     {return DOLLAR; }
 
 \"[^\"]*\"                              {return CADENA; }
-\"[a-z|A-Z|0-9]\"                              {return CADENA; } //TODO LO acabo de añadir DEBERÁI DE SER CARACTER 
+\'[a-z|A-Z|0-9]\'                       {return CARACTER; } //TODO LO acabo de añadir DEBERÁI DE SER CARACTER 
 
 
 [0-9]+                                  { yylval.atributo = 0; yylval.dtipo = entero; return CONSTANTE; }
