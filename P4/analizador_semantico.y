@@ -695,7 +695,7 @@ declar_de_variables_locales : VAR INICIOBLOQUE variables_locales FINBLOQUE
 variables_locales : variables_locales cuerpo_declar_variables
                   | cuerpo_declar_variables ;
 
-// TODO  Comprobar muy bien esta REGLA
+// Comprobar muy bien esta REGLA
 cuerpo_declar_variables : tipo { tipoTmp = $1.dtipo; } lista_variables PYC
                         | error ;
 tipo  : PRIMITIVO
@@ -721,8 +721,8 @@ lista_expresiones : lista_expresiones COMA expresion {
 
 // TODO  Repasar por si el error está aquí
 parametros : parametros COMA tipo ID { insertarParametro($1.dtipo, $2.lexema); }
-           | tipo ID { insertarParametro($1.dtipo, $2.lexema); }
-           | error;
+           | tipo ID { insertarParametro($1.dtipo, $2.lexema); };
+
 
 sentencias : sentencias sentencia
            | %empty ;
@@ -776,21 +776,20 @@ expresion : PARIZQ expresion PARDER        { $$.dtipo = $2.dtipo; }
           | NOT expresion                  { $$.dtipo = not($2.dtipo); } 
           | INT expresion                  { $$.dtipo = interrogacion($2.dtipo); }
           | MENOSMENOS expresion	  { $$.dtipo = masMenos("-",$2.dtipo); }  // Se reutiliza la función masMenos porque suponemos que devuelve valor del mismo tipo 
-          | expresion MENOSMENOS expresion { $$.dtipo = borrList($1.dtipo, $2.atributo, $3.dtipo)} 
+| expresion MENOSMENOS expresion { $$.dtipo = borrList($1.dtipo, $2.atributo, $3.dtipo);} 
           | expresion ORLOG expresion     { $$.dtipo = orLog($1.dtipo, $3.dtipo); } 
           | expresion ANDLOG expresion    { $$.dtipo = andLog($1.dtipo, $3.dtipo); } 
           | expresion ARROBA expresion    { $$.dtipo = arroba($1.dtipo, $3.dtipo); } 
           | expresion REL expresion       { $$.dtipo = rel($1.dtipo, $2.atributo, $3.dtipo); } // TODO Debería estar bien
           | expresion MASMENOS expresion  { $$.dtipo = masmenos($1.dtipo, $2.atributo, $3.dtipo); } // TODO Revisar y adaptar nombre a MASMENOS
           | expresion PORPOR expresion    { $$.dtipo = porPor($1.dtipo, $3.dtipo); } // TODO Debería estar bien 
-          | expresion PORPOT expresion    { $$.dtipo = borrList($1.dtipo, $2.atributo, $3.dtipo)}
+| expresion PORPOT expresion    { $$.dtipo = borrList($1.dtipo, $2.atributo, $3.dtipo);}
           | expresion MULDIV expresion    { $$.dtipo = porDiv($1.dtipo, $2.atributo, $3.dtipo); } // TODO Debería estar bien
           | expresion EQN expresion       { $$.dtipo = eqn($1.dtipo, $2.atributo, $3.dtipo); } // TODO Debería estar bien
           | expresion OPERMASMAS expresion ARROBA expresion { $$.dtipo = ternario($1.dtipo, $3.dtipo, $5.dtipo); } // TODO Deberia estar bien
           | ID                            { $$.dtipo = buscarID($1.lexema); } // TODO Debería estar bien
           | constante                     { $$.dtipo = $1.dtipo; } // TODO Debería estar bien
-          | funcion 			   { $$.dtipo = $1.dtipo; } // TODO Debería estar bien  
-          | error;                
+          | funcion 			   { $$.dtipo = $1.dtipo; }; // TODO Debería estar bien                
 
 // TODO Revisar
 funcion : ID PARIZQ argumentos PARDER { $$.dtipo = comprobarFuncion($1.lexema); } ;
