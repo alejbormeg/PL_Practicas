@@ -47,7 +47,7 @@ typedef enum {
 
 typedef struct {
   TipoEntrada tipoEntrada;    // Tipo de entrada
-  char* nombre;               // Nombre del identificador (no se usa con marca)
+  char* nombre;               // Nombre del i (no se usa con marca)
   TipoDato tipoDato;          // Tipo de dato
   int parametros;             // Nº de parámetros (para funciones)
 } EntradaTS;
@@ -213,7 +213,8 @@ int buscarEntrada(char* id) {
   while(i >= 0 && (ts[i].tipoEntrada == parametroFormal || strcmp(id, ts[i].nombre)))
     --i;
 
-  if (i < 0) {
+  // habría que ser más estrictos en el caso de false y true. viendo que el tipo es verdaderamente booleano
+  if (i < 0 && strcmp(id, "true")  &&  strcmp(id, "false") ) {
     sprintf(msgError, "ERROR SINTÁCTICO: identificador %s no declarado\n", id);
     yyerror(msgError);
   }
