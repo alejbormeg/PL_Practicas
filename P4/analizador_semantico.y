@@ -213,7 +213,9 @@ int buscarEntrada(char* id) {
   while(i >= 0 && (ts[i].tipoEntrada == parametroFormal || strcmp(id, ts[i].nombre)))
     --i;
 
-  // habría que ser más estrictos en el caso de false y true. viendo que el tipo es verdaderamente booleano
+  // TODO habría que ser más estrictos en el caso de false y true. viendo que el tipo es verdaderamente booleano
+  // esto puede ser una fuente de error para futuros casos
+  // por ejemplo, hace que se trague el error float f = true; xD
   if (i < 0 && strcmp(id, "true")  &&  strcmp(id, "false") ) {
     sprintf(msgError, "ERROR SINTÁCTICO: identificador %s no declarado\n", id);
     yyerror(msgError);
