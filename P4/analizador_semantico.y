@@ -706,7 +706,7 @@ lista_variables : ID COMA lista_variables  { insertarVariable($1.lexema); }
                 | ID { insertarVariable($1.lexema); };
 
 cabecera_subprog : tipo ID { insertarFuncion($1.dtipo, $2.lexema); } PARIZQ parametros PARDER 
-                 | error;
+                 
 
 // TODO  Revisar con cuidado
 lista_expresiones : lista_expresiones COMA expresion {
@@ -718,10 +718,9 @@ lista_expresiones : lista_expresiones COMA expresion {
                     n_argumentos++;
                   };
 
-
-// TODO  Repasar por si el error está aquí
-parametros : parametros COMA tipo ID { insertarParametro($1.dtipo, $2.lexema); }
+parametros : parametros COMA tipo ID { insertarParametro($3.dtipo, $4.lexema); }
            | tipo ID { insertarParametro($1.dtipo, $2.lexema); };
+           | error; 
 
 
 sentencias : sentencias sentencia
@@ -789,7 +788,9 @@ expresion : PARIZQ expresion PARDER        { $$.dtipo = $2.dtipo; }
           | expresion OPERMASMAS expresion ARROBA expresion { $$.dtipo = ternario($1.dtipo, $3.dtipo, $5.dtipo); } // TODO Deberia estar bien
           | ID                            { $$.dtipo = buscarID($1.lexema); } // TODO Debería estar bien
           | constante                     { $$.dtipo = $1.dtipo; } // TODO Debería estar bien
-          | funcion 			   { $$.dtipo = $1.dtipo; }; // TODO Debería estar bien                
+          | funcion 			   { $$.dtipo = $1.dtipo; }
+          | error; 
+                          
 
 // TODO Revisar
 funcion : ID PARIZQ argumentos PARDER { $$.dtipo = comprobarFuncion($1.lexema); } ;

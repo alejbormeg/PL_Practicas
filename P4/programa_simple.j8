@@ -1,10 +1,17 @@
 main (){
 var {int numero1; int numero2; int suma;}
+
+int funcion( int a, int b, int a) {
+	return a+a;
+}
+
+
 numero1 = 3;
 numero2 = 8;
 suma = numero1 - numero2;
 suma = numero1 + numero2;
 output suma;
 }
+
 
 

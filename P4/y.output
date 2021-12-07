@@ -4,7 +4,7 @@ Terminals unused in grammar
     BAR
 
 
-State 146 conflicts: 1 shift/reduce
+State 147 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -44,13 +44,13 @@ Grammar
    19 $@4: %empty
 
    20 cabecera_subprog: tipo ID $@4 PARIZQ parametros PARDER
-   21                 | error
 
-   22 lista_expresiones: lista_expresiones COMA expresion
-   23                  | expresion
+   21 lista_expresiones: lista_expresiones COMA expresion
+   22                  | expresion
 
-   24 parametros: parametros COMA tipo ID
-   25           | tipo ID
+   23 parametros: parametros COMA tipo ID
+   24           | tipo ID
+   25           | error
 
    26 sentencias: sentencias sentencia
    27           | %empty
@@ -114,23 +114,24 @@ Grammar
    71          | ID
    72          | constante
    73          | funcion
+   74          | error
 
-   74 funcion: ID PARIZQ argumentos PARDER
+   75 funcion: ID PARIZQ argumentos PARDER
 
-   75 argumentos: lista_expresiones
-   76           | %empty
+   76 argumentos: lista_expresiones
+   77           | %empty
 
-   77 constante: CONSTANTE
-   78          | lista
+   78 constante: CONSTANTE
+   79          | lista
 
-   79 lista: CORCHETEIZQ lista_expresiones CORCHETEDER
-   80      | CORCHETEIZQ CORCHETEDER
+   80 lista: CORCHETEIZQ lista_expresiones CORCHETEDER
+   81      | CORCHETEIZQ CORCHETEDER
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
-    error (256) 14 21
+    error (256) 14 25 74
     MAIN (258) 1
     VAR (259) 8
     PRIMITIVO (260) 15
@@ -145,17 +146,17 @@ Terminals, with rules where they appear
     UNTIL (269) 51
     WHILE (270) 41
     OPERLISTA (271) 52
-    CONSTANTE (272) 77
+    CONSTANTE (272) 78
     INICIOBLOQUE (273) 3 8
     FINBLOQUE (274) 3 8
-    CORCHETEIZQ (275) 79 80
-    CORCHETEDER (276) 79 80
-    COMA (277) 17 22 24 43 46
+    CORCHETEIZQ (275) 80 81
+    CORCHETEDER (276) 80 81
+    COMA (277) 17 21 23 43 46
     ASIGN (278) 37
-    PARDER (279) 1 20 38 41 51 55 74
-    PARIZQ (280) 1 20 38 41 51 55 74
+    PARDER (279) 1 20 38 41 51 55 75
+    PARIZQ (280) 1 20 38 41 51 55 75
     ESTRUCTURA (281) 16
-    ID (282) 17 18 20 24 25 37 43 44 71 74
+    ID (282) 17 18 20 23 24 37 43 44 71 75
     OPERMASMAS (283) 70
     ARROBA (284) 63 70
     ORLOG (285) 61
@@ -210,22 +211,22 @@ Nonterminals, with rules where they appear
         on right: 13
     tipo (55)
         on left: 15 16
-        on right: 13 16 20 24 25
+        on right: 13 16 20 23 24
     lista_variables (56)
         on left: 17 18
         on right: 13 17
     cabecera_subprog (57)
-        on left: 20 21
+        on left: 20
         on right: 7
     $@4 (58)
         on left: 19
         on right: 20
     lista_expresiones (59)
-        on left: 22 23
-        on right: 22 75 79
+        on left: 21 22
+        on right: 21 76 80
     parametros (60)
-        on left: 24 25
-        on right: 20 24
+        on left: 23 24 25
+        on right: 20 23
     sentencias (61)
         on left: 26 27
         on right: 3 26
@@ -269,20 +270,20 @@ Nonterminals, with rules where they appear
         on left: 52 53 54
         on right: 36
     expresion (75)
-        on left: 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73
-        on right: 22 23 37 38 41 48 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70
+        on left: 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74
+        on right: 21 22 37 38 41 48 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70
     funcion (76)
-        on left: 74
+        on left: 75
         on right: 73
     argumentos (77)
-        on left: 75 76
-        on right: 74
+        on left: 76 77
+        on right: 75
     constante (78)
-        on left: 77 78
+        on left: 78 79
         on right: 72
     lista (79)
-        on left: 79 80
-        on right: 78
+        on left: 80 81
+        on right: 79
 
 
 State 0
@@ -392,32 +393,15 @@ State 12
     3 bloque: INICIOBLOQUE $@1 declar_de_variables_locales declar_de_subprogs . sentencias FINBLOQUE
     4 declar_de_subprogs: declar_de_subprogs . declar_subprog
 
-    error       shift, and go to state 19
     PRIMITIVO   shift, and go to state 14
     ESTRUCTURA  shift, and go to state 15
 
-    INPUT         reduce using rule 27 (sentencias)
-    OUTPUT        reduce using rule 27 (sentencias)
-    RETURN        reduce using rule 27 (sentencias)
-    IF            reduce using rule 27 (sentencias)
-    REPEAT        reduce using rule 27 (sentencias)
-    WHILE         reduce using rule 27 (sentencias)
-    CONSTANTE     reduce using rule 27 (sentencias)
-    INICIOBLOQUE  reduce using rule 27 (sentencias)
-    FINBLOQUE     reduce using rule 27 (sentencias)
-    CORCHETEIZQ   reduce using rule 27 (sentencias)
-    PARIZQ        reduce using rule 27 (sentencias)
-    ID            reduce using rule 27 (sentencias)
-    MASMENOS      reduce using rule 27 (sentencias)
-    MENOSMENOS    reduce using rule 27 (sentencias)
-    NOT           reduce using rule 27 (sentencias)
-    INT           reduce using rule 27 (sentencias)
-    DOLLAR        reduce using rule 27 (sentencias)
+    $default  reduce using rule 27 (sentencias)
 
-    declar_subprog    go to state 20
-    tipo              go to state 21
-    cabecera_subprog  go to state 22
-    sentencias        go to state 23
+    declar_subprog    go to state 19
+    tipo              go to state 20
+    cabecera_subprog  go to state 21
+    sentencias        go to state 22
 
 
 State 13
@@ -441,7 +425,7 @@ State 15
     PRIMITIVO   shift, and go to state 14
     ESTRUCTURA  shift, and go to state 15
 
-    tipo  go to state 24
+    tipo  go to state 23
 
 
 State 16
@@ -451,10 +435,10 @@ State 16
 
     error       shift, and go to state 13
     PRIMITIVO   shift, and go to state 14
-    FINBLOQUE   shift, and go to state 25
+    FINBLOQUE   shift, and go to state 24
     ESTRUCTURA  shift, and go to state 15
 
-    cuerpo_declar_variables  go to state 26
+    cuerpo_declar_variables  go to state 25
     tipo                     go to state 18
 
 
@@ -471,44 +455,38 @@ State 18
 
     $default  reduce using rule 12 ($@3)
 
-    $@3  go to state 27
+    $@3  go to state 26
 
 
 State 19
-
-   21 cabecera_subprog: error .
-
-    $default  reduce using rule 21 (cabecera_subprog)
-
-
-State 20
 
     4 declar_de_subprogs: declar_de_subprogs declar_subprog .
 
     $default  reduce using rule 4 (declar_de_subprogs)
 
 
-State 21
+State 20
 
    20 cabecera_subprog: tipo . ID $@4 PARIZQ parametros PARDER
 
-    ID  shift, and go to state 28
+    ID  shift, and go to state 27
 
 
-State 22
+State 21
 
     7 declar_subprog: cabecera_subprog . $@2 bloque
 
     $default  reduce using rule 6 ($@2)
 
-    $@2  go to state 29
+    $@2  go to state 28
 
 
-State 23
+State 22
 
     3 bloque: INICIOBLOQUE $@1 declar_de_variables_locales declar_de_subprogs sentencias . FINBLOQUE
    26 sentencias: sentencias . sentencia
 
+    error         shift, and go to state 29
     INPUT         shift, and go to state 30
     OUTPUT        shift, and go to state 31
     RETURN        shift, and go to state 32
@@ -543,28 +521,28 @@ State 23
     lista                   go to state 59
 
 
-State 24
+State 23
 
    16 tipo: ESTRUCTURA tipo .
 
     $default  reduce using rule 16 (tipo)
 
 
-State 25
+State 24
 
     8 declar_de_variables_locales: VAR INICIOBLOQUE variables_locales FINBLOQUE .
 
     $default  reduce using rule 8 (declar_de_variables_locales)
 
 
-State 26
+State 25
 
    10 variables_locales: variables_locales cuerpo_declar_variables .
 
     $default  reduce using rule 10 (variables_locales)
 
 
-State 27
+State 26
 
    13 cuerpo_declar_variables: tipo $@3 . lista_variables PYC
 
@@ -573,7 +551,7 @@ State 27
     lista_variables  go to state 61
 
 
-State 28
+State 27
 
    20 cabecera_subprog: tipo ID . $@4 PARIZQ parametros PARDER
 
@@ -582,13 +560,20 @@ State 28
     $@4  go to state 62
 
 
-State 29
+State 28
 
     7 declar_subprog: cabecera_subprog $@2 . bloque
 
     INICIOBLOQUE  shift, and go to state 6
 
     bloque  go to state 63
+
+
+State 29
+
+   74 expresion: error .
+
+    $default  reduce using rule 74 (expresion)
 
 
 State 30
@@ -604,6 +589,7 @@ State 31
 
    45 sentencia_salida: OUTPUT . lista_expresion_cadena PYC
 
+    error        shift, and go to state 29
     CADENA       shift, and go to state 66
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
@@ -626,6 +612,7 @@ State 32
 
    50 sentencia_return: RETURN . expresion PYC
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -652,6 +639,7 @@ State 34
 
    51 sentencia_repeat_until: REPEAT . sentencia UNTIL PARIZQ expresion PARDER PYC
 
+    error         shift, and go to state 29
     INPUT         shift, and go to state 30
     OUTPUT        shift, and go to state 31
     RETURN        shift, and go to state 32
@@ -694,9 +682,9 @@ State 35
 
 State 36
 
-   77 constante: CONSTANTE .
+   78 constante: CONSTANTE .
 
-    $default  reduce using rule 77 (constante)
+    $default  reduce using rule 78 (constante)
 
 
 State 37
@@ -708,9 +696,10 @@ State 37
 
 State 38
 
-   79 lista: CORCHETEIZQ . lista_expresiones CORCHETEDER
-   80      | CORCHETEIZQ . CORCHETEDER
+   80 lista: CORCHETEIZQ . lista_expresiones CORCHETEDER
+   81      | CORCHETEIZQ . CORCHETEDER
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     CORCHETEDER  shift, and go to state 76
@@ -732,6 +721,7 @@ State 39
 
    55 expresion: PARIZQ . expresion PARDER
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -751,7 +741,7 @@ State 40
 
    37 sentencia_asignacion: ID . ASIGN expresion PYC
    71 expresion: ID .
-   74 funcion: ID . PARIZQ argumentos PARDER
+   75 funcion: ID . PARIZQ argumentos PARDER
 
     ASIGN   shift, and go to state 80
     PARIZQ  shift, and go to state 81
@@ -763,6 +753,7 @@ State 41
 
    56 expresion: MASMENOS . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -782,6 +773,7 @@ State 42
 
    59 expresion: MENOSMENOS . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -801,6 +793,7 @@ State 43
 
    57 expresion: NOT . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -821,6 +814,7 @@ State 44
    53 sentencia_lista: INT . expresion PYC
    58 expresion: INT . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -840,6 +834,7 @@ State 45
 
    54 sentencia_lista: DOLLAR . expresion PYC
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -970,9 +965,9 @@ State 58
 
 State 59
 
-   78 constante: lista .
+   79 constante: lista .
 
-    $default  reduce using rule 78 (constante)
+    $default  reduce using rule 79 (constante)
 
 
 State 60
@@ -1032,7 +1027,7 @@ State 66
 State 67
 
    71 expresion: ID .
-   74 funcion: ID . PARIZQ argumentos PARDER
+   75 funcion: ID . PARIZQ argumentos PARDER
 
     PARIZQ  shift, and go to state 81
 
@@ -1043,6 +1038,7 @@ State 68
 
    58 expresion: INT . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1137,6 +1133,7 @@ State 73
 
    38 sentencia_if: IF PARIZQ . expresion PARDER sentencia sentencia_else
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1163,6 +1160,7 @@ State 75
 
    41 sentencia_while: WHILE PARIZQ . expresion PARDER sentencia
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1180,15 +1178,15 @@ State 75
 
 State 76
 
-   80 lista: CORCHETEIZQ CORCHETEDER .
+   81 lista: CORCHETEIZQ CORCHETEDER .
 
-    $default  reduce using rule 80 (lista)
+    $default  reduce using rule 81 (lista)
 
 
 State 77
 
-   22 lista_expresiones: lista_expresiones . COMA expresion
-   79 lista: CORCHETEIZQ lista_expresiones . CORCHETEDER
+   21 lista_expresiones: lista_expresiones . COMA expresion
+   80 lista: CORCHETEIZQ lista_expresiones . CORCHETEDER
 
     CORCHETEDER  shift, and go to state 111
     COMA         shift, and go to state 112
@@ -1196,7 +1194,7 @@ State 77
 
 State 78
 
-   23 lista_expresiones: expresion .
+   22 lista_expresiones: expresion .
    60 expresion: expresion . MENOSMENOS expresion
    61          | expresion . ORLOG expresion
    62          | expresion . ANDLOG expresion
@@ -1221,7 +1219,7 @@ State 78
     MULDIV      shift, and go to state 97
     MENOSMENOS  shift, and go to state 98
 
-    $default  reduce using rule 23 (lista_expresiones)
+    $default  reduce using rule 22 (lista_expresiones)
 
 
 State 79
@@ -1257,6 +1255,7 @@ State 80
 
    37 sentencia_asignacion: ID ASIGN . expresion PYC
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1274,8 +1273,9 @@ State 80
 
 State 81
 
-   74 funcion: ID PARIZQ . argumentos PARDER
+   75 funcion: ID PARIZQ . argumentos PARDER
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1285,7 +1285,7 @@ State 81
     NOT          shift, and go to state 43
     INT          shift, and go to state 68
 
-    $default  reduce using rule 76 (argumentos)
+    PARDER  reduce using rule 77 (argumentos)
 
     lista_expresiones  go to state 115
     expresion          go to state 78
@@ -1412,6 +1412,7 @@ State 88
 
    70 expresion: expresion OPERMASMAS . expresion ARROBA expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1431,6 +1432,7 @@ State 89
 
    63 expresion: expresion ARROBA . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1450,6 +1452,7 @@ State 90
 
    61 expresion: expresion ORLOG . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1469,6 +1472,7 @@ State 91
 
    62 expresion: expresion ANDLOG . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1488,6 +1492,7 @@ State 92
 
    69 expresion: expresion EQN . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1507,6 +1512,7 @@ State 93
 
    64 expresion: expresion REL . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1526,6 +1532,7 @@ State 94
 
    66 expresion: expresion PORPOR . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1545,6 +1552,7 @@ State 95
 
    67 expresion: expresion PORPOT . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1564,6 +1572,7 @@ State 96
 
    65 expresion: expresion MASMENOS . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1583,6 +1592,7 @@ State 97
 
    68 expresion: expresion MULDIV . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1602,6 +1612,7 @@ State 98
 
    60 expresion: expresion MENOSMENOS . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1637,11 +1648,12 @@ State 101
 
    20 cabecera_subprog: tipo ID $@4 PARIZQ . parametros PARDER
 
+    error       shift, and go to state 132
     PRIMITIVO   shift, and go to state 14
     ESTRUCTURA  shift, and go to state 15
 
-    tipo        go to state 132
-    parametros  go to state 133
+    tipo        go to state 133
+    parametros  go to state 134
 
 
 State 102
@@ -1655,7 +1667,7 @@ State 103
 
    43 lista_id: lista_id COMA . ID
 
-    ID  shift, and go to state 134
+    ID  shift, and go to state 135
 
 
 State 104
@@ -1687,6 +1699,7 @@ State 106
 
    46 lista_expresion_cadena: lista_expresion_cadena COMA . expresion_cadena
 
+    error        shift, and go to state 29
     CADENA       shift, and go to state 66
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
@@ -1697,7 +1710,7 @@ State 106
     NOT          shift, and go to state 43
     INT          shift, and go to state 68
 
-    expresion_cadena  go to state 135
+    expresion_cadena  go to state 136
     expresion         go to state 71
     funcion           go to state 57
     constante         go to state 58
@@ -1726,7 +1739,7 @@ State 108
    69          | expresion . EQN expresion
    70          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    PARDER      shift, and go to state 136
+    PARDER      shift, and go to state 137
     OPERMASMAS  shift, and go to state 88
     ARROBA      shift, and go to state 89
     ORLOG       shift, and go to state 90
@@ -1744,7 +1757,7 @@ State 109
 
    51 sentencia_repeat_until: REPEAT sentencia UNTIL . PARIZQ expresion PARDER PYC
 
-    PARIZQ  shift, and go to state 137
+    PARIZQ  shift, and go to state 138
 
 
 State 110
@@ -1762,7 +1775,7 @@ State 110
    69          | expresion . EQN expresion
    70          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    PARDER      shift, and go to state 138
+    PARDER      shift, and go to state 139
     OPERMASMAS  shift, and go to state 88
     ARROBA      shift, and go to state 89
     ORLOG       shift, and go to state 90
@@ -1778,15 +1791,16 @@ State 110
 
 State 111
 
-   79 lista: CORCHETEIZQ lista_expresiones CORCHETEDER .
+   80 lista: CORCHETEIZQ lista_expresiones CORCHETEDER .
 
-    $default  reduce using rule 79 (lista)
+    $default  reduce using rule 80 (lista)
 
 
 State 112
 
-   22 lista_expresiones: lista_expresiones COMA . expresion
+   21 lista_expresiones: lista_expresiones COMA . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -1796,7 +1810,7 @@ State 112
     NOT          shift, and go to state 43
     INT          shift, and go to state 68
 
-    expresion  go to state 139
+    expresion  go to state 140
     funcion    go to state 57
     constante  go to state 58
     lista      go to state 59
@@ -1824,7 +1838,7 @@ State 114
    69          | expresion . EQN expresion
    70          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    PYC         shift, and go to state 140
+    PYC         shift, and go to state 141
     OPERMASMAS  shift, and go to state 88
     ARROBA      shift, and go to state 89
     ORLOG       shift, and go to state 90
@@ -1840,19 +1854,19 @@ State 114
 
 State 115
 
-   22 lista_expresiones: lista_expresiones . COMA expresion
-   75 argumentos: lista_expresiones .
+   21 lista_expresiones: lista_expresiones . COMA expresion
+   76 argumentos: lista_expresiones .
 
     COMA  shift, and go to state 112
 
-    $default  reduce using rule 75 (argumentos)
+    $default  reduce using rule 76 (argumentos)
 
 
 State 116
 
-   74 funcion: ID PARIZQ argumentos . PARDER
+   75 funcion: ID PARIZQ argumentos . PARDER
 
-    PARDER  shift, and go to state 141
+    PARDER  shift, and go to state 142
 
 
 State 117
@@ -1892,7 +1906,7 @@ State 120
    70          | expresion OPERMASMAS expresion . ARROBA expresion
 
     OPERMASMAS  shift, and go to state 88
-    ARROBA      shift, and go to state 142
+    ARROBA      shift, and go to state 143
     ORLOG       shift, and go to state 90
     ANDLOG      shift, and go to state 91
     EQN         shift, and go to state 92
@@ -2151,38 +2165,46 @@ State 131
 
 State 132
 
-   25 parametros: tipo . ID
+   25 parametros: error .
 
-    ID  shift, and go to state 143
+    $default  reduce using rule 25 (parametros)
 
 
 State 133
 
-   20 cabecera_subprog: tipo ID $@4 PARIZQ parametros . PARDER
-   24 parametros: parametros . COMA tipo ID
+   24 parametros: tipo . ID
 
-    COMA    shift, and go to state 144
-    PARDER  shift, and go to state 145
+    ID  shift, and go to state 144
 
 
 State 134
+
+   20 cabecera_subprog: tipo ID $@4 PARIZQ parametros . PARDER
+   23 parametros: parametros . COMA tipo ID
+
+    COMA    shift, and go to state 145
+    PARDER  shift, and go to state 146
+
+
+State 135
 
    43 lista_id: lista_id COMA ID .
 
     $default  reduce using rule 43 (lista_id)
 
 
-State 135
+State 136
 
    46 lista_expresion_cadena: lista_expresion_cadena COMA expresion_cadena .
 
     $default  reduce using rule 46 (lista_expresion_cadena)
 
 
-State 136
+State 137
 
    38 sentencia_if: IF PARIZQ expresion PARDER . sentencia sentencia_else
 
+    error         shift, and go to state 29
     INPUT         shift, and go to state 30
     OUTPUT        shift, and go to state 31
     RETURN        shift, and go to state 32
@@ -2201,7 +2223,7 @@ State 136
     DOLLAR        shift, and go to state 45
 
     bloque                  go to state 46
-    sentencia               go to state 146
+    sentencia               go to state 147
     sentencia_asignacion    go to state 48
     sentencia_if            go to state 49
     sentencia_while         go to state 50
@@ -2216,10 +2238,11 @@ State 136
     lista                   go to state 59
 
 
-State 137
+State 138
 
    51 sentencia_repeat_until: REPEAT sentencia UNTIL PARIZQ . expresion PARDER PYC
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -2229,16 +2252,17 @@ State 137
     NOT          shift, and go to state 43
     INT          shift, and go to state 68
 
-    expresion  go to state 147
+    expresion  go to state 148
     funcion    go to state 57
     constante  go to state 58
     lista      go to state 59
 
 
-State 138
+State 139
 
    41 sentencia_while: WHILE PARIZQ expresion PARDER . sentencia
 
+    error         shift, and go to state 29
     INPUT         shift, and go to state 30
     OUTPUT        shift, and go to state 31
     RETURN        shift, and go to state 32
@@ -2257,7 +2281,7 @@ State 138
     DOLLAR        shift, and go to state 45
 
     bloque                  go to state 46
-    sentencia               go to state 148
+    sentencia               go to state 149
     sentencia_asignacion    go to state 48
     sentencia_if            go to state 49
     sentencia_while         go to state 50
@@ -2272,9 +2296,9 @@ State 138
     lista                   go to state 59
 
 
-State 139
+State 140
 
-   22 lista_expresiones: lista_expresiones COMA expresion .
+   21 lista_expresiones: lista_expresiones COMA expresion .
    60 expresion: expresion . MENOSMENOS expresion
    61          | expresion . ORLOG expresion
    62          | expresion . ANDLOG expresion
@@ -2299,28 +2323,29 @@ State 139
     MULDIV      shift, and go to state 97
     MENOSMENOS  shift, and go to state 98
 
-    $default  reduce using rule 22 (lista_expresiones)
+    $default  reduce using rule 21 (lista_expresiones)
 
 
-State 140
+State 141
 
    37 sentencia_asignacion: ID ASIGN expresion PYC .
 
     $default  reduce using rule 37 (sentencia_asignacion)
 
 
-State 141
-
-   74 funcion: ID PARIZQ argumentos PARDER .
-
-    $default  reduce using rule 74 (funcion)
-
-
 State 142
+
+   75 funcion: ID PARIZQ argumentos PARDER .
+
+    $default  reduce using rule 75 (funcion)
+
+
+State 143
 
    63 expresion: expresion ARROBA . expresion
    70          | expresion OPERMASMAS expresion ARROBA . expresion
 
+    error        shift, and go to state 29
     CONSTANTE    shift, and go to state 36
     CORCHETEIZQ  shift, and go to state 38
     PARIZQ       shift, and go to state 39
@@ -2330,49 +2355,49 @@ State 142
     NOT          shift, and go to state 43
     INT          shift, and go to state 68
 
-    expresion  go to state 149
+    expresion  go to state 150
     funcion    go to state 57
     constante  go to state 58
     lista      go to state 59
 
 
-State 143
-
-   25 parametros: tipo ID .
-
-    $default  reduce using rule 25 (parametros)
-
-
 State 144
 
-   24 parametros: parametros COMA . tipo ID
+   24 parametros: tipo ID .
+
+    $default  reduce using rule 24 (parametros)
+
+
+State 145
+
+   23 parametros: parametros COMA . tipo ID
 
     PRIMITIVO   shift, and go to state 14
     ESTRUCTURA  shift, and go to state 15
 
-    tipo  go to state 150
+    tipo  go to state 151
 
 
-State 145
+State 146
 
    20 cabecera_subprog: tipo ID $@4 PARIZQ parametros PARDER .
 
     $default  reduce using rule 20 (cabecera_subprog)
 
 
-State 146
+State 147
 
    38 sentencia_if: IF PARIZQ expresion PARDER sentencia . sentencia_else
 
-    ELSE  shift, and go to state 151
+    ELSE  shift, and go to state 152
 
     ELSE      [reduce using rule 40 (sentencia_else)]
     $default  reduce using rule 40 (sentencia_else)
 
-    sentencia_else  go to state 152
+    sentencia_else  go to state 153
 
 
-State 147
+State 148
 
    51 sentencia_repeat_until: REPEAT sentencia UNTIL PARIZQ expresion . PARDER PYC
    60 expresion: expresion . MENOSMENOS expresion
@@ -2387,7 +2412,7 @@ State 147
    69          | expresion . EQN expresion
    70          | expresion . OPERMASMAS expresion ARROBA expresion
 
-    PARDER      shift, and go to state 153
+    PARDER      shift, and go to state 154
     OPERMASMAS  shift, and go to state 88
     ARROBA      shift, and go to state 89
     ORLOG       shift, and go to state 90
@@ -2401,14 +2426,14 @@ State 147
     MENOSMENOS  shift, and go to state 98
 
 
-State 148
+State 149
 
    41 sentencia_while: WHILE PARIZQ expresion PARDER sentencia .
 
     $default  reduce using rule 41 (sentencia_while)
 
 
-State 149
+State 150
 
    60 expresion: expresion . MENOSMENOS expresion
    61          | expresion . ORLOG expresion
@@ -2439,17 +2464,18 @@ State 149
     $default  reduce using rule 70 (expresion)
 
 
-State 150
-
-   24 parametros: parametros COMA tipo . ID
-
-    ID  shift, and go to state 154
-
-
 State 151
+
+   23 parametros: parametros COMA tipo . ID
+
+    ID  shift, and go to state 155
+
+
+State 152
 
    39 sentencia_else: ELSE . sentencia
 
+    error         shift, and go to state 29
     INPUT         shift, and go to state 30
     OUTPUT        shift, and go to state 31
     RETURN        shift, and go to state 32
@@ -2468,7 +2494,7 @@ State 151
     DOLLAR        shift, and go to state 45
 
     bloque                  go to state 46
-    sentencia               go to state 155
+    sentencia               go to state 156
     sentencia_asignacion    go to state 48
     sentencia_if            go to state 49
     sentencia_while         go to state 50
@@ -2483,35 +2509,35 @@ State 151
     lista                   go to state 59
 
 
-State 152
+State 153
 
    38 sentencia_if: IF PARIZQ expresion PARDER sentencia sentencia_else .
 
     $default  reduce using rule 38 (sentencia_if)
 
 
-State 153
+State 154
 
    51 sentencia_repeat_until: REPEAT sentencia UNTIL PARIZQ expresion PARDER . PYC
 
-    PYC  shift, and go to state 156
-
-
-State 154
-
-   24 parametros: parametros COMA tipo ID .
-
-    $default  reduce using rule 24 (parametros)
+    PYC  shift, and go to state 157
 
 
 State 155
+
+   23 parametros: parametros COMA tipo ID .
+
+    $default  reduce using rule 23 (parametros)
+
+
+State 156
 
    39 sentencia_else: ELSE sentencia .
 
     $default  reduce using rule 39 (sentencia_else)
 
 
-State 156
+State 157
 
    51 sentencia_repeat_until: REPEAT sentencia UNTIL PARIZQ expresion PARDER PYC .
 
