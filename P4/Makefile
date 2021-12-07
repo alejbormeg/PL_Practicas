@@ -13,7 +13,7 @@ limpia:
 	rm ana8 y.tab.c lex.yy.c y.output y.tab.h
 
 todo:
-	make --no-print-directory limpia
+	#make --no-print-directory limpia
 	make --no-print-directory ana8
 
 # Test

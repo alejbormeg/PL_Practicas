@@ -1,10 +1,10 @@
 main(){
 	var {
-		int ve, a,b,c ;
-		float vf,h,j, k;
+		int ve, a,b,c;
+		float vf,h,j ,k;
 		char vc;
 		bool vl; 
-		list of int pe;
+		list of int pe, pe2, pe3;
 		list of float pf, pf2;
 		list of char pc, pc2;
 		list of bool pl; 
@@ -109,3 +109,4 @@ main(){
 	pe = pe ;
 
 }
+
