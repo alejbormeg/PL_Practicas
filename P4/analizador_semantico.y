@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 
-void yyerror( const char * msg );
 
 #define YYERROR_VERBOSE
+
 #define min(a, b) ({ __typeof__ (a) _a = (a); __typeof__ (b) _b = (b); _a < _b ? _a : _b; })
 #define max(a, b) ({ __typeof__ (a) _a = (a); __typeof__ (b) _b = (b); _a > _b ? _a : _b; })
 
@@ -17,14 +17,14 @@ extern int yylineno;
 
 char msgError[256];
 
+// Esto elimina un Warning, no debería cambiar nada más.
 int yylex();
 
+/************************/
+/* ESTRUCTURA DE LA TS */
+/***********************/
 
-/********************************/
-/* ESTRUCTURA TABLA DE SIMBOLOS */
-/********************************/
-
-//Tipo de entrada
+// Tipo de entrada
 typedef enum {
   marca,
   funcion,
@@ -32,7 +32,8 @@ typedef enum {
   parametroFormal
 } TipoEntrada;
 
-//Si TipoEntrada es función, variable ... indica el tipo de dato
+// Si TipoEntrada es función, variable, o parametro-formal; indica el tipo de dato
+// No se usa en otro caso
 typedef enum {
   entero,
   real,
@@ -42,34 +43,33 @@ typedef enum {
   listaReal,
   listaBooleano,
   listaCaracter,
-  error //Si da un error con expresiones
+  error // Si da un error con expresiones
 } TipoDato;
 
 typedef struct {
   TipoEntrada tipoEntrada;    // Tipo de entrada
-  char* nombre;               // Nombre del i (no se usa con marca)
+  char* nombre;               // Nombre del identificador (no se usa con marca)
   TipoDato tipoDato;          // Tipo de dato
-  int parametros;             // Nº de parámetros (para funciones)
+  int parametros;             // Nº de parámetros formales (sólo se usa con función)
 } EntradaTS;
 
-//La Tabla de Símbolos
+// La Tabla de Símbolos
 EntradaTS ts[MAX_TAM_TS];
 
-//Última entrada de la TS usada.
+// Última entrada de la TS usada.
 long int tope = -1;
 
-//Tipo auxiliar para declaración de variables
+// Tipo auxiliar para declaración de variables
 TipoDato tipoTmp;
 
-//Si entramos en un bloque de un subprograma
-//Si es 0 es un bloque de un subprograma; en caso contrario no
+// Si entramos en un bloque de un subprograma
+// Si es 0 es un bloque de un subprograma; en caso contrario no
 int subProg = 0;
 
-//Variables usadas para pasar argumentos a una función
+// Variables usadas para pasar argumentos a una función
 #define MAX_ARGS 50
 TipoDato argumentos_tipo_datos[MAX_ARGS];
 int n_argumentos = 0;
-
 
 typedef struct {
   int atributo;
@@ -88,13 +88,13 @@ char* tipoAString(TipoDato tipo_dato) {
     case caracter:
       return "char";
     case listaReal:
-      return "list of float";
+      return "list_of float";
     case listaEntero:
-      return "list of int";
+      return "list_of int";
     case listaCaracter:
-      return "list of char";
+      return "list_of char";
     case listaBooleano:
-      return "list of bool";
+      return "list_of bool";
     case error:
       return "error";
     default:
@@ -102,7 +102,6 @@ char* tipoAString(TipoDato tipo_dato) {
       exit(EXIT_FAILURE);
   }
 }
-
 
 TipoDato tipoLista(TipoDato tipo_dato) {
   switch (tipo_dato) {
@@ -175,7 +174,7 @@ void imprimir() {
 }
 
 void idRepetida(char* id) {
-  //Miramos si id estaba declarado después de la última marca
+  // Miramos si id estaba declarado después de la última marca
   int repetida = 0;
   for (int i = tope; !repetida && ts[i].tipoEntrada != marca; --i) {
     if (ts[i].tipoEntrada != parametroFormal && !strcmp(ts[i].nombre, id)) {
@@ -187,7 +186,7 @@ void idRepetida(char* id) {
 }
 
 void insertarEntrada(TipoEntrada te, char* nombre, TipoDato tipo_dato, int nParam) {
-  //Hacemos la entrada
+  // Hacemos la entrada
   EntradaTS entrada = {
     te,
     strdup(nombre),
@@ -195,42 +194,39 @@ void insertarEntrada(TipoEntrada te, char* nombre, TipoDato tipo_dato, int nPara
     nParam
   };
 
-  //Si la tabla está llena da error
+  // Si la tabla está llena da error
   if (tope + 1 >= MAX_TAM_TS) {
     sprintf(msgError, "ERROR SINTÁCTICO: La tabla de símbolos está llena\n");
     yyerror(msgError);
   }
-  //Aumentamos el tope
+  // Aumentamos el tope
   ++tope;
-  //Añadimos la nueva entrada
+  // Añadimos la nueva entrada
   ts[tope] = entrada;
 }
 
-//Busca una entrada en la TS con el id especificado en el ámbito del programa
-//actual. Si no lo encuentra, devuelve -1. No gestiona errores!
+// Busca una entrada en la TS con el id especificado en el ámbito del programa
+// actual. Si no lo encuentra, devuelve -1. No gestiona errores!
 int buscarEntrada(char* id) {
   int i = tope;
   while(i >= 0 && (ts[i].tipoEntrada == parametroFormal || strcmp(id, ts[i].nombre)))
     --i;
 
-  // TODO habría que ser más estrictos en el caso de false y true. viendo que el tipo es verdaderamente booleano
-  // esto puede ser una fuente de error para futuros casos
-  // por ejemplo, hace que se trague el error float f = true; xD
-  if (i < 0 && strcmp(id, "true")  &&  strcmp(id, "false") ) {
+  if (i < 0) {
     sprintf(msgError, "ERROR SINTÁCTICO: identificador %s no declarado\n", id);
     yyerror(msgError);
   }
   return i;
 }
 
-/*************************************/
-/* FUNCIONES DE LA TABLA DE SIMBOLOS */
-/*************************************/
+/****************/
+/* FUNCIONES TS */
+/****************/
 
 void insertarMarca() {
-  //Metemos la marca
+  // Metemos la marca
   insertarEntrada(marca, "", -1, -1);
-  //Si es subprograma añadimos las variables al bloque
+  // Si es subprograma añadimos las variables al bloque
   if (subProg) {
     for (int i = tope - 1; ts[i].tipoEntrada != funcion; --i) {
       insertarEntrada(variable, ts[i].nombre, ts[i].tipoDato, -1);
@@ -240,28 +236,28 @@ void insertarMarca() {
 }
 
 void vaciarEntradas() {
-  //Hasta la última marca borramos todo
+  // Hasta la última marca borramos todo
   while (ts[tope].tipoEntrada != marca)
     --tope;
-  //Elimina la última marca
+  // Elimina la última marca
   --tope;
 }
 
 void insertarVariable(char* id) {
-  //Comprobamos que no esté repetida la id
+  // Comprobamos que no esté repetida la id
   idRepetida(id);
   insertarEntrada(variable, id, tipoTmp, -1);
 }
 
 void insertarFuncion(TipoDato tipoDato, char* id) {
-  //Comprobamos que el id no esté usado ya
+  // Comprobamos que el id no esté usado ya
   idRepetida(id);
   insertarEntrada(funcion, id, tipoDato, 0);
 }
 
 void insertarParametro(TipoDato tipoDato, char* id) {
-  //Comprobamos que no haya parámetros con nombres repetidos
-  //Además guardamos el índice de la función
+  // Comprobamos que no haya parámetros con nombres repetidos
+  // Además guardamos el índice de la función
   int i;
   int parametroRepetido = 0;
   for (i = tope; !parametroRepetido && ts[i].tipoEntrada != funcion; --i) {
@@ -271,9 +267,9 @@ void insertarParametro(TipoDato tipoDato, char* id) {
       parametroRepetido = 1;
     }
   }
-  //Añadimos la entrada
+  // Añadimos la entrada
   insertarEntrada(parametroFormal, id, tipoDato, -1);
-  //Actualizamos el nº de parámetros de la función
+  // Actualizamos el nº de parámetros de la función
   ++ts[i].parametros;
 }
 
@@ -345,7 +341,7 @@ TipoDato masMenos(int atr, TipoDato td) {
   return td;
 }
 
-TipoDato not(TipoDato td) {
+TipoDato excl(TipoDato td) {
   if (td == error)
     return error;
   if (td != booleano) {
@@ -357,13 +353,11 @@ TipoDato not(TipoDato td) {
   return booleano;
 }
 
-
-TipoDato interrogacion(TipoDato td) {
+TipoDato intHash(int atr, TipoDato td) {
   if (td == error)
     return error;
 
-// WARNING Esto se hace suponiendo que la interrogación está sola en la tabla tokens
-  char* operador = "?";
+  char* operador = atr ? "#" : "?";
   if (!esLista(td)) {
     sprintf(msgError, "ERROR SINTÁCTICO: operador %s no aplicable al tipo %s\n",
         operador, tipoAString(td));
@@ -371,10 +365,13 @@ TipoDato interrogacion(TipoDato td) {
     return error;
   }
 
+  if (atr)
     return tipoLista(td);
+  else
+    return entero;
 }
 
-TipoDato arroba(TipoDato td1, TipoDato td2) {
+TipoDato at(TipoDato td1, TipoDato td2) {
   if (td1 == error || td2 == error)
     return error;
 
@@ -431,12 +428,12 @@ TipoDato eqn(TipoDato td1, int atr, TipoDato td2) {
   return booleano;
 }
 
-//Comprueba el tipo de la operación binaria realizada. En caso de error, lo
-//gestiona. En caso contrario, devuelve el tipo tras la operación binaria.
-//IMPORTANTE: Se asume que op1 esta asociado al valor 1 del atributo (atr)
-//mientras que op2 está asociado al valor 0.
-//IMPORTANE: Se asume que el op1 es simétrico y que el op2 no es simétrico y
-//unicamente funciona de la forma "T op2 T" o bien "list_of T op2 T".
+// Comprueba el tipo de la operación binaria realizada. En caso de error, lo
+// gestiona. En caso contrario, devuelve el tipo tras la operación binaria.
+// IMPORTANTE: Se asume que op1 esta asociado al valor 1 del atributo (atr)
+// mientras que op2 está asociado al valor 0.
+// IMPORTANE: Se asume que el op1 es simétrico y que el op2 no es simétrico y
+// unicamente funciona de la forma "T op2 T" o bien "list_of T op2 T".
 TipoDato op2Binario(TipoDato td1, int atr, TipoDato td2, char* op1, char* op2) {
   if (td1 == error || td2 == error)
     return error;
@@ -454,8 +451,8 @@ TipoDato op2Binario(TipoDato td1, int atr, TipoDato td2, char* op1, char* op2) {
   TipoDato resultado = td1;
 
   if (!op_error && (l1 || l2) ) {
-    //Llegado a este punto hay exactamente una lista. Vemos si el tipo de
-    //la lista encaja con el tipo del otro atributo:
+    // Llegado a este punto hay exactamente una lista. Vemos si el tipo de
+    // la lista encaja con el tipo del otro atributo:
     if ( (operador == op2) || l1 ) {
       resultado = l1 ? td1 : td2;
     } else {
@@ -472,7 +469,7 @@ TipoDato op2Binario(TipoDato td1, int atr, TipoDato td2, char* op1, char* op2) {
   return resultado;
 }
 
-TipoDato masmenos(TipoDato td1, int atr, TipoDato td2) {
+TipoDato addSub(TipoDato td1, int atr, TipoDato td2) {
   return op2Binario(td1, atr, td2, "-", "+");
 }
 
@@ -493,8 +490,6 @@ TipoDato porPor(TipoDato td1, TipoDato td2) {
 
   return td1;
 }
-
-// TODO Hacer el PORPOT
 
 TipoDato borrList(TipoDato td1, int atr, TipoDato td2) {
   if (td1 == error || td2 == error)
@@ -610,25 +605,22 @@ TipoDato comprobarFuncion(char* id) {
     }
   }
 
-  //De esta forma mostramos el máximo número de errores posibles.
+  // De esta forma mostramos el máximo número de errores posibles.
 
-  //Borramos los argumentos recibidos.
+  // Borramos los argumentos recibidos.
   n_argumentos = 0;
 
-  //Devolvemos el tipo de la función.
+  // Devolvemos el tipo de la función.
   return ts[iFuncion].tipoDato;
 }
 
-// ---- código refinamiento segundo  ----
-
 #define YYSTYPE Atributos
-
 %}
 
 %start programa
 %token MAIN
 %token VAR
-%token PRIMITIVO
+%token TIPO
 %token PYC
 %token INPUT OUTPUT
 %token CADENA
@@ -637,187 +629,171 @@ TipoDato comprobarFuncion(char* id) {
 %token REPEAT UNTIL
 %token WHILE
 %token OPERLISTA
-%token CONSTANTE
-%token INICIOBLOQUE FINBLOQUE
-%token CORCHETEIZQ CORCHETEDER
+%token CONST
+%token INIBLOQUE FINBLOQUE
+%token CORIZQ CORDER
 %token COMA
 %token ASIGN
 %token PARDER PARIZQ
-%token ESTRUCTURA
+%token DOLLAR
 %token ID
+
 /* Ternario */
-%right OPERMASMAS ARROBA
+%right MASMAS ARROBA
 
-/* Or lógico */
-%left ORLOG 
+/* Or log */
+%left ORLOG
 
-/* AND lógico */
-%left ANDLOG 
+/* And log */
+%left ANDLOG
 
-/* XOR lógico */
-%left XOR 
-
-/* Igual distinto */
+/* Igual */
 %left EQN
 
-/* Relacional */
+/* Rel */
 %left REL
 
-%left PORPOR
-
-%left PORPOT
+/* Op bin lista */
+%left PORPOR BORRLIST
 
 /* Sum rest */
 %left MASMENOS
 
-/* Multiplicación división */
+/* Mult div */
 %left MULDIV
 
-/* Menos menos */
-%right MENOSMENOS
-
-%right NOT
-
-%precedence INT DOLLAR BAR
+/* Unarios */
+%precedence INTHASH EXCL
 %%
 
 programa : MAIN PARIZQ PARDER bloque ;
 
-bloque : INICIOBLOQUE { insertarMarca(); } declar_de_variables_locales declar_de_subprogs sentencias FINBLOQUE { vaciarEntradas(); };
+bloque : INIBLOQUE { insertarMarca(); }
+         declar_de_variables_locales
+         declar_de_subprogs
+         sentencias
+         FINBLOQUE { vaciarEntradas(); } ;
 
-
-declar_de_subprogs : declar_de_subprogs declar_subprog
-                   | %empty ;
-
-declar_subprog : cabecera_subprog { subProg = 1; } 
-                 bloque ;
-
-declar_de_variables_locales : VAR INICIOBLOQUE variables_locales FINBLOQUE
+declar_de_variables_locales : VAR INIBLOQUE variables_locales FINBLOQUE
                             | %empty ;
 
 variables_locales : variables_locales cuerpo_declar_variables
                   | cuerpo_declar_variables ;
 
-// Comprobar muy bien esta REGLA
-cuerpo_declar_variables : tipo { tipoTmp = $1.dtipo; } lista_variables PYC
+cuerpo_declar_variables : TIPO { tipoTmp = $1.dtipo; } lista_variables PYC
                         | error ;
-tipo  : PRIMITIVO
-      | ESTRUCTURA tipo;
 
+lista_variables : ID COMA lista_variables { insertarVariable($1.lexema); }
+                | ID { insertarVariable($1.lexema); } ;
 
-lista_variables : ID COMA lista_variables  { insertarVariable($1.lexema); }
-                | ID { insertarVariable($1.lexema); };
+declar_de_subprogs : declar_de_subprogs declar_subprog
+                   | %empty ;
 
-cabecera_subprog : tipo ID { insertarFuncion($1.dtipo, $2.lexema); } PARIZQ parametros PARDER 
-                 
+declar_subprog : cabecera_subprog { subProg = 1; }
+                 bloque ;
 
-// TODO  Revisar con cuidado
-lista_expresiones : lista_expresiones COMA expresion {
-                    argumentos_tipo_datos[n_argumentos] = $3.dtipo;
-                    n_argumentos++;
-                  }
-                  | expresion {
-                    argumentos_tipo_datos[n_argumentos] = $1.dtipo;
-                    n_argumentos++;
-                  };
+cabecera_subprog : TIPO ID { insertarFuncion($1.dtipo, $2.lexema); } PARIZQ cabecera_argumentos PARDER ;
 
-parametros : parametros COMA tipo ID { insertarParametro($3.dtipo, $4.lexema); }
-           | tipo ID { insertarParametro($1.dtipo, $2.lexema); };
-           | error; 
+cabecera_argumentos : parametros
+                    | %empty
+                    | error ;
 
+parametros : parametros COMA parametro
+           | parametro ;
+
+parametro : TIPO ID { insertarParametro($1.dtipo, $2.lexema); } ;
 
 sentencias : sentencias sentencia
            | %empty ;
 
 sentencia : bloque
-          | sentencia_asignacion 
+          | expresion PYC
+          | sentencia_asignacion
+          | sentencia_lista
           | sentencia_if
           | sentencia_while
           | sentencia_entrada
           | sentencia_salida
-          | sentencia_return
           | sentencia_repeat_until
-          | sentencia_lista ;
+          | sentencia_return ;
 
-sentencia_asignacion : ID ASIGN expresion PYC { comprobarAsignacion($1.lexema, $3.dtipo); };
+sentencia_asignacion : ID ASIGN expresion PYC { comprobarAsignacion($1.lexema, $3.dtipo); } ;
 
-sentencia_if : IF PARIZQ expresion PARDER sentencia sentencia_else  {expresionBooleana($3.dtipo); } ;
+sentencia_lista : expresion OPERLISTA PYC { sentenciaLista($1.dtipo, $2.lexema); }
+                | DOLLAR expresion PYC { sentenciaLista($2.dtipo, $1.lexema); } ;
 
-sentencia_else  : ELSE sentencia
-                | %empty ;
+sentencia_if : IF PARIZQ expresion PARDER sentencia bloque_else { expresionBooleana($3.dtipo); } ;
+
+bloque_else : ELSE sentencia
+            | %empty ;
 
 sentencia_while : WHILE PARIZQ expresion PARDER sentencia { expresionBooleana($3.dtipo); } ;
 
 sentencia_entrada : INPUT lista_id PYC ;
-lista_id  : lista_id COMA ID
-          | ID ;
 
-sentencia_salida : OUTPUT lista_expresion_cadena PYC ;
+lista_id : lista_id COMA ID
+         | ID ;
 
-lista_expresion_cadena  : lista_expresion_cadena COMA expresion_cadena
-                        | expresion_cadena ;
+sentencia_salida : OUTPUT lista_expresiones_o_cadena PYC ;
+
+lista_expresiones_o_cadena : lista_expresiones_o_cadena COMA expresion_cadena
+                           | expresion_cadena ;
 
 expresion_cadena : expresion
                  | CADENA ;
 
-sentencia_return : RETURN expresion PYC { comprobarReturn($2.dtipo); };
+sentencia_repeat_until : REPEAT sentencia UNTIL PARIZQ expresion PARDER PYC { expresionBooleana($5.dtipo); };
 
+sentencia_return : RETURN expresion PYC { comprobarReturn($2.dtipo); } ;
 
-// Para la sentencia de repetición se comprueba que el tipo sea booleano
-sentencia_repeat_until  : REPEAT sentencia UNTIL PARIZQ expresion PARDER PYC { expresionBooleana($5.dtipo); };
+expresion : PARIZQ expresion PARDER                  { $$.dtipo = $2.dtipo; }
+          | MASMENOS expresion %prec EXCL              { $$.dtipo = masMenos($1.atributo, $2.dtipo); }
+          | EXCL expresion                           { $$.dtipo = excl($2.dtipo); }
+          | INTHASH expresion                        { $$.dtipo = intHash($1.atributo, $2.dtipo); }
+          | expresion ARROBA expresion                   { $$.dtipo = at($1.dtipo, $3.dtipo); }
+          | expresion ANDLOG expresion               { $$.dtipo = andLog($1.dtipo, $3.dtipo); }
+          | expresion ORLOG expresion                { $$.dtipo = orLog($1.dtipo, $3.dtipo); }
+          | expresion EQN expresion                  { $$.dtipo = eqn($1.dtipo, $2.atributo, $3.dtipo); }
+          | expresion MASMENOS expresion               { $$.dtipo = addSub($1.dtipo, $2.atributo, $3.dtipo); }
+          | expresion MULDIV expresion               { $$.dtipo = porDiv($1.dtipo, $2.atributo, $3.dtipo); }
+          | expresion PORPOR expresion               { $$.dtipo = porPor($1.dtipo, $3.dtipo); }
+          | expresion BORRLIST expresion             { $$.dtipo = borrList($1.dtipo, $2.atributo, $3.dtipo); }
+          | expresion REL expresion                  { $$.dtipo = rel($1.dtipo, $2.atributo, $3.dtipo); }
+          | expresion MASMAS expresion ARROBA expresion  { $$.dtipo = ternario($1.dtipo, $3.dtipo, $5.dtipo); }
+          | llamada_funcion                          { $$.dtipo = $1.dtipo; }
+          | ID                                       { $$.dtipo = buscarID($1.lexema); }
+          | constante                                { $$.dtipo = $1.dtipo; }
+          | error ;
 
-// TODO  Revisar estas funciones porque nuestras listas son diferentes
-sentencia_lista : expresion OPERLISTA PYC { sentenciaLista($1.dtipo, $2.lexema); }
-                | INT expresion PYC    { $$.dtipo = interrogacion($2.dtipo); } // TODO Revisar
-                | DOLLAR expresion PYC { sentenciaLista($2.dtipo, $1.lexema); };
+llamada_funcion : ID PARIZQ argumentos PARDER { $$.dtipo = comprobarFuncion($1.lexema); } ;
 
-
-// TODO  Revisar todas las funciones, para nosotros NOT==EXCL
-expresion : PARIZQ expresion PARDER        { $$.dtipo = $2.dtipo; }
-          | MASMENOS expresion %prec NOT   { $$.dtipo = masMenos($1.atributo, $2.dtipo); } 
-          | NOT expresion                  { $$.dtipo = not($2.dtipo); } 
-          | INT expresion                  { $$.dtipo = interrogacion($2.dtipo); }
-          | MENOSMENOS expresion	  { $$.dtipo = masMenos("-",$2.dtipo); }  // Se reutiliza la función masMenos porque suponemos que devuelve valor del mismo tipo 
-| expresion MENOSMENOS expresion { $$.dtipo = borrList($1.dtipo, $2.atributo, $3.dtipo);} 
-          | expresion ORLOG expresion     { $$.dtipo = orLog($1.dtipo, $3.dtipo); } 
-          | expresion ANDLOG expresion    { $$.dtipo = andLog($1.dtipo, $3.dtipo); } 
-          | expresion ARROBA expresion    { $$.dtipo = arroba($1.dtipo, $3.dtipo); } 
-          | expresion REL expresion       { $$.dtipo = rel($1.dtipo, $2.atributo, $3.dtipo); } // TODO Debería estar bien
-          | expresion MASMENOS expresion  { $$.dtipo = masmenos($1.dtipo, $2.atributo, $3.dtipo); } // TODO Revisar y adaptar nombre a MASMENOS
-          | expresion PORPOR expresion    { $$.dtipo = porPor($1.dtipo, $3.dtipo); } // TODO Debería estar bien 
-| expresion PORPOT expresion    { $$.dtipo = borrList($1.dtipo, $2.atributo, $3.dtipo);}
-          | expresion MULDIV expresion    { $$.dtipo = porDiv($1.dtipo, $2.atributo, $3.dtipo); } // TODO Debería estar bien
-          | expresion EQN expresion       { $$.dtipo = eqn($1.dtipo, $2.atributo, $3.dtipo); } // TODO Debería estar bien
-          | expresion OPERMASMAS expresion ARROBA expresion { $$.dtipo = ternario($1.dtipo, $3.dtipo, $5.dtipo); } // TODO Deberia estar bien
-          | ID                            { $$.dtipo = buscarID($1.lexema); } // TODO Debería estar bien
-          | constante                     { $$.dtipo = $1.dtipo; } // TODO Debería estar bien
-          | funcion 			   { $$.dtipo = $1.dtipo; }
-          | error; 
-                          
-
-// TODO Revisar
-funcion : ID PARIZQ argumentos PARDER { $$.dtipo = comprobarFuncion($1.lexema); } ;
-
-argumentos : lista_expresiones
+argumentos : lista_argumentos
            | %empty ;
 
-// TODO Revisar           
-constante : CONSTANTE { $$.dtipo = $1.dtipo; }
-          | lista { $$.dtipo = $1.dtipo; };
+lista_argumentos : lista_argumentos COMA expresion {
+                    argumentos_tipo_datos[n_argumentos] = $3.dtipo;
+                    n_argumentos++;
+                  }
+                 | expresion {
+                    argumentos_tipo_datos[n_argumentos] = $1.dtipo;
+                    n_argumentos++;
+                  } ;
 
-// TODO Revisar         
-lista : CORCHETEIZQ lista_expresiones CORCHETEDER { $$.dtipo = aTipoLista($2.dtipo); }
-      | CORCHETEIZQ CORCHETEDER ;
-      
-      
-// TODO  Cuidado con el lista_expresiones de ellos, que aquí al final faltan cosas
+constante : CONST { $$.dtipo = $1.dtipo; }
+          | lista { $$.dtipo = $1.dtipo; } ;
+
+lista : CORIZQ lista_expresiones CORDER { $$.dtipo = aTipoLista($2.dtipo); } ;
+
+lista_expresiones : lista_expresiones COMA expresion { $$.dtipo = mismoTipoLista($1.dtipo, $3.dtipo);  }
+                  | expresion { $$.dtipo = $1.dtipo; };
 
 %%
 
 #include "lex.yy.c"
 
 void yyerror(const char *msg){
-  fprintf(stderr, "[Linea %d]: %s\n", yylineno, msg);
+  fprintf(stderr, "[Linea %d] %s\n", yylineno, msg);
+  fflush(stderr);
 }
 
 int main(){
