@@ -2,7 +2,7 @@ main ()
 {
 
 	var {
-		int v,b,n,k;
+		i·nt ve,b,n,k;
 		int ve2;
 		float vf,s,d, f ;
 		char vc ;
@@ -16,7 +16,7 @@ main ()
 
  int funcionA (int a1, float a2, char a3) {
  		var {
-			int x1, x2 ;
+			int x1, x2, a2 ;
 		}
 
 		char funcionB(char b1, bool b2) {
@@ -29,10 +29,11 @@ main ()
 					float x1;
 				}
 
-				x1 = 1.3;
+				x1 = 1.3*ve;
 				v=ve2*2;
-				v=funcionA(2*5,2.5,'a');
-				if ((c2>10))
+				ve2=funcionA(2*5,2.5,'a');
+				ve2=funcionC(1,2,3,4,5);
+				if ((c2>10)+2)
 					c2= c2-1 ;
 				else
 					x1= 3.1 ;
@@ -97,8 +98,8 @@ main ()
 	p1 = p1 ++true@3 ;
 	pf = pf -- (3 + 2 / 2) ;
 	pe = pe ;
-	pe= pe*2;
+	pe= pe*2 + 2.4;
 	pe = pe ++ 3 @ 2;
-
+	pe= pe+pe*2;
 	pe = pe / 3;
 }
