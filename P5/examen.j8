@@ -1,0 +1,64 @@
+main() {
+{
+    var {
+        int num_elementos, i;
+        list_of int resultado, por_dos, sumar;
+    }
+    
+    int fib(int count) {
+        var {
+            int a, b, c;
+            int ctr;
+        }
+
+        int imprimeDig(int dig) {
+            int addToLista(int dig) {
+                resultado = resultado ** [dig];
+                return 0;
+            }
+
+            output dig, " ";
+            addToLista(dig);
+            return 0;
+        }
+
+        a = 1; b = 1;
+
+        imprimeDig(a);
+        imprimeDig(b);
+
+        ctr = 2;
+        while(ctr < count) {
+            c = a + b;
+            a = b;
+            b = c;
+            ctr=ctr+1;
+
+            imprimeDig(c);
+        }
+        
+        return 0;
+    }
+
+    output "Introduzca el número de elementos a calcular:> ";
+    input num_elementos;
+    
+    output "\nFibonacci normal es:\n";
+    fib(num_elementos);
+
+    por_dos = resultado*2;
+    output "\n2*Fibonacci es:\n", por_dos, "\n";
+    
+    $resultado; $por_dos;
+    i = 0;
+    while(i < #resultado){
+        sumar = sumar ** [?resultado + ?por_dos];
+        if(i != #resultado-1) {
+            resultado>>; por_dos>>;
+        }
+        i=i+1;
+        
+    }
+    output "3*Fibonacci es:\n", sumar, "\n";
+ }
+}
