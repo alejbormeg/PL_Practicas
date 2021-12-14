@@ -14,13 +14,16 @@ main() {
         int imprimeDig(int dig) {
             int addToLista(int dig) {
                 resultado = resultado ** [dig];
+                
+            	output "\t\tHola";
                 return 0;
             }
-
+	
             output dig, " ";
             addToLista(dig);
             return 0;
         }
+         
 
         a = 1; b = 1;
 
@@ -40,8 +43,10 @@ main() {
         return 0;
     }
 
-    output "Introduzca el número de elementos a calcular:> ";
+    output "Introduzca el número de elementos a calcular:";
     input num_elementos;
+    
+   
     
     output "\nFibonacci normal es:\n";
     fib(num_elementos);

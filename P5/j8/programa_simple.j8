@@ -1,10 +1,28 @@
-main (){
-var {int numero1; int numero2; int suma;}
-numero1 = 3;
-numero2 = 8;
-suma = numero1 - numero2;
-suma = numero1 + numero2;
-output suma;
+main () {
+	var {
+		int numero1;
+		int numero2;
+		int suma;
+	}
+	
+	int distancia(int a, int b) {
+		var {
+			int resta;
+		}
+		
+		resta = a - b;
+		
+		if (resta < 0)
+			resta = -resta;
+			
+		return resta;
+	}	
+
+	numero1 = 80;
+	numero2 = 120;
+	suma = numero1 + numero2;
+	
+	output "Primer numero: ", numero1, "\nSegundo numero: ", numero2, "\nSuma: ", suma, "\nDistancia entre numeros: ", distancia(numero1, numero2);
 }
 
 
