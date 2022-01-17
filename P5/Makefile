@@ -38,3 +38,13 @@ test2: todo ./j8/fibonacci.j8
 	
 	echo "\n\n*** EJECUCION DEL PROGRAMA DEL USUARIO fibonacci.x ***\n"
 	./bin/fibonacci.x                    # ejecutar
+	
+	
+examen: todo ./j8/examen.j8
+	echo "\n\n*** COMPILACION DEL PROGRAMA DEL USUARIO examen.j8 ***"
+	./traductor < ./j8/examen.j8
+	gcc prog.c -w -o ./bin/examen.x
+	# make --no-print-directory limpia
+	
+	echo "\n\n*** EJECUCION DEL PROGRAMA DEL USUARIO examen.x ***\n"
+	./bin/examen.x                    # ejecutar
